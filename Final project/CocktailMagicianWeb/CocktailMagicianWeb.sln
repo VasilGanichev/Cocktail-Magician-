@@ -5,6 +5,12 @@ VisualStudioVersion = 16.0.29215.179
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CocktailMagicianWeb", "CocktailMagicianWeb\CocktailMagicianWeb.csproj", "{0222EA95-B02D-4043-A536-179D2B09B360}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CocktailMagician.Data", "CocktailMagician.Data\CocktailMagician.Data.csproj", "{31BA99DB-D9BE-4905-8284-0833472603EB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CocktailMagician.Services", "CocktailMagician.Services\CocktailMagician.Services.csproj", "{127FB8B7-5F13-4894-9AA0-FF22A7C67A6C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CocktailMagician.Tests", "CocktailMagician.Tests\CocktailMagician.Tests.csproj", "{3E34E130-5899-48AF-8EF4-9F0C4169E394}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +21,18 @@ Global
 		{0222EA95-B02D-4043-A536-179D2B09B360}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0222EA95-B02D-4043-A536-179D2B09B360}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0222EA95-B02D-4043-A536-179D2B09B360}.Release|Any CPU.Build.0 = Release|Any CPU
+		{31BA99DB-D9BE-4905-8284-0833472603EB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{31BA99DB-D9BE-4905-8284-0833472603EB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{31BA99DB-D9BE-4905-8284-0833472603EB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{31BA99DB-D9BE-4905-8284-0833472603EB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{127FB8B7-5F13-4894-9AA0-FF22A7C67A6C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{127FB8B7-5F13-4894-9AA0-FF22A7C67A6C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{127FB8B7-5F13-4894-9AA0-FF22A7C67A6C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{127FB8B7-5F13-4894-9AA0-FF22A7C67A6C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3E34E130-5899-48AF-8EF4-9F0C4169E394}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3E34E130-5899-48AF-8EF4-9F0C4169E394}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3E34E130-5899-48AF-8EF4-9F0C4169E394}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3E34E130-5899-48AF-8EF4-9F0C4169E394}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
