@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace CocktailMagician.Data.Configurations
 {
-    public class CocktailConfig
+    public class CocktailConfig: IEntityTypeConfiguration<Cocktail>
     {
         public void Configure(EntityTypeBuilder<Cocktail> builder)
         {

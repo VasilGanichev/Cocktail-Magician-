@@ -1,9 +1,9 @@
 ﻿using CocktailMagician.Data.Entities;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-
 namespace CocktailMagician.Data.Configurations
 {
-    public class BarCocktailConfig
+    public class BarCocktailConfig : IEntityTypeConfiguration<BarCocktail>
     {
         public void Configure(EntityTypeBuilder<BarCocktail> builder)
         {

@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using CocktailMagician.Data.Configurations;
 
 namespace CocktailMagician.Data
 {
@@ -17,12 +18,17 @@ namespace CocktailMagician.Data
         public DbSet<Cocktail> Cocktails { get; set; }
         public DbSet<CocktailIngredient> CocktailIngredients { get; set; }
         public DbSet<Ingredient> Ingredients { get; set; }
-        public DbSet<IngredientType> IngredientTypes { get; set; }
         public DbSet<Review> Reviews { get; set; }
-        public DbSet<User> Users { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-
+            modelBuilder.ApplyConfiguration(new BarCocktailConfig());
+            modelBuilder.ApplyConfiguration(new BarConfig());
+            modelBuilder.ApplyConfiguration(new CocktailConfig());
+            modelBuilder.ApplyConfiguration(new CocktailIngredientConfig());
+            modelBuilder.ApplyConfiguration(new IgredientConfig());
+            modelBuilder.ApplyConfiguration(new ReviewsConfig());
+            modelBuilder.ApplyConfiguration(new UserConfig());
+            base.OnModelCreating(modelBuilder);
         }
     }
 }
