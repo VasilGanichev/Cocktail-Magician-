@@ -1,10 +1,7 @@
-﻿using CocktailMagician.Data.Entities;
-using JetBrains.Annotations;
+﻿using CocktailMagician.Data.Configurations;
+using CocktailMagician.Data.Entities;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace CocktailMagician.Data
 {
@@ -17,12 +14,19 @@ namespace CocktailMagician.Data
         public DbSet<Cocktail> Cocktails { get; set; }
         public DbSet<CocktailIngredient> CocktailIngredients { get; set; }
         public DbSet<Ingredient> Ingredients { get; set; }
-        public DbSet<IngredientType> IngredientTypes { get; set; }
         public DbSet<Review> Reviews { get; set; }
         public DbSet<User> Users { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.ApplyConfiguration(new BarConfig());
+            modelBuilder.ApplyConfiguration(new BarCocktailConfig());
+            modelBuilder.ApplyConfiguration(new CocktailConfig());
+            modelBuilder.ApplyConfiguration(new CocktailIngredientConfig());
+            modelBuilder.ApplyConfiguration(new IngredientConfig());
+            modelBuilder.ApplyConfiguration(new ReviewsConfig());
+            modelBuilder.ApplyConfiguration(new UserConfig());
 
+            base.OnModelCreating(modelBuilder);
         }
     }
 }

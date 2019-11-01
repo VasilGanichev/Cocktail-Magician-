@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace CocktailMagician.Data.Entities
+﻿namespace CocktailMagician.Data.Entities
 {
     public class BarCocktail
     {
+        public int ID { get; set; }
         public int BarID { get; set; }
         public Bar Bar { get; set; }
         public int CocktailID { get; set; }
