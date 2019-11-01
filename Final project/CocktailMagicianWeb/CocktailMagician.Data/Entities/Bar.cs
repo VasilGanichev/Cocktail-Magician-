@@ -6,7 +6,7 @@ namespace CocktailMagician.Data.Entities
 {
     public class Bar
     {
-        public int id { get; set; }
+        public int Id { get; set; }
         public string Name { get; set; }
         public string Address { get; set; }
         public string PhoneNumber { get; set; }
