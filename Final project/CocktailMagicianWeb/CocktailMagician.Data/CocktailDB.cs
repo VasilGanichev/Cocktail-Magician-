@@ -1,16 +1,11 @@
 ﻿using CocktailMagician.Data.Entities;
-using JetBrains.Annotations;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace CocktailMagician.Data
 {
     public class CocktailDB : DbContext
     {
-        public CocktailDB( DbContextOptions options) : base(options)
+        public CocktailDB(DbContextOptions options) : base(options)
         {
         }
 

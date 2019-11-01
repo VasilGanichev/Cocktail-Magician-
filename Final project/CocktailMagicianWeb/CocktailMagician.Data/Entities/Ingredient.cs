@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 
 namespace CocktailMagician.Data.Entities
 {
@@ -8,6 +6,7 @@ namespace CocktailMagician.Data.Entities
     {
         public int ID { get; set; }
         public string Name { get; set; }
-        public IngredientType Type { get; set; }
+        public string Type { get; set; }
+        public ICollection<CocktailIngredient> CocktailIngredients { get; set; }
     }
 }
