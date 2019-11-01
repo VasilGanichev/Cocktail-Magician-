@@ -1,12 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using CocktailMagician.Data;
+using CocktailMagician.Data.Entities;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.UI;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -31,6 +31,22 @@ namespace CocktailMagicianWeb
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
+            services.AddDbContext<CocktailDB>(options =>
+              options
+              //.UseLazyLoadingProxies()
+              .UseSqlServer(
+                  Configuration.GetConnectionString("DefaultConnection"))); ;
+            services.AddSingleton<IConfiguration>(Configuration);
+            services.AddDefaultIdentity<User>(a =>
+            {
+                a.Password.RequireDigit = false;
+                a.Password.RequireUppercase = false;
+                a.Password.RequireLowercase = false;
+                a.Password.RequireNonAlphanumeric = false;
+            })
+                .AddDefaultUI(UIFramework.Bootstrap4)
+                .AddRoles<IdentityRole>()
+                .AddEntityFrameworkStores<CocktailDB>();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
