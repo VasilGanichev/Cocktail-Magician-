@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace CocktailMagician.Data.Models
+namespace CocktailMagician.Data.Entities
 {
     public class Review
     {
@@ -13,7 +13,7 @@ namespace CocktailMagician.Data.Models
         public User User { get; set; }
         public int BarId { get; set; }
         public Bar Bar { get; set; }
-        //public int CocktailID{get;set;}
-        //public Cocktail Cocktail{get;set;}
+        public int CocktailID{get;set;}
+        public Cocktail Cocktail{get;set;}
     }
 }
