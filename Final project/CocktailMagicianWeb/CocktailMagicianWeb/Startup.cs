@@ -33,7 +33,6 @@ namespace CocktailMagicianWeb
 
             services.AddDbContext<CocktailDB>(options =>
               options
-              //.UseLazyLoadingProxies()
               .UseSqlServer(
                   Configuration.GetConnectionString("DefaultConnection"))); ;
             services.AddSingleton<IConfiguration>(Configuration);
