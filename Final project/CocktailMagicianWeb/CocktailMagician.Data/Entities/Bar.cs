@@ -12,7 +12,7 @@ namespace CocktailMagician.Data.Entities
         public string PhoneNumber { get; set; }
         public byte[] Picture { get; set; }
         public int CocktailID { get; set; }
-        public List<Cocktail> Cocktails {get; set;}
+        public List<BarCocktail> BarCocktails {get; set;}
         public int ReviewID { get; set; }
         public List<Review> Reviews { get; set; }
 
