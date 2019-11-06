@@ -19,7 +19,9 @@ namespace CocktailMagician.Data.Configurations
             builder.Property(b => b.PhoneNumber)
                 .IsRequired();
 
-            builder.Property(b => b.Picture)
+            builder.Property(b => b.Picture);
+
+            builder.Property(b => b.IsHidden)
                 .IsRequired();
 
             builder.HasMany(b => b.Reviews)

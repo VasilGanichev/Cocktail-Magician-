@@ -11,6 +11,7 @@ namespace CocktailMagician.Data.Entities
         public string Address { get; set; }
         public string PhoneNumber { get; set; }
         public byte[] Picture { get; set; }
+        public bool IsHidden { get; set; }
         public int CocktailID { get; set; }
         public List<BarCocktail> BarCocktails {get; set;}
         public int ReviewID { get; set; }
