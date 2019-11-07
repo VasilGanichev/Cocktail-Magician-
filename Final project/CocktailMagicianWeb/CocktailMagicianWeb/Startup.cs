@@ -1,5 +1,7 @@
 ﻿using CocktailMagician.Data;
 using CocktailMagician.Data.Entities;
+using CocktailMagician.Services;
+using CocktailMagician.Services.Contracts;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -47,7 +49,7 @@ namespace CocktailMagicianWeb
                 .AddDefaultUI(UIFramework.Bootstrap4)
                 .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<CocktailDB>();
-
+            services.AddScoped<IBarServices, BarServices>();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
 

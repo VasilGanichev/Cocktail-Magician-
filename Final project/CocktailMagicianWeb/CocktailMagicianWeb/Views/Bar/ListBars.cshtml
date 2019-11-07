@@ -1,0 +1,42 @@
+﻿@model BarResultsViewModel
+@{
+    ViewData["Title"] = "ListBars";
+    <style>
+        img {
+            max-width: 100%;
+            height: auto;
+        }
+    </style>
+}
+
+<h1>Bars:</h1>
+
+<table class="table table-hover">
+
+    @if (Model != null)
+    {
+        <tr>
+            <th>Image</th>
+            <th>Name</th>
+            <th>Address</th>
+            <th>Phone</th>
+        </tr>
+        foreach (var bar in Model.Bars)
+        {
+            <tr>
+                <td>
+                    <img src="data:image/jpg;base64,@(Html.Raw(Convert.ToBase64String(bar.Picture)))" width="230" height="172"/>
+                </td>
+                <td>
+                    @bar.Name
+                </td>
+                <td>
+                    @bar.Address
+                </td>
+                <td>
+                    @bar.PhoneNumber
+                </td>
+            </tr>
+        }
+    }
+</table>
