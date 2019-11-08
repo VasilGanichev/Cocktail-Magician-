@@ -1,5 +1,7 @@
 ﻿using CocktailMagician.Data;
 using CocktailMagician.Data.Entities;
+using CocktailMagician.Services;
+using CocktailMagician.Services.Contracts;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -34,7 +36,7 @@ namespace CocktailMagicianWeb
             services.AddDbContext<CocktailDB>(options =>
               options
               .UseSqlServer(
-                  Configuration.GetConnectionString("DefaultConnection"))); ;
+                  Configuration.GetConnectionString("DefaultConnection")));
             services.AddSingleton<IConfiguration>(Configuration);
             services.AddDefaultIdentity<User>(a =>
             {
@@ -46,7 +48,7 @@ namespace CocktailMagicianWeb
                 .AddDefaultUI(UIFramework.Bootstrap4)
                 .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<CocktailDB>();
-
+            services.AddScoped<IIngredientServices, IngredientServices>();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
 
