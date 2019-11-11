@@ -57,15 +57,28 @@ namespace CocktailMagician.Services
             await this.context.Bars.AddAsync(bar);
             await this.context.SaveChangesAsync();
         }
-        public async Task HideBarAsync(Bar bar)
+        public async Task EditBarAsync(Bar bar, string newName, string newAdress, string newPhoneNumber, byte[] newPicture, bool newIsHidden)
         {
             bar.EnsureNotNull();
-            if (!(await this.context.Bars.ContainsAsync(bar)))
-                throw new ArgumentNullException("Bar does not exist!");
-            if (bar.IsHidden == true)
-                throw new ArgumentException("Bar is already hidden!");
-            bar.IsHidden = true;
-            await this.context.SaveChangesAsync();
+            if (bar.Name != newName || bar.Address != newAdress || bar.PhoneNumber != newPhoneNumber || bar.Picture != newPicture || bar.IsHidden != newIsHidden)
+            {
+                if (newName != null )
+                    bar.Name = newName;
+
+                if (newAdress != null )
+                    bar.Address = newAdress;
+
+                if (newPhoneNumber != null )
+                    bar.PhoneNumber = newPhoneNumber;
+
+                if (newPicture != null)
+                    bar.Picture = newPicture;
+
+                    bar.IsHidden = newIsHidden;
+                await this.context.SaveChangesAsync();
+            }
+
+
         }
         public async Task<IReadOnlyCollection<Bar>> SearchBooksByMultipleCriteriaAsync(string name, string adress, string phonenumber)
         {

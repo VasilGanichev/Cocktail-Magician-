@@ -12,9 +12,9 @@ namespace CocktailMagician.Services.Contracts
         Task CreateBarAsync(Bar bar);
         Task CreateBarAsync(string name, string adress, string phoneNumber, byte[] picture);
         Task<IReadOnlyCollection<Bar>> SearchBooksByMultipleCriteriaAsync(string name, string adress, string phonenumber);
-        Task HideBarAsync(Bar bar);
         Task<IReadOnlyCollection<Bar>> GetHiddenCollectionAsync();
         Task<IReadOnlyCollection<Bar>> GetVisibleCollectionAsync();
         Task<Bar> GetBarAsync(int id);
+        Task EditBarAsync(Bar bar, string newName, string newAdress, string newPhoneNumber, byte[] newPicture, bool newIsHidden);
     }
 }

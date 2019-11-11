@@ -1,16 +1,16 @@
 ﻿@model BarViewModel
 
 @{
-    ViewData["Title"] = "CreateBar";
+    ViewData["Title"] = "EditBar";
 }
 
-<h1>CreateBar</h1>
 
-<h4>Bar</h4>
+
+<h3>Edit Bar:</h3>
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="CreateBar" method="post" enctype="multipart/form-data">
+        <form asp-action="EditBar" method="post" enctype="multipart/form-data">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="@Model.Name" class="control-label"></label>
@@ -37,14 +37,18 @@
                     <input class="form-check-input" asp-for="@Model.IsHidden" /> @Html.DisplayNameFor(model => model.IsHidden)
                 </label>
             </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+            <div>
+                <input asp-for="@Model.Id" class="form-control" hidden />
             </div>
+            <div class="form-group">
+                <input type="submit" value="Edit" class="btn btn-primary" />
+            </div>
+
         </form>
     </div>
 </div>
 
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
 
-@section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-}

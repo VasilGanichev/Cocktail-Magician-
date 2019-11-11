@@ -13,6 +13,7 @@ namespace CocktailMagicianWeb.Utilities.Mappers
         {
             var viewmodel = new BarViewModel
             {
+                Id = bar.Id,
                 Name = bar.Name,
                 Address = bar.Address,
                 PhoneNumber = bar.PhoneNumber,

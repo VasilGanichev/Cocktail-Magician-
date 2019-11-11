@@ -25,7 +25,17 @@
         {
             <tr>
                 <td>
+                    @try
+                    {
                     <img src="data:image/jpg;base64,@(Html.Raw(Convert.ToBase64String(bar.Picture)))" width="230" height="172"/>
+
+                    }
+                    catch (Exception)
+                    {
+                        <td>
+                         <img src="~/no-image-icon-6.png" width="230" height="172"/>
+                        </td>
+                    }
                 </td>
                 <td>
                     @bar.Name
