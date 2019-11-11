@@ -50,6 +50,7 @@ namespace CocktailMagicianWeb
                 .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<CocktailDB>();
             services.AddScoped<IBarServices, BarServices>();
+            services.AddScoped<IIngredientServices, IngredientServices>();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
 

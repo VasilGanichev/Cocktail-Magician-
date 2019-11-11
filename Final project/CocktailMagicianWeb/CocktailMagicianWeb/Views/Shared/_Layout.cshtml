@@ -40,12 +40,22 @@
                                 <button class="dropbtn">Ingredients</button>
                                 <div class="dropdown-content">
                                     <a class="nav-link text-dark" asp-controller="Ingredients" asp-action="AddIngredient">Add Ingredient</a>
-                                    <a class="nav-link text-dark" asp-controller="Ingredients" asp-action="ManageIngredients" method="get" >Manage Ingredients</a>
+                                    <a class="nav-link text-dark" asp-controller="Ingredients" asp-action="ManageIngredients" method="get">Manage Ingredients</a>
                                 </div>
                             </div>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Bar" asp-action="CreateBar">Create Bar</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Bar" asp-action="ListBars">Our Bars</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Bar" asp-action="SearchBars">Browse Our Bars</a>
+                        </li>
                     </ul>
                 </div>
+                <partial name="_LoginPartial" />
             </div>
         </nav>
     </header>
