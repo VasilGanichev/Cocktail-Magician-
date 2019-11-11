@@ -1,6 +1,6 @@
 configuration: Release
 
 before_build: 
-    -nuget restore
+    -nuget restore -verbosity detailed
 build: 
     publish_wap: true
