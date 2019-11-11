@@ -1,0 +1,12 @@
+﻿@model UpdateIngredientViemModel
+@{
+    ViewData["Title"] = "UpdateIngredient";
+}
+
+<h4>Updating Ingredient "@Model.CurrentName"</h4>
+<form asp-controller="Ingredients" asp-action="UpdateIngredient" method="post">
+    <input class="form-control col-md-4" placeholder="New name..." type="text" asp-for="@Model.NewName" />
+    <button class="btn" style="background-color:#ff0000; color:white" />Update
+</form>
+
+
