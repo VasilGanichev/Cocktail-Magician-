@@ -1,6 +1,6 @@
 ﻿using CocktailMagician.Data.Entities;
-using CocktailMagicianWeb.Models.Cocktails;
 using CocktailMagicianWeb.Models.Ingredients;
+using CocktailMagicianWeb.Models.Cocktails;
 
 namespace CocktailMagicianWeb.Utilities
 {
@@ -25,7 +25,7 @@ namespace CocktailMagicianWeb.Utilities
         public static CocktailViewModel MapToViewModel(this Cocktail cocktail)
         {
             var vm = new CocktailViewModel();
-            vm.ID = cocktail.ID;
+            vm.Id = cocktail.ID;
             vm.Name = cocktail.Name;
             vm.Picture = cocktail.Picture;
             return vm;
