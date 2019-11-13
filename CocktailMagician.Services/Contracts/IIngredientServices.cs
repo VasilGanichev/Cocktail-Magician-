@@ -10,7 +10,7 @@ namespace CocktailMagician.Services.Contracts
         Task<Ingredient> GetAsync(int id);
         Task UpdateAsync(int id, string name);
         Task DeleteAsync(int id);
-        Task<List<Ingredient>> SearchIngredientsAsync(string input);
+        Task<List<Ingredient>> GetMultipleIngredientsByNameAsync(string input);
         Task<bool> IsIngredientUsedAsync(int id);
     }
 }

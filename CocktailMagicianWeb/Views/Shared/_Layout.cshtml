@@ -44,18 +44,17 @@
                                 </div>
                             </div>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Bar" asp-action="CreateBar">Create Bar</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Bar" asp-action="ListBars">Our Bars</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Bar" asp-action="SearchBars">Browse Our Bars</a>
+                        <li>
+                            <div class="dropdown">
+                                <button class="dropbtn">Cocktails</button>
+                                <div class="dropdown-content">
+                                    <a class="nav-link text-dark" asp-controller="Cocktails" asp-action="ManageCocktails">Manage Cocktails</a>
+                                    <a class="nav-link text-dark" asp-controller="Cocktails" asp-action="AddCocktail">Add Cocktail</a>
+                                </div>
+                            </div>
                         </li>
                     </ul>
                 </div>
-                <partial name="_LoginPartial" />
             </div>
         </nav>
     </header>
@@ -91,7 +90,7 @@
         </script>
     </environment>
     <script src="~/js/site.js" asp-append-version="true"></script>
-
+    <script src="~/js/addCocktail.js"></script>
     @RenderSection("Scripts", required: false)
 </body>
 </html>

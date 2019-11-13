@@ -11,6 +11,7 @@ namespace CocktailMagician.Data
         {
         }   
         public DbSet<Bar> Bars { get; set; }
+        public DbSet<BarCocktail> BarCocktails { get; set; }
         public DbSet<Cocktail> Cocktails { get; set; }
         public DbSet<CocktailIngredient> CocktailIngredients { get; set; }
         public DbSet<Ingredient> Ingredients { get; set; }

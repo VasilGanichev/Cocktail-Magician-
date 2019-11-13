@@ -25,7 +25,7 @@ namespace CocktailMagicianWeb.Controllers
         public async Task<IActionResult> ManageIngredients(IngredientsViewModel vm)
         {
             var viewModel = new IngredientsViewModel();
-            var ingredients = await _ingredientServices.SearchIngredientsAsync(vm.Input);
+            var ingredients = await _ingredientServices.GetMultipleIngredientsByNameAsync(vm.Input);
             if (ingredients.Count == 0)
             {
                 ModelState.AddModelError(string.Empty, "No ingredients found with this name.");

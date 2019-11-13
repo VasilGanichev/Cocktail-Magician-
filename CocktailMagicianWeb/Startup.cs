@@ -35,9 +35,8 @@ namespace CocktailMagicianWeb
 
             services.AddDbContext<CocktailDB>(options =>
               options
-              //.UseLazyLoadingProxies()
               .UseSqlServer(
-                  Configuration.GetConnectionString("DefaultConnection"))); ;
+                  Configuration.GetConnectionString("DefaultConnection")));
             services.AddSingleton<IConfiguration>(Configuration);
             services.AddDefaultIdentity<User>(a =>
             {
@@ -49,8 +48,10 @@ namespace CocktailMagicianWeb
                 .AddDefaultUI(UIFramework.Bootstrap4)
                 .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<CocktailDB>();
-            services.AddScoped<IBarServices, BarServices>();
             services.AddScoped<IIngredientServices, IngredientServices>();
+            services.AddScoped<ICocktailIngredientServices, CocktailIngredientServices>();
+            services.AddScoped<ICocktailServices, CocktailServices>();
+            services.AddScoped<IBarCocktailServices, BarCocktailServices>();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
 

@@ -48,7 +48,7 @@ namespace CocktailMagician.Services
             await _context.SaveChangesAsync();
         }
 
-        public async Task<List<Ingredient>> SearchIngredientsAsync(string input)
+        public async Task<List<Ingredient>> GetMultipleIngredientsByNameAsync(string input)
         {
             var ingredients = await _context.Ingredients.Where(i => i.Name.Contains(input)).ToListAsync();
             return ingredients;

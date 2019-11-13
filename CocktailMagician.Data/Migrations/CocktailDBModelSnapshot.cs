@@ -63,7 +63,7 @@ namespace CocktailMagician.Data.Migrations
 
                     b.HasIndex("CocktailID");
 
-                    b.ToTable("BarCocktail");
+                    b.ToTable("BarCocktails");
                 });
 
             modelBuilder.Entity("CocktailMagician.Data.Entities.Cocktail", b =>
