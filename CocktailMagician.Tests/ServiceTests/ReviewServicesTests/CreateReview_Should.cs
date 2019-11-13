@@ -37,7 +37,7 @@ namespace CocktailMagician.Tests.ServiceTests.ReviewsServiceTests
             };
             var cocktail = new Cocktail
             {
-                ID = 1,
+                Id = 1,
             };
             var user = new User
             {
@@ -95,7 +95,7 @@ namespace CocktailMagician.Tests.ServiceTests.ReviewsServiceTests
             var options = TestUtilities.GetOptions(nameof(CorrectlyAddCocktailReview));
             var cocktail = new Cocktail
             {
-                ID = 1,
+                Id = 1,
             };
             var user = new User
             {

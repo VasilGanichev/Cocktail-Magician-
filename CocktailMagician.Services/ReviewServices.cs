@@ -32,7 +32,7 @@ namespace CocktailMagician.Services
                     Rating = rating,
                     Comment = comment,
                     Cocktail = cocktail,
-                    CocktailID = cocktail.ID,
+                    CocktailID = cocktail.Id,
                     User = user,
                     UserID = user.Id,
                 };
