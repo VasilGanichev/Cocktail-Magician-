@@ -9,7 +9,7 @@ namespace CocktailMagician.Data.Configurations
         public void Configure(EntityTypeBuilder<Cocktail> builder)
         {
             builder
-                .HasKey(c => c.ID);
+                .HasKey(c => c.Id);
 
             builder
                 .Property(c => c.Name)

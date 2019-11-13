@@ -13,7 +13,7 @@ namespace CocktailMagician.Data.Configurations
                 .IsRequired();
 
             builder
-                .Property(c => c.IngredienetID)
+                .Property(c => c.IngredientID)
                 .IsRequired();
 
             builder

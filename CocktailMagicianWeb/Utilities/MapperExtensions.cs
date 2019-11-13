@@ -25,7 +25,7 @@ namespace CocktailMagicianWeb.Utilities
         public static CocktailViewModel MapToViewModel(this Cocktail cocktail)
         {
             var vm = new CocktailViewModel();
-            vm.Id = cocktail.ID;
+            vm.Id = cocktail.Id;
             vm.Name = cocktail.Name;
             vm.Picture = cocktail.Picture;
             return vm;

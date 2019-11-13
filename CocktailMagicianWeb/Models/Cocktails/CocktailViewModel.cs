@@ -8,6 +8,7 @@ namespace CocktailMagicianWeb.Models.Cocktails
         public byte[] Picture { get; set; }
         public string Name { get; set; }
         public List<string> Ingredients { get; set; } = new List<string>(10);
-        public List<string> Bars { get; set; } = new List<string>();
+        public List<string> Bars { get; set; } = new List<string>(20);
+        public List<int> Quantities { get; set; } = new List<int>(10);
     }
 }

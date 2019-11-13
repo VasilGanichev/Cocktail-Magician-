@@ -7,10 +7,12 @@ namespace CocktailMagician.Services.Contracts
     public interface IIngredientServices
     {
         Task<Ingredient> AddAsync(string name, string type);
+        Task<List<Ingredient>> GetMultipleIngredientsByNameAsync(List<string> names);
         Task<Ingredient> GetAsync(int id);
+        Task<List<Ingredient>> GetIngedientsByTypeAsync(string type);
         Task UpdateAsync(int id, string name);
         Task DeleteAsync(int id);
-        Task<List<Ingredient>> GetMultipleIngredientsByNameAsync(string input);
+        Task<List<Ingredient>> SearchIngredientsAsync(string input);
         Task<bool> IsIngredientUsedAsync(int id);
     }
 }

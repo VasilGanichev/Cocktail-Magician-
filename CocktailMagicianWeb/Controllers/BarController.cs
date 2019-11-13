@@ -91,7 +91,5 @@ namespace CocktailMagicianWeb.Controllers
             await this.barServices.EditBarAsync(bar, viewModel.Name, viewModel.Address, viewModel.PhoneNumber, pictureByteArray, viewModel.IsHidden);
             return RedirectToAction("Index", "Home");
         }
-
-
     }
 }

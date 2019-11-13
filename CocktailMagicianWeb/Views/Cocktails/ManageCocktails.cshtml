@@ -1,0 +1,46 @@
+﻿@model CocktailsViewModel
+@{
+    ViewData["Title"] = "ManageCocktails";
+}
+
+<h3>Manage Cocktails</h3>
+<div>
+    <form asp-controller="Cocktails" asp-action="ManageCocktails">
+        <div class="row">
+            <input class="form-control col-md-4" placeholder="Cocktail name..." type="text" asp-for="Input" />
+            <button class="btn" style="background-color:#ff0000; color:white" />Search
+        </div>
+    </form>
+</div>
+
+@if (Model != null)
+{
+    <br>
+    <h5>Search Results:</h5>
+    <div asp-validation-summary="All" class="text-danger"></div>
+
+
+    if (!(Model.Cocktails.Count == 0))
+    {
+
+        <table class="table table-hover col-md-10">
+            <tr>
+                <th>Name</th>
+                <th>Type</th>
+            </tr>
+
+            @foreach (var ingredient in Model.Cocktails)
+            {
+                <tr>
+                    <td>@ingredient.Name</td>
+                    <td>
+                        <a asp-controller="Ingredients" asp-action="UpdateIngredient" asp-route-id="@ingredient.Id">Update</a>
+                    </td>
+                    <td> <a asp-controller="Ingredients" asp-action="DeleteIngredient" asp-route-id="@ingredient.Id">Delete</a></td>
+                </tr>
+            }
+
+        </table>
+    }
+}
+
