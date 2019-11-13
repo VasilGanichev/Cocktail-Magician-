@@ -49,9 +49,10 @@ namespace CocktailMagicianWeb
                 .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<CocktailDB>();
             services.AddScoped<IIngredientServices, IngredientServices>();
-            services.AddScoped<ICocktailIngredientServices, CocktailIngredientServices>();
-            services.AddScoped<ICocktailServices, CocktailServices>();
-            services.AddScoped<IBarCocktailServices, BarCocktailServices>();
+            services.AddScoped<IBarServices, BarServices>();
+            //services.AddScoped<ICocktailIngredientServices, CocktailIngredientServices>();
+            //services.AddScoped<ICocktailServices, CocktailServices>();
+            //services.AddScoped<IBarCocktailServices, BarCocktailServices>();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
 

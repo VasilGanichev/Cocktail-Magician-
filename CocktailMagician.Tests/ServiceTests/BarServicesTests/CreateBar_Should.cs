@@ -15,7 +15,7 @@ namespace CocktailMagician.Tests.ServiceTests.BarServicesTests
       [TestMethod]
       public void ThrowWhenBarIsNull()
       {
-          var options = TestUtils.GetOptions(nameof(ThrowWhenBarIsNull));
+          var options = TestUtilities.GetOptions(nameof(ThrowWhenBarIsNull));
           using (var assertContext = new CocktailDB(options))
           {
               var sut = new BarServices(assertContext);
@@ -26,7 +26,7 @@ namespace CocktailMagician.Tests.ServiceTests.BarServicesTests
       [TestMethod]
       public void ThrowWhenParametersAreNull()
       {
-        var options = TestUtils.GetOptions(nameof(ThrowWhenParametersAreNull));
+        var options = TestUtilities.GetOptions(nameof(ThrowWhenParametersAreNull));
         var inCorrectBar = new Bar
         {
             Name = null,
@@ -46,7 +46,7 @@ namespace CocktailMagician.Tests.ServiceTests.BarServicesTests
       [TestMethod]
       public void AddBarToDB()
       {
-          var options = TestUtils.GetOptions(nameof(AddBarToDB));
+          var options = TestUtilities.GetOptions(nameof(AddBarToDB));
             var bar = new Bar
             {
                 Id = 1,

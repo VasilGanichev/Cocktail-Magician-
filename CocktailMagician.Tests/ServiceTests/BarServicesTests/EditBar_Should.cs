@@ -14,7 +14,7 @@ namespace CocktailMagician.Tests.ServiceTests.BarServicesTests
         [TestMethod]
         public void CorrectlyEditBar()
         {
-            var options = TestUtils.GetOptions(nameof(CorrectlyEditBar));
+            var options = TestUtilities.GetOptions(nameof(CorrectlyEditBar));
             var resultName = "test1";
             var resultAddress = "Mill Street";
             var resultPhoneNumber = "testNumber";

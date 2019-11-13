@@ -8,5 +8,6 @@ namespace CocktailMagician.Services.Contracts
         Task<Review> GetReviewAsync(int id);
         Task<Review> CreateReviewAsync(double rating, string comment, Bar bar, Cocktail cocktail, User user);
         Task DeleteAsync(int id);
+        Task EditReview(Review review, double newRating, string newComment);
     }
 }

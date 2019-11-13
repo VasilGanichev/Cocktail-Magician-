@@ -16,7 +16,7 @@
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
     <link href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" rel="stylesheet" />
-   
+
 }
 
 
@@ -75,36 +75,40 @@
                 foreach (var bar in Model.SearchResults)
                 {
                     <tr>
-                        <td>
-                            @try
-                            {
+
+                        @if (bar.Picture == null)
+                        {
+                            <td>
+                                <img src="~/images/no-image-icon-6.png" width="230" height="172" />
+                            </td>
+                        }
+                        else
+                        {
+                            <td>
                                 <img src="data:image/jpg;base64,@(Html.Raw(Convert.ToBase64String(bar.Picture)))" width="230" height="172" />
+                            </td>
+                        }
+                        <td>
+                            @bar.Name
+                        </td>
+                        <td>
+                            @bar.Address
+                        </td>
+                        <td>
+                            @bar.PhoneNumber
+                        </td>
+                        <td>
+                            <button class="btn btn-info" onclick="location.href='@Url.Action("EditBar", "Bar", new { Id = @bar.Id })'">Edit</button>
+                        </td>
+                        <td>
+                            <button class="btn btn-info" onclick="location.href='@Url.Action("BarDetails", "Bar", new { Id = @bar.Id })'">Details</button>
+                        </td>
 
-                            }
-                            catch (Exception)
-                            {
-                            <td>
-                                <img src="~/no-image.jpg" width="230" height="172" />
-                            </td>
-                            }
-                            </td>
-                            <td>
-                                @bar.Name
-                            </td>
-                            <td>
-                                @bar.Address
-                            </td>
-                            <td>
-                                @bar.PhoneNumber
-                            </td>
-                            <td>
-                                <button class="btn btn-info" onclick="location.href='@Url.Action("EditBar", "Bar", new { Id = @bar.Id })'">Edit</button>
-                            </td>
-                        </tr>
-                    }
-
+                    </tr>
                 }
+
             }
+        }
     </table>
 </div>
 @section Scripts {
