@@ -5,7 +5,7 @@ namespace CocktailMagician.Tests
 {
     public static class TestUtilities
     {
-        //appveyor e pederas
+
         public static DbContextOptions<CocktailDB> GetOptions(string databaseName)
         {
             return new DbContextOptionsBuilder<CocktailDB>()

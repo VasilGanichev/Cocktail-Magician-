@@ -15,7 +15,7 @@ namespace CocktailMagician.Tests.ServiceTests.BarServicesTests
         [TestMethod]
         public void ThrowWhenIdNotFound()
         {
-            var options = TestUtils.GetOptions(nameof(ThrowWhenIdNotFound));
+            var options = TestUtilities.GetOptions(nameof(ThrowWhenIdNotFound));
 
             var testBar = new Bar
             {
@@ -37,7 +37,7 @@ namespace CocktailMagician.Tests.ServiceTests.BarServicesTests
         [TestMethod]
         public void ReturnCorrectBar()
         {
-            var options = TestUtils.GetOptions(nameof(ReturnCorrectBar));
+            var options = TestUtilities.GetOptions(nameof(ReturnCorrectBar));
 
             var testBar = new Bar
             {

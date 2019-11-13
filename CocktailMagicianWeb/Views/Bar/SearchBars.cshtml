@@ -16,7 +16,7 @@
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
     <link href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" rel="stylesheet" />
-   
+
 }
 
 
@@ -86,7 +86,7 @@
                             <td>
                                 <img src="~/no-image.jpg" width="230" height="172" />
                             </td>
-                            }
+                        }
                             </td>
                             <td>
                                 @bar.Name
@@ -100,6 +100,10 @@
                             <td>
                                 <button class="btn btn-info" onclick="location.href='@Url.Action("EditBar", "Bar", new { Id = @bar.Id })'">Edit</button>
                             </td>
+                            <td>
+                                <button class="btn btn-info" onclick="location.href='@Url.Action("BarDetails", "Bar", new { Id = @bar.Id })'">Details</button>
+                            </td>
+
                         </tr>
                     }
 
