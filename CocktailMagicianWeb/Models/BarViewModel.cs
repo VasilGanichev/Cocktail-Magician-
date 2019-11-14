@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CocktailMagician.Data.Entities;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -18,6 +19,8 @@ namespace CocktailMagicianWeb.Models
         public string PhoneNumber { get; set; }
         public byte[] Picture { get; set; }
         public bool IsHidden { get; set; }
+        public List<BarReview> BarReviews { get; set; } = new List<BarReview>();
+        public double Rating { get; set; }
 
     }
 }

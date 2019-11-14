@@ -21,7 +21,7 @@ namespace CocktailMagician.Services
         }
         public async Task<Bar> GetBarAsync(int id)
         {
-            var bar = await this.context.Bars.FirstOrDefaultAsync(b => b.Id == id);
+            var bar = await this.context.Bars.Include(b => b.BarReviews).FirstOrDefaultAsync(b => b.Id == id);
             bar.EnsureNotNull();
             return bar;
         }

@@ -28,6 +28,7 @@ namespace CocktailMagician.Services
             {
                 Rating = rating,
                 Comment = comment,
+                UserName = user.UserName,
                 Cocktail = cocktail,
                 CocktailId = cocktail.Id,
                 User = user,

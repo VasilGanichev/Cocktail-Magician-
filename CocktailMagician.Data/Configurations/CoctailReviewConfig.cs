@@ -18,6 +18,10 @@ namespace CocktailMagician.Data.Configurations
 
             builder.Property(r => r.Comment)
                 .HasMaxLength(300);
+
+            builder.Property(r => r.UserName)
+                .IsRequired();
+
         }
     }
 }

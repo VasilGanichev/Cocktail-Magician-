@@ -39,7 +39,7 @@
 
 
 <div class="topleft">
-    <h1>BarDetails</h1>
+    <h1>Bar Details:</h1>
     <br />
     <div>
         @try
@@ -57,9 +57,10 @@
         <table class="table table-hover">
             @if (Model != null)
             {
-                <th>Name</th>
-                <th>Address</th>
-                <th>Phone</th>
+                <th>Name:</th>
+                <th>Address:</th>
+                <th>Phone:</th>
+                <th>Rated: </th>
                 <th>Cocktails</th>
 
             }
@@ -73,9 +74,39 @@
                 <td>
                     @Model.PhoneNumber
                 </td>
+                <td>
+                    @Model.Rating
+                </td>
             </tr>
         </table>
         <button class="btn btn-info" onclick="location.href='@Url.Action("LeaveBarReview", "Reviews", new { Id = Model.Id })'">Leave Review</button>
 
+        <div class="tableContent">
+    @if (Model.BarReviews != null)
+    {
+
+        <table class="table table-hover">
+            <th>Name</th>
+            <th>Rating</th>
+            <th>Comment</th>
+            @foreach (var Review in Model.BarReviews)
+            {
+                <tr>
+                    <td>
+                        @Review.UserName
+                    </td>
+                    <td>
+                        @Review.Rating
+                    </td>
+                    <td>
+                        @Review.Comment
+                    </td>
+                </tr>
+            }
+
+
+        </table>
+    }
+</div>
     </div>
 </div>

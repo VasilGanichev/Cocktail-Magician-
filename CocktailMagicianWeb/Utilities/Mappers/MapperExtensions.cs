@@ -11,15 +11,21 @@ namespace CocktailMagicianWeb.Utilities.Mappers
     {
         public static BarViewModel MapToViewModel(this Bar bar)
         {
-            var viewmodel = new BarViewModel
+            var viewmodel = new BarViewModel();
+            viewmodel.Id = bar.Id;
+            viewmodel.Name = bar.Name;
+            viewmodel.Address = bar.Address;
+            viewmodel.PhoneNumber = bar.PhoneNumber;
+            viewmodel.Picture = bar.Picture;
+            viewmodel.BarReviews = bar.BarReviews;
+            try
             {
-                Id = bar.Id,
-                Name = bar.Name,
-                Address = bar.Address,
-                PhoneNumber = bar.PhoneNumber,
-                Picture = bar.Picture,
-
-            };
+                viewmodel.Rating = bar.BarReviews.Select(b => b.Rating).Average();
+            }
+            catch (Exception)
+            {
+                viewmodel.Rating = 0;
+            }
             return viewmodel;
         }
     }
