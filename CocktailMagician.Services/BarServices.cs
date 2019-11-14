@@ -82,11 +82,11 @@ namespace CocktailMagician.Services
         }
         public async Task<IReadOnlyCollection<Bar>> SearchBooksByMultipleCriteriaAsync(string name, string adress, string phonenumber)
         {
-            var booksResult = await this.context.Bars.Include(r => r.Reviews).Where(b => ((name == null) || (b.Name.Contains(name)))
+            var barsResult = await this.context.Bars.Include(r => r.BarReviews).Where(b => ((name == null) || (b.Name.Contains(name)))
               && ((adress == null) || (b.Address.Contains(adress)))
               && ((phonenumber == null) || (b.PhoneNumber.Contains(phonenumber))))
                 .ToListAsync();
-            return booksResult;
+            return barsResult;
         }
     }
 }

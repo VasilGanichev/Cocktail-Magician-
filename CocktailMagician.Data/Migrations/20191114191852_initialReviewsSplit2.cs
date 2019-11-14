@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace CocktailMagician.Data.Migrations
 {
-    public partial class initial : Migration
+    public partial class initialReviewsSplit2 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -58,9 +58,10 @@ namespace CocktailMagician.Data.Migrations
                     Name = table.Column<string>(nullable: false),
                     Address = table.Column<string>(nullable: false),
                     PhoneNumber = table.Column<string>(nullable: false),
-                    Picture = table.Column<byte[]>(nullable: false),
+                    Picture = table.Column<byte[]>(nullable: true),
+                    IsHidden = table.Column<bool>(nullable: false),
                     CocktailID = table.Column<int>(nullable: false),
-                    ReviewID = table.Column<int>(nullable: false)
+                    BarReviewID = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -71,14 +72,15 @@ namespace CocktailMagician.Data.Migrations
                 name: "Cocktails",
                 columns: table => new
                 {
-                    ID = table.Column<int>(nullable: false)
+                    Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     Picture = table.Column<byte[]>(nullable: true),
-                    Name = table.Column<string>(nullable: false)
+                    Name = table.Column<string>(nullable: false),
+                    CocktailsReviewID = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Cocktails", x => x.ID);
+                    table.PrimaryKey("PK_Cocktails", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -202,7 +204,35 @@ namespace CocktailMagician.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "BarCocktail",
+                name: "BarReviews",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    Rating = table.Column<double>(nullable: false),
+                    Comment = table.Column<string>(maxLength: 300, nullable: true),
+                    UserID = table.Column<string>(nullable: true),
+                    BarId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_BarReviews", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_BarReviews_Bars_BarId",
+                        column: x => x.BarId,
+                        principalTable: "Bars",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_BarReviews_AspNetUsers_UserID",
+                        column: x => x.UserID,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "BarCocktails",
                 columns: table => new
                 {
                     ID = table.Column<int>(nullable: false)
@@ -212,23 +242,23 @@ namespace CocktailMagician.Data.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_BarCocktail", x => x.ID);
+                    table.PrimaryKey("PK_BarCocktails", x => x.ID);
                     table.ForeignKey(
-                        name: "FK_BarCocktail_Bars_BarID",
+                        name: "FK_BarCocktails_Bars_BarID",
                         column: x => x.BarID,
                         principalTable: "Bars",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_BarCocktail_Cocktails_CocktailID",
+                        name: "FK_BarCocktails_Cocktails_CocktailID",
                         column: x => x.CocktailID,
                         principalTable: "Cocktails",
-                        principalColumn: "ID",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Reviews",
+                name: "CocktailReviews",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
@@ -236,26 +266,19 @@ namespace CocktailMagician.Data.Migrations
                     Rating = table.Column<double>(nullable: false),
                     Comment = table.Column<string>(maxLength: 300, nullable: true),
                     UserID = table.Column<string>(nullable: true),
-                    BarId = table.Column<int>(nullable: false),
-                    CocktailID = table.Column<int>(nullable: false)
+                    CocktailId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Reviews", x => x.Id);
+                    table.PrimaryKey("PK_CocktailReviews", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Reviews_Bars_BarId",
-                        column: x => x.BarId,
-                        principalTable: "Bars",
+                        name: "FK_CocktailReviews_Cocktails_CocktailId",
+                        column: x => x.CocktailId,
+                        principalTable: "Cocktails",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Reviews_Cocktails_CocktailID",
-                        column: x => x.CocktailID,
-                        principalTable: "Cocktails",
-                        principalColumn: "ID",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Reviews_AspNetUsers_UserID",
+                        name: "FK_CocktailReviews_AspNetUsers_UserID",
                         column: x => x.UserID,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
@@ -269,8 +292,7 @@ namespace CocktailMagician.Data.Migrations
                     ID = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     CocktailID = table.Column<int>(nullable: false),
-                    IngredienetID = table.Column<int>(nullable: false),
-                    IngredientID = table.Column<int>(nullable: true),
+                    IngredientID = table.Column<int>(nullable: false),
                     Quantity = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
@@ -280,14 +302,14 @@ namespace CocktailMagician.Data.Migrations
                         name: "FK_CocktailIngredients_Cocktails_CocktailID",
                         column: x => x.CocktailID,
                         principalTable: "Cocktails",
-                        principalColumn: "ID",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_CocktailIngredients_Ingredients_IngredientID",
                         column: x => x.IngredientID,
                         principalTable: "Ingredients",
                         principalColumn: "ID",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
@@ -330,14 +352,24 @@ namespace CocktailMagician.Data.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
-                name: "IX_BarCocktail_BarID",
-                table: "BarCocktail",
+                name: "IX_BarCocktails_BarID",
+                table: "BarCocktails",
                 column: "BarID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_BarCocktail_CocktailID",
-                table: "BarCocktail",
+                name: "IX_BarCocktails_CocktailID",
+                table: "BarCocktails",
                 column: "CocktailID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_BarReviews_BarId",
+                table: "BarReviews",
+                column: "BarId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_BarReviews_UserID",
+                table: "BarReviews",
+                column: "UserID");
 
             migrationBuilder.CreateIndex(
                 name: "IX_CocktailIngredients_CocktailID",
@@ -350,18 +382,13 @@ namespace CocktailMagician.Data.Migrations
                 column: "IngredientID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Reviews_BarId",
-                table: "Reviews",
-                column: "BarId");
+                name: "IX_CocktailReviews_CocktailId",
+                table: "CocktailReviews",
+                column: "CocktailId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Reviews_CocktailID",
-                table: "Reviews",
-                column: "CocktailID");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Reviews_UserID",
-                table: "Reviews",
+                name: "IX_CocktailReviews_UserID",
+                table: "CocktailReviews",
                 column: "UserID");
         }
 
@@ -383,22 +410,25 @@ namespace CocktailMagician.Data.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "BarCocktail");
+                name: "BarCocktails");
+
+            migrationBuilder.DropTable(
+                name: "BarReviews");
 
             migrationBuilder.DropTable(
                 name: "CocktailIngredients");
 
             migrationBuilder.DropTable(
-                name: "Reviews");
+                name: "CocktailReviews");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
-                name: "Ingredients");
+                name: "Bars");
 
             migrationBuilder.DropTable(
-                name: "Bars");
+                name: "Ingredients");
 
             migrationBuilder.DropTable(
                 name: "Cocktails");
