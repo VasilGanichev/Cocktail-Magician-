@@ -40,6 +40,10 @@ namespace CocktailMagicianWeb.Controllers
         [HttpPost]
         public async Task<IActionResult> LeaveBarReview(ReviewViewModel viewModel)
         {
+            if (!ModelState.IsValid)
+            {
+                return View(viewModel);
+            }
             var user = await _userManager.GetUserAsync(HttpContext.User);
             var bar = await _barServices.GetBarAsync(viewModel.Id);
             await _reviewServices.CreateReviewAsync(viewModel.Rating, viewModel.Comment, bar, null, user);
