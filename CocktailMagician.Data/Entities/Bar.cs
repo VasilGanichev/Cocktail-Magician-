@@ -15,7 +15,7 @@ namespace CocktailMagician.Data.Entities
         public int CocktailID { get; set; }
         public List<BarCocktail> BarCocktails {get; set;}
         public int ReviewID { get; set; }
-        public List<Review> Reviews { get; set; }
+        public List<BarReview> Reviews { get; set; }
 
         
     }

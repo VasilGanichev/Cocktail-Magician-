@@ -52,9 +52,9 @@ namespace CocktailMagicianWeb
             services.AddScoped<IIngredientServices, IngredientServices>();
             services.AddScoped<IBarServices, BarServices>();
             services.AddScoped<IReviewServices, ReviewServices>();
-            //services.AddScoped<ICocktailIngredientServices, CocktailIngredientServices>();
-            //services.AddScoped<ICocktailServices, CocktailServices>();
-            //services.AddScoped<IBarCocktailServices, BarCocktailServices>();
+            services.AddScoped<ICocktailIngredientServices, CocktailIngredientServices>();
+            services.AddScoped<ICocktailServices, CocktailServices>();
+            services.AddScoped<IBarCocktailServices, BarCocktailServices>();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
 

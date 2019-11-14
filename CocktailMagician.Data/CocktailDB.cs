@@ -15,7 +15,7 @@ namespace CocktailMagician.Data
         public DbSet<Cocktail> Cocktails { get; set; }
         public DbSet<CocktailIngredient> CocktailIngredients { get; set; }
         public DbSet<Ingredient> Ingredients { get; set; }
-        public DbSet<Review> Reviews { get; set; }
+        public DbSet<BarReview> BarReviews { get; set; }
         public DbSet<User> Users { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -24,7 +24,7 @@ namespace CocktailMagician.Data
             modelBuilder.ApplyConfiguration(new CocktailConfig());
             modelBuilder.ApplyConfiguration(new CocktailIngredientConfig());
             modelBuilder.ApplyConfiguration(new IngredientConfig());
-            modelBuilder.ApplyConfiguration(new ReviewsConfig());
+            modelBuilder.ApplyConfiguration(new BarReviewsConfig());
             modelBuilder.ApplyConfiguration(new UserConfig());
 
             base.OnModelCreating(modelBuilder);
