@@ -9,6 +9,7 @@ namespace CocktailMagician.Data.Entities
     {
         public bool IsBanned { get; set; }
         public int ReviewId { get; set; }
-        public List<Review>Reviews { get; set; }
+        public List<BarReview> BarReviews { get; set; }
+        public List<CocktailReview> CocktaReviews { get; set; }
     }
 }

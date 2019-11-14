@@ -28,6 +28,8 @@ namespace CocktailMagician.Data.Migrations
                     b.Property<string>("Address")
                         .IsRequired();
 
+                    b.Property<int>("BarReviewID");
+
                     b.Property<int>("CocktailID");
 
                     b.Property<bool>("IsHidden");
@@ -39,8 +41,6 @@ namespace CocktailMagician.Data.Migrations
                         .IsRequired();
 
                     b.Property<byte[]>("Picture");
-
-                    b.Property<int>("ReviewID");
 
                     b.HasKey("Id");
 
@@ -66,11 +66,37 @@ namespace CocktailMagician.Data.Migrations
                     b.ToTable("BarCocktails");
                 });
 
+            modelBuilder.Entity("CocktailMagician.Data.Entities.BarReview", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("BarId");
+
+                    b.Property<string>("Comment")
+                        .HasMaxLength(300);
+
+                    b.Property<double>("Rating");
+
+                    b.Property<string>("UserID");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("BarId");
+
+                    b.HasIndex("UserID");
+
+                    b.ToTable("BarReviews");
+                });
+
             modelBuilder.Entity("CocktailMagician.Data.Entities.Cocktail", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("CocktailsReviewID");
 
                     b.Property<string>("Name")
                         .IsRequired();
@@ -103,6 +129,30 @@ namespace CocktailMagician.Data.Migrations
                     b.ToTable("CocktailIngredients");
                 });
 
+            modelBuilder.Entity("CocktailMagician.Data.Entities.CocktailReview", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("CocktailId");
+
+                    b.Property<string>("Comment")
+                        .HasMaxLength(300);
+
+                    b.Property<double>("Rating");
+
+                    b.Property<string>("UserID");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CocktailId");
+
+                    b.HasIndex("UserID");
+
+                    b.ToTable("CocktailReviews");
+                });
+
             modelBuilder.Entity("CocktailMagician.Data.Entities.Ingredient", b =>
                 {
                     b.Property<int>("ID")
@@ -118,34 +168,6 @@ namespace CocktailMagician.Data.Migrations
                     b.HasKey("ID");
 
                     b.ToTable("Ingredients");
-                });
-
-            modelBuilder.Entity("CocktailMagician.Data.Entities.Review", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("BarId");
-
-                    b.Property<int>("CocktailID");
-
-                    b.Property<string>("Comment")
-                        .HasMaxLength(300);
-
-                    b.Property<double>("Rating");
-
-                    b.Property<string>("UserID");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("BarId");
-
-                    b.HasIndex("CocktailID");
-
-                    b.HasIndex("UserID");
-
-                    b.ToTable("Reviews");
                 });
 
             modelBuilder.Entity("CocktailMagician.Data.Entities.User", b =>
@@ -330,6 +352,19 @@ namespace CocktailMagician.Data.Migrations
                         .OnDelete(DeleteBehavior.Restrict);
                 });
 
+            modelBuilder.Entity("CocktailMagician.Data.Entities.BarReview", b =>
+                {
+                    b.HasOne("CocktailMagician.Data.Entities.Bar", "Bar")
+                        .WithMany("BarReviews")
+                        .HasForeignKey("BarId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("CocktailMagician.Data.Entities.User", "User")
+                        .WithMany("BarReviews")
+                        .HasForeignKey("UserID")
+                        .OnDelete(DeleteBehavior.Restrict);
+                });
+
             modelBuilder.Entity("CocktailMagician.Data.Entities.CocktailIngredient", b =>
                 {
                     b.HasOne("CocktailMagician.Data.Entities.Cocktail", "Cocktail")
@@ -343,20 +378,15 @@ namespace CocktailMagician.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("CocktailMagician.Data.Entities.Review", b =>
+            modelBuilder.Entity("CocktailMagician.Data.Entities.CocktailReview", b =>
                 {
-                    b.HasOne("CocktailMagician.Data.Entities.Bar", "Bar")
-                        .WithMany("Reviews")
-                        .HasForeignKey("BarId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
                     b.HasOne("CocktailMagician.Data.Entities.Cocktail", "Cocktail")
-                        .WithMany()
-                        .HasForeignKey("CocktailID")
+                        .WithMany("CocktailReviews")
+                        .HasForeignKey("CocktailId")
                         .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("CocktailMagician.Data.Entities.User", "User")
-                        .WithMany("Reviews")
+                        .WithMany("CocktaReviews")
                         .HasForeignKey("UserID")
                         .OnDelete(DeleteBehavior.Restrict);
                 });
