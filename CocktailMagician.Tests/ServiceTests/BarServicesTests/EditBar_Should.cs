@@ -26,12 +26,16 @@ namespace CocktailMagician.Tests.ServiceTests.BarServicesTests
                 PhoneNumber = "add",
                 IsHidden = false,
             };
-            using(var actContext = new CocktailDB(options))
+            using (var actContext = new CocktailDB(options))
             {
                 var sut = new BarServices(actContext);
                 actContext.Bars.AddAsync(bar).GetAwaiter();
                 actContext.SaveChangesAsync().GetAwaiter();
-                sut.EditBarAsync(bar, resultName, resultAddress, resultPhoneNumber, null, true).GetAwaiter();
+                bar.Name = resultName;
+                bar.Address = resultAddress;
+                bar.PhoneNumber = resultPhoneNumber;
+                bar.IsHidden = true;
+                sut.EditBarAsync(bar).GetAwaiter().GetResult();
             }
             using (var asertContext = new CocktailDB(options))
             {

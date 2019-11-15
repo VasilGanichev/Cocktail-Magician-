@@ -49,5 +49,10 @@ namespace CocktailMagicianWeb.Controllers
             await _reviewServices.CreateBarReviewAsync(viewModel.Rating, viewModel.Comment, bar, user);
             return RedirectToAction("Index", "Home");
         }
+        public async Task<IActionResult> LoadBarReviews(int Id)
+        {
+            var reviews = await _reviewServices.GetBarReviewsCollectionAsync(Id);
+            return Json(reviews);
+        }
     }
 }

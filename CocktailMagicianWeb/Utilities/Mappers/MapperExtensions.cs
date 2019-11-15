@@ -28,5 +28,16 @@ namespace CocktailMagicianWeb.Utilities.Mappers
             }
             return viewmodel;
         }
+        public static Bar MapToModel(this BarViewModel viewModel)
+        {
+            var bar = new Bar();
+            bar.Id = viewModel.Id;
+            bar.Name = viewModel.Name;
+            bar.Address = viewModel.Address;
+            bar.PhoneNumber = viewModel.PhoneNumber;
+            bar.Picture = viewModel.Picture;
+
+            return bar;
+        }
     }
 }

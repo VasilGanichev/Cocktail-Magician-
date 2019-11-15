@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using CocktailMagician.Services.Utilities;
 using CocktailMagician.Data;
 using Microsoft.EntityFrameworkCore;
+using System.Linq;
 
 namespace CocktailMagician.Services
 {
@@ -49,12 +50,17 @@ namespace CocktailMagician.Services
         public async Task<BarReview> GetBarReviewAsync(int id)
         {
             var review = await this.context.BarReviews.FirstOrDefaultAsync(r => r.Id == id);
-            review.EnsureNotNull();
             return review;
         }
         public async Task EditBarReview(BarReview review, double newRating, string newComment)
         {
             throw new NotImplementedException();
+        }
+
+        public async Task<List<BarReview>> GetBarReviewsCollectionAsync(int barId)
+        {
+            var reviews = await (this.context.BarReviews.Where(r => r.BarId == barId)).ToListAsync();
+            return reviews;
         }
     }
 

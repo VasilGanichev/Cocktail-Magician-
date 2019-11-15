@@ -27,7 +27,7 @@ namespace CocktailMagicianWeb.Controllers
             return View();
         }
         [HttpPost]
-        public async Task<IActionResult> CreateBar(Bar bar, List<IFormFile> Picture)
+        public async Task<IActionResult> CreateBar(BarViewModel bar, List<IFormFile> Picture)
         {
             if (!ModelState.IsValid)
             {
@@ -44,7 +44,8 @@ namespace CocktailMagicianWeb.Controllers
                     }
                 }
             }
-            await this.barServices.CreateBarAsync(bar);
+            var barModel = bar.MapToModel();
+            await this.barServices.CreateBarAsync(barModel);
             return RedirectToAction("Index", "Home");
         }
         public async Task<IActionResult> ListBars()
@@ -75,7 +76,10 @@ namespace CocktailMagicianWeb.Controllers
         [HttpPost]
         public async Task<IActionResult> EditBar(BarViewModel viewModel, List<IFormFile> Picture)
         {
-            byte[] pictureByteArray = null;
+            if (!ModelState.IsValid)
+            {
+                return View();
+            }
             foreach (var item in Picture)
             {
                 if (item.Length > 0)
@@ -83,12 +87,12 @@ namespace CocktailMagicianWeb.Controllers
                     using (var stream = new MemoryStream())
                     {
                         await item.CopyToAsync(stream);
-                        pictureByteArray = stream.ToArray();
+                        viewModel.Picture = stream.ToArray();
                     }
                 }
             }
-            var bar = await this.barServices.GetBarAsync(viewModel.Id);
-            await this.barServices.EditBarAsync(bar, viewModel.Name, viewModel.Address, viewModel.PhoneNumber, pictureByteArray, viewModel.IsHidden);
+            var bar = viewModel.MapToModel();
+            await this.barServices.EditBarAsync(bar);
             return RedirectToAction("Index", "Home");
         }
         [HttpGet]

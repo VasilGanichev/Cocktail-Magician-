@@ -57,27 +57,11 @@ namespace CocktailMagician.Services
             await this.context.Bars.AddAsync(bar);
             await this.context.SaveChangesAsync();
         }
-        public async Task EditBarAsync(Bar bar, string newName, string newAdress, string newPhoneNumber, byte[] newPicture, bool newIsHidden)
+        public async Task EditBarAsync(Bar bar)
         {
             bar.EnsureNotNull();
-            if (bar.Name != newName || bar.Address != newAdress || bar.PhoneNumber != newPhoneNumber || bar.Picture != newPicture || bar.IsHidden != newIsHidden)
-            {
-                if (newName != null )
-                    bar.Name = newName;
-
-                if (newAdress != null )
-                    bar.Address = newAdress;
-
-                if (newPhoneNumber != null )
-                    bar.PhoneNumber = newPhoneNumber;
-
-                if (newPicture != null)
-                    bar.Picture = newPicture;
-
-                    bar.IsHidden = newIsHidden;
-                await this.context.SaveChangesAsync();
-            }
-
+            this.context.Bars.Update(bar);
+            await this.context.SaveChangesAsync();
 
         }
         public async Task<IReadOnlyCollection<Bar>> SearchBooksByMultipleCriteriaAsync(string name, string adress, string phonenumber)

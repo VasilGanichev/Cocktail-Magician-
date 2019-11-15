@@ -3,7 +3,7 @@
     ViewData["Title"] = "BarDetails";
     <style>
         .topleft {
-            position: absolute;
+            position: relative;
             top: 150px;
             left: 50px;
         }
@@ -38,53 +38,60 @@
 
 
 
-<div class="topleft">
-    <h1>Bar Details:</h1>
-    <br />
+@*
+
     <div>
-        @try
-        {
-            <img src="data:image/jpg;base64,@(Html.Raw(Convert.ToBase64String(Model.Picture)))" width="460" height="350" />
-
-        }
-        catch (Exception)
-        {
-            <img src="~/no-image-icon-6.png" width="230" height="172" />
-        }
-
-    </div>
-    <div class="tableContent">
-        <table class="table table-hover">
-            @if (Model != null)
+        <h1>Bar Details:</h1>
+        <br />
+        <div>
+            @try
             {
-                <th>Name:</th>
-                <th>Address:</th>
-                <th>Phone:</th>
-                <th>Rated: </th>
-                <th>Cocktails</th>
+                <img src="data:image/jpg;base64,@(Html.Raw(Convert.ToBase64String(Model.Picture)))" width="460" height="350" />
 
             }
-            <tr>
-                <td>
-                    @Model.Name
-                </td>
-                <td>
-                    @Model.Address
-                </td>
-                <td>
-                    @Model.PhoneNumber
-                </td>
-                <td>
-                    @Model.Rating
-                </td>
-            </tr>
-        </table>
-        <button class="btn btn-info" onclick="location.href='@Url.Action("LeaveBarReview", "Reviews", new { Id = Model.Id })'">Leave Review</button>
+            catch (Exception)
+            {
+                <img src="~/no-image-icon-6.png" width="230" height="172" />
+            }
 
+        </div>
         <div class="tableContent">
+            <table class="table table-hover">
+                @if (Model != null)
+                {
+                    <th>Name:</th>
+                    <th>Address:</th>
+                    <th>Phone:</th>
+                    <th>Rated: </th>
+                    <th>Cocktails</th>
+
+                }
+                <tr>
+                    <td>
+                        @Model.Name
+                    </td>
+                    <td>
+                        @Model.Address
+                    </td>
+                    <td>
+                        @Model.PhoneNumber
+                    </td>
+                    <td>
+                        @Model.Rating
+                    </td>
+                </tr>
+            </table>
+            <button class="btn btn-info" onclick="location.href='@Url.Action("LeaveBarReview", "Reviews", new { Id = Model.Id })'">Leave Review</button>
+
+        </div>
+    </div>
+*@
+<button class="btn btn-info" id="Load-Reviews" data-bar="@Model.Id">Load Reviews</button>
+
+<div class="tableContent">
     @if (Model.BarReviews != null)
     {
-
+        @*
         <table class="table table-hover">
             <th>Name</th>
             <th>Rating</th>
@@ -104,9 +111,7 @@
                 </tr>
             }
 
-
-        </table>
+        </table>*@
     }
-</div>
-    </div>
+
 </div>
