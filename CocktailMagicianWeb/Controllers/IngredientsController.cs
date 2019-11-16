@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using CocktailMagicianWeb.Models.Ingredients;
 using System.Linq;
 using CocktailMagicianWeb.Utilities;
+using Microsoft.AspNetCore.Authorization;
 
 namespace CocktailMagicianWeb.Controllers
 {
@@ -17,11 +18,12 @@ namespace CocktailMagicianWeb.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "CocktailMagician")]
         public IActionResult ManageIngredients()
         {
             return View();
         }
-
+        [Authorize(Roles = "CocktailMagician")]
         public async Task<IActionResult> ManageIngredients(IngredientsViewModel vm)
         {
             var viewModel = new IngredientsViewModel();
@@ -37,12 +39,14 @@ namespace CocktailMagicianWeb.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "CocktailMagician")]
         public IActionResult AddIngredient()
         {
             return View();
         }
 
         [HttpPost]
+        [Authorize(Roles = "CocktailMagician")]
         public async Task<IActionResult> AddIngredient(AddIngredientViewModel vm)
         {
             await _ingredientServices.AddAsync(vm.Name, vm.Type);
@@ -50,18 +54,20 @@ namespace CocktailMagicianWeb.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "CocktailMagician")]
         public async Task<IActionResult> UpdateIngredient(int id)
         {
             var ingredient = await _ingredientServices.GetAsync(id);
             var vm = ingredient.MapToUpdateViewModel();
             return View(vm);
         }
-
+        [Authorize(Roles = "CocktailMagician")]
         public async Task<IActionResult> UpdateIngredient(UpdateIngredientViemModel vm)
         {
             await _ingredientServices.UpdateAsync(vm.ID, vm.NewName);
             return View("ManageIngredients");
         }
+        [Authorize(Roles = "CocktailMagician")]
         public async Task<IActionResult> DeleteIngredient(int id)
         {
             if (await _ingredientServices.IsIngredientUsedAsync(id))

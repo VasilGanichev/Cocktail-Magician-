@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using CocktailMagicianWeb.Utilities.Mappers;
 using CocktailMagicianWeb.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace CocktailMagicianWeb.Controllers
 {
@@ -22,11 +23,14 @@ namespace CocktailMagicianWeb.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "CocktailMagician")]
         public IActionResult CreateBar()
         {
             return View();
         }
+
         [HttpPost]
+        [Authorize(Roles = "CocktailMagician")]
         public async Task<IActionResult> CreateBar(BarViewModel bar, List<IFormFile> Picture)
         {
             if (!ModelState.IsValid)
@@ -67,6 +71,7 @@ namespace CocktailMagicianWeb.Controllers
             return View(viewModel);
         }
         [HttpGet]
+        [Authorize(Roles = "CocktailMagician")]
         public async Task<IActionResult> EditBar(int id)
         {
             var viewmodel = (await this.barServices.GetBarAsync(id)).MapToViewModel();
@@ -74,6 +79,7 @@ namespace CocktailMagicianWeb.Controllers
             return View(viewmodel);
         }
         [HttpPost]
+        [Authorize(Roles = "CocktailMagician")]
         public async Task<IActionResult> EditBar(BarViewModel viewModel, List<IFormFile> Picture)
         {
             if (!ModelState.IsValid)

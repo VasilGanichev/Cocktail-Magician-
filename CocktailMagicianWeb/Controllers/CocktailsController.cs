@@ -1,6 +1,7 @@
 ﻿using CocktailMagician.Services.Contracts;
 using CocktailMagicianWeb.Models.Cocktails;
 using CocktailMagicianWeb.Utilities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Linq;
 using System.Threading.Tasks;
@@ -21,7 +22,7 @@ namespace CocktailMagicianWeb.Controllers
            _cocktailIngredientsServices = cocktailIngredientsServices;
            _barCocktailServices = barCocktailServices;
         }
-
+        [Authorize(Roles = "CocktailMagician")]
         public async Task<IActionResult> ManageCocktails(CocktailsViewModel vm)
         {
             if (vm is null)
@@ -41,11 +42,12 @@ namespace CocktailMagicianWeb.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "CocktailMagician")]
         public IActionResult AddCocktail()
         {
             return View();
         }
-
+        [Authorize(Roles = "CocktailMagician")]
         public async Task<IActionResult> AddCocktail(CocktailViewModel vm)
         {
             var cocktail = await _cocktailServices.AddAsync(vm.Name, vm.Picture);
@@ -64,13 +66,13 @@ namespace CocktailMagicianWeb.Controllers
             }
             return View();
         }
-
+        [Authorize(Roles = "CocktailMagician")]
         public async Task<IActionResult> GetIngedientsByType(string type)
         {
             var ingredients = await _ingredientServices.GetIngedientsByTypeAsync(type);
             return Json(ingredients);
         }
-
+        [Authorize(Roles = "CocktailMagician")]
         public async Task<IActionResult> GetBars(string type)
         {
             var bars = await _cocktailServices.GetCollectionAsync();

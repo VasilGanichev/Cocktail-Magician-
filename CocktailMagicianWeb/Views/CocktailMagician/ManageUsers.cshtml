@@ -1,0 +1,87 @@
+﻿@model ManageUserViewModel
+@{
+    ViewData["Title"] = "ManageUsers";
+}
+@{var counter = 0;}
+<style>
+    table {
+        font-family: arial, sans-serif;
+        border-collapse: collapse;
+        width: 50%;
+    }
+
+    td, th {
+        width: 10%;
+    }
+</style>
+
+<h3>Manage Users</h3>
+<div>
+    <form asp-controller="CocktailMagician" asp-action="ManageUsers" method="get">
+        <div class="row">
+            <input class="form-control col-md-4" placeholder="User name..." type="text" asp-for="Input" />
+            <button id="Search" class="btn btn-info" />Search
+        </div>
+    </form>
+</div>
+
+@if (Model != null)
+{
+    <br>
+    <h5>Search Results:</h5>
+    <div asp-validation-summary="All" class="text-danger"></div>
+
+    if (!(Model.Users.Count == 0))
+    {
+
+        <table id="the-clicking-table" class="table table-hover col-md-10">
+            <tr style="background-color:lightblue">
+                <th>Name</th>
+                <th>Role</th>
+                <th>Status</th>
+            </tr>
+
+            @foreach (var user in Model.Users)
+            {
+                <tr>
+                    <td>@user.Name</td>
+                    <td id="@user.UserId">@user.Role</td>
+                    @if (user.IsBanned)
+                    {
+                        <td id="@user.Name">Banned</td>
+                        <td>
+                            <form>
+                                <button id="remove-ban" type="submit" class="btn btn-info" data-url="/CocktailMagician/RemoveBan" data-userid="@user.UserId" data-status="@user.Name">Remove Ban</button>
+                            </form>
+                        </td>
+                    }
+                    else
+                    {
+                        <td id="@user.Name">Active</td>
+                        <td>
+                            <form>
+                                <button id="ban" type="submit" class="btn btn-info" data-url="/CocktailMagician/Ban" data-userid="@user.UserId" data-status="@user.Name">Ban User</button>
+                            </form>
+                        </td>
+                    }
+                    @if (user.Role == "BarCrawler")
+                    {
+                        <td>
+                            <form>
+                                <button type="submit" class="btn btn-info promote" data-url="/CocktailMagician/promote" data-userid="@user.UserId">Promote</button>
+                            </form>
+                        </td>
+                    }
+                    else
+                    {
+                        <td>
+                            <form>
+                                <button type="submit" class="btn btn-info demote" data-url="/CocktailMagician/demote" data-userid="@user.UserId">Demote</button>
+                            </form>
+                        </td>
+                    }
+                </tr>
+            }
+        </table>
+    }
+}
