@@ -193,7 +193,7 @@ $('#Ingredients').on('click', '#addCocktailToBars', function (e) {
     e.preventDefault()
     const btn = $('#addCocktailToBars')
     $.ajax({
-        url: '/Cocktails/GetBars',
+        url: '/Bar/GetBars',
         cache: false,
         type: 'GET',
         success: function (responseData) {

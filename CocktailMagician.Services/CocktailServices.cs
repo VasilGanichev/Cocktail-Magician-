@@ -43,12 +43,6 @@ namespace CocktailMagician.Services
             return cocktail;
         }
 
-        public async Task<List<Bar>> GetCollectionAsync()
-        {
-            var bars = await _context.Bars.Where(c => c.IsHidden == false).ToListAsync();
-            return bars;
-        }
-
         public async Task HideAsync(int id)
         {
             var cocktail = await GetByIdAsync(id);

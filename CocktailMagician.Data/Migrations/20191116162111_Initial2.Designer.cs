@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CocktailMagician.Data.Migrations
 {
     [DbContext(typeof(CocktailDB))]
-    [Migration("20191114200554_reviews")]
-    partial class reviews
+    [Migration("20191116162111_Initial2")]
+    partial class Initial2
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -65,7 +65,7 @@ namespace CocktailMagician.Data.Migrations
 
                     b.HasIndex("CocktailID");
 
-                    b.ToTable("BarCocktails");
+                    b.ToTable("BarCocktail");
                 });
 
             modelBuilder.Entity("CocktailMagician.Data.Entities.BarReview", b =>
@@ -102,6 +102,8 @@ namespace CocktailMagician.Data.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<int>("CocktailsReviewID");
+
+                    b.Property<bool>("IsHidden");
 
                     b.Property<string>("Name")
                         .IsRequired();

@@ -16,13 +16,15 @@ namespace CocktailMagicianWeb.Controllers
         private readonly ICocktailServices _cocktailServices;
         private readonly ICocktailIngredientServices _cocktailIngredientsServices;
         private readonly IBarCocktailServices _barCocktailServices;
+        private readonly IBarServices _barServices;
 
-        public CocktailsController(IIngredientServices ingredientServices, ICocktailServices cocktailServices, ICocktailIngredientServices cocktailIngredientsServices, IBarCocktailServices barCocktailServices)
+        public CocktailsController(IIngredientServices ingredientServices, ICocktailServices cocktailServices, ICocktailIngredientServices cocktailIngredientsServices, IBarCocktailServices barCocktailServices, IBarServices barServices)
         {
            _ingredientServices = ingredientServices;
            _cocktailServices = cocktailServices;
            _cocktailIngredientsServices = cocktailIngredientsServices;
            _barCocktailServices = barCocktailServices;
+            this._barServices = barServices;
         }
 
         public async Task<IActionResult> ManageCocktails(CocktailsViewModel vm)
@@ -68,7 +70,7 @@ namespace CocktailMagicianWeb.Controllers
             {
                 await _cocktailIngredientsServices.AddAsync(cocktail, ingredients[i], vm.Quantities[i]);
             }
-            var bars = await _cocktailServices.GetCollectionAsync();
+            var bars = await _barServices.GetCollectionAsync();
             if (bars != null)
             {
                 foreach (var bar in bars)
@@ -80,7 +82,7 @@ namespace CocktailMagicianWeb.Controllers
         }
         public async Task<IActionResult> UpdateCocktail(int id)
         {
-            var bars = await _cocktailServices.GetCollectionAsync();
+            var bars = await _barServices.GetCollectionAsync();
             return Json(bars);
         }
         public async Task HideCocktail([FromBody]CocktailViewModel vm)
@@ -96,12 +98,6 @@ namespace CocktailMagicianWeb.Controllers
         {
             var ingredients = await _ingredientServices.GetIngedientsByTypeAsync(type);
             return Json(ingredients);
-        }
-
-        public async Task<IActionResult> GetBars(string type)
-        {
-            var bars = await _cocktailServices.GetCollectionAsync();
-            return Json(bars);
         }
     }
 }

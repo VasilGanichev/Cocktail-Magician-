@@ -63,7 +63,7 @@ namespace CocktailMagician.Data.Migrations
 
                     b.HasIndex("CocktailID");
 
-                    b.ToTable("BarCocktails");
+                    b.ToTable("BarCocktail");
                 });
 
             modelBuilder.Entity("CocktailMagician.Data.Entities.BarReview", b =>
@@ -100,6 +100,8 @@ namespace CocktailMagician.Data.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<int>("CocktailsReviewID");
+
+                    b.Property<bool>("IsHidden");
 
                     b.Property<string>("Name")
                         .IsRequired();
