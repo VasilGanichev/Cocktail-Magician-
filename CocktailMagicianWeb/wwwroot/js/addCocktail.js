@@ -83,7 +83,9 @@ $('#Ingredients').on('change', 'select', function (e) {
                     }
                     console.log(` <select> ${options}  </select>`)
                     console.log(thisSelect)
-                    thisSelect.parent().append(` <select name="Ingredients"> ${options}  </select>`).append('<input name="Quantities" placeholder="mililiters/spoon..." class="form-control col-md-3"></input>')
+                    thisSelect.parent().append(` <select name="Ingredients"> ${options}  </select>`)
+                        .append('<input name="Quantities" placeholder="mililiters/spoon..." class="form-control col-md-3"></input>')
+
                 }
             }
         })

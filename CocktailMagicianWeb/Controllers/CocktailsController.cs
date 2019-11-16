@@ -1,7 +1,10 @@
 ﻿using CocktailMagician.Services.Contracts;
 using CocktailMagicianWeb.Models.Cocktails;
 using CocktailMagicianWeb.Utilities;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -46,8 +49,19 @@ namespace CocktailMagicianWeb.Controllers
             return View();
         }
 
-        public async Task<IActionResult> AddCocktail(CocktailViewModel vm)
+        public async Task<IActionResult> AddCocktail(CocktailViewModel vm, List<IFormFile> Picture)
         {
+            foreach (var item in Picture)
+            {
+                if (item.Length > 0)
+                {
+                    using (var stream = new MemoryStream())
+                    {
+                        await item.CopyToAsync(stream);
+                        vm.Picture = stream.ToArray();
+                    }
+                }
+            }
             var cocktail = await _cocktailServices.AddAsync(vm.Name, vm.Picture);
             var ingredients = await _ingredientServices.GetMultipleIngredientsByNameAsync(vm.Ingredients);
             for (int i = 0; i < ingredients.Count; i++)
@@ -63,6 +77,19 @@ namespace CocktailMagicianWeb.Controllers
                 }
             }
             return View();
+        }
+        public async Task<IActionResult> UpdateCocktail(int id)
+        {
+            var bars = await _cocktailServices.GetCollectionAsync();
+            return Json(bars);
+        }
+        public async Task HideCocktail([FromBody]CocktailViewModel vm)
+        {
+            await _cocktailServices.HideAsync(vm.Id);
+        }
+        public async Task UnhideCocktail([FromBody]CocktailViewModel vm)
+        {
+            await _cocktailServices.UnhideAsync(vm.Id);
         }
 
         public async Task<IActionResult> GetIngedientsByType(string type)

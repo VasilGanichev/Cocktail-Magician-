@@ -11,5 +11,6 @@ namespace CocktailMagician.Data.Entities
         public string Name { get; set; }
         public ICollection<CocktailIngredient> Ingredients { get; set; }
         public ICollection<BarCocktail> Bars { get; set; }
+        public bool IsHidden { get; set; }
     }
 }

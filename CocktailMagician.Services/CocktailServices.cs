@@ -32,14 +32,35 @@ namespace CocktailMagician.Services
         }
         public async Task<List<Cocktail>> GetMultipleCocktailsByNameAsync(string input)
         {
-            var cocktails = await _context.Cocktails.Where(i => i.Name.Contains(input)).ToListAsync();
+            var cocktails = await _context.Cocktails.Where(c => c.Name.Contains(input)).ToListAsync();
             return cocktails;
+        }
+
+        public async Task<Cocktail> GetByIdAsync(int id)
+        {
+            var cocktail = await _context.Cocktails.FirstOrDefaultAsync(c => c.Id == id);
+
+            return cocktail;
         }
 
         public async Task<List<Bar>> GetCollectionAsync()
         {
-            var bars = await _context.Bars.ToListAsync();
+            var bars = await _context.Bars.Where(c => c.IsHidden == false).ToListAsync();
             return bars;
+        }
+
+        public async Task HideAsync(int id)
+        {
+            var cocktail = await GetByIdAsync(id);
+            cocktail.IsHidden = true;
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task UnhideAsync(int id)
+        {
+            var cocktail = await GetByIdAsync(id);
+            cocktail.IsHidden = false;
+            await _context.SaveChangesAsync();
         }
     }
 }

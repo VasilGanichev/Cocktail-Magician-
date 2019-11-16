@@ -100,6 +100,12 @@
     </environment>
     <script src="~/js/site.js" asp-append-version="true"></script>
     <script src="~/js/addCocktail.js"></script>
+    <script src="~/js/ManageCocktails.js"></script>
     @RenderSection("Scripts", required: false)
+    @section Scripts
+{
+        <partial name=”_validationScriptPartial” />
+    }
+
 </body>
 </html>

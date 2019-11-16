@@ -23,20 +23,41 @@
     if (!(Model.Cocktails.Count == 0))
     {
 
-        <table class="table table-hover col-md-10">
+        <table id="cocktailTable" class="table table-hover col-md-10">
             <tr>
                 <th>Name</th>
                 <th>Type</th>
             </tr>
 
-            @foreach (var ingredient in Model.Cocktails)
+            @foreach (var cocktail in Model.Cocktails)
             {
                 <tr>
-                    <td>@ingredient.Name</td>
+                    @if (cocktail.Picture is null)
+                    {
+                        <td>
+                            <img src="~/images/no-image-icon-6.png" width="230" height="172" />
+                        </td>
+                    }
+                    else
+                    {
+                        <td>
+                            <img src="data:image/jpg;base64,@(Html.Raw(Convert.ToBase64String(cocktail.Picture)))" width="230" height="172" />
+
+                        </td>
+
+                    }
+                    <td>@cocktail.Name</td>
                     <td>
-                        <a asp-controller="Ingredients" asp-action="UpdateIngredient" asp-route-id="@ingredient.Id">Update</a>
+                        <a asp-controller="Cocktails" asp-action="UpdateCocktail" asp-route-id="@cocktail.Id">Update</a>
                     </td>
-                    <td> <a asp-controller="Ingredients" asp-action="DeleteIngredient" asp-route-id="@ingredient.Id">Delete</a></td>
+                    @if (cocktail.IsHidden)
+                    {
+                        <td> <a id="unhide" data-cocktail="@cocktail.Id" asp-controller="" asp-action="">Unhide</a></td>
+                    }
+                    else
+                    {
+                        <td> <a id="hide" data-cocktail="@cocktail.Id" asp-controller="" asp-action="">Hide</a></td>
+                    }
                 </tr>
             }
 

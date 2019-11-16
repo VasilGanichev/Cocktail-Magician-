@@ -1,0 +1,25 @@
+﻿@model CocktailViewModel
+@{
+    ViewData["Title"] = "UpdateCocktail";
+}
+
+<h4>Update Cocktail</h4>
+<form asp-controller="Cocktails" asp-action="UpdateCocktail" enctype="multipart/form-data">
+    <input placeholder="Name..." asp-for="@Model.Name" class="form-control col-md-4">
+    <span asp-validation-for="@Model.Name" class="text-danger"></span>
+    Image:
+    <input type="file" asp-for="Picture" />
+    <br>
+    @foreach (var ingredient in Model.Ingredients)
+    {
+        <select id="list"  class="drop" data-position="1">
+            <option id="alcohol" value="alcohol">Alcohol</option>
+            <option id="sweetener" value="sweetener">Sweetener</option>
+            <option id="juice" value="juice">Juice</option>
+            <option id="herb" value="herb">Herb</option>
+        </select>
+
+        <input name="Quantities" placeholder="mililiters/spoon..." class="form-control col-md-3"></input>
+    }
+</form>
+

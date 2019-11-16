@@ -27,6 +27,7 @@ namespace CocktailMagicianWeb.Utilities
             var vm = new CocktailViewModel();
             vm.Id = cocktail.Id;
             vm.Name = cocktail.Name;
+            vm.IsHidden = cocktail.IsHidden;
             vm.Picture = cocktail.Picture;
             return vm;
         }

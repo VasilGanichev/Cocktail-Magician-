@@ -24,7 +24,7 @@ namespace CocktailMagician.Services
                 CocktailID = cocktail.Id
             };
 
-            await _context.BarCocktails.AddAsync(barCocktail);
+            await _context.BarCocktail.AddAsync(barCocktail);
             await _context.SaveChangesAsync();
 
             return barCocktail;
