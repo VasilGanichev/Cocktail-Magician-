@@ -11,7 +11,12 @@ namespace CocktailMagician.Data.Configurations
     {
         public void Configure(EntityTypeBuilder<User> builder)
         {
-            builder.HasMany(u => u.Reviews)
+            builder.HasMany(u => u.BarReviews)
+                .WithOne(r => r.User)
+                .HasForeignKey(r => r.UserID)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            builder.HasMany(u => u.CocktaReviews)
                 .WithOne(r => r.User)
                 .HasForeignKey(r => r.UserID)
                 .OnDelete(DeleteBehavior.Restrict);

@@ -24,7 +24,7 @@ namespace CocktailMagician.Data.Configurations
             builder.Property(b => b.IsHidden)
                 .IsRequired();
 
-            builder.HasMany(b => b.Reviews)
+            builder.HasMany(b => b.BarReviews)
                 .WithOne(r => r.Bar)
                 .HasForeignKey(r => r.BarId);
         }

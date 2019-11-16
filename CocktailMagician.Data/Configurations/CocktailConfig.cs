@@ -26,6 +26,10 @@ namespace CocktailMagician.Data.Configurations
                 .WithOne(i => i.Cocktail)
                 .HasForeignKey(i => i.CocktailID)
                 .OnDelete(DeleteBehavior.Restrict);
+            builder
+                .HasMany(c => c.CocktailReviews)
+                .WithOne(r => r.Cocktail)
+                .HasForeignKey(b => b.CocktailId);
         }
     }
 }

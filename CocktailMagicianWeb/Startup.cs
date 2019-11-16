@@ -2,6 +2,7 @@
 using CocktailMagician.Data.Entities;
 using CocktailMagician.Services;
 using CocktailMagician.Services.Contracts;
+using CocktailMagicianWeb.Utilities.Middlewares;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -50,6 +51,7 @@ namespace CocktailMagicianWeb
                 .AddEntityFrameworkStores<CocktailDB>();
             services.AddScoped<IIngredientServices, IngredientServices>();
             services.AddScoped<IBarServices, BarServices>();
+            services.AddScoped<IBarReviewServices, BarReviewServices>();
             services.AddScoped<ICocktailIngredientServices, CocktailIngredientServices>();
             services.AddScoped<ICocktailServices, CocktailServices>();
             services.AddScoped<IBarCocktailServices, BarCocktailServices>();
@@ -69,8 +71,11 @@ namespace CocktailMagicianWeb
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
-
+            app.Plant().Wait();
             app.UseHttpsRedirection();
+            app.UseStaticFiles();
+            app.UseCookiePolicy();
+            app.UseAuthentication();
             app.UseStaticFiles();
             app.UseCookiePolicy();
 

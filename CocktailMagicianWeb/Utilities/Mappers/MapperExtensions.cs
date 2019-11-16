@@ -11,16 +11,42 @@ namespace CocktailMagicianWeb.Utilities.Mappers
     {
         public static BarViewModel MapToViewModel(this Bar bar)
         {
-            var viewmodel = new BarViewModel
+            var viewmodel = new BarViewModel();
+            viewmodel.Id = bar.Id;
+            viewmodel.Name = bar.Name;
+            viewmodel.Address = bar.Address;
+            viewmodel.PhoneNumber = bar.PhoneNumber;
+            viewmodel.Picture = bar.Picture;
+            viewmodel.BarReviews = bar.BarReviews;
+            try
             {
-                Id = bar.Id,
-                Name = bar.Name,
-                Address = bar.Address,
-                PhoneNumber = bar.PhoneNumber,
-                Picture = bar.Picture,
-
-            };
+                viewmodel.Rating = bar.BarReviews.Select(b => b.Rating).Average();
+            }
+            catch (Exception)
+            {
+                viewmodel.Rating = 0;
+            }
             return viewmodel;
+        }
+        public static Bar MapToModel(this BarViewModel viewModel)
+        {
+            var bar = new Bar();
+            bar.Id = viewModel.Id;
+            bar.Name = viewModel.Name;
+            bar.Address = viewModel.Address;
+            bar.PhoneNumber = viewModel.PhoneNumber;
+            bar.Picture = viewModel.Picture;
+
+            return bar;
+        }
+        public static UserViewModel MapToViewmodel(this User user, string userRole)
+        {
+            var viewModel = new UserViewModel();
+            viewModel.UserId = user.Id;
+            viewModel.Name = user.UserName;
+            viewModel.Role = userRole;
+            viewModel.IsBanned = user.IsBanned;
+            return viewModel;
         }
     }
 }

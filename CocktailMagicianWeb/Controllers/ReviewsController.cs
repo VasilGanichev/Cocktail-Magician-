@@ -13,10 +13,10 @@ namespace CocktailMagicianWeb.Controllers
     public class ReviewsController : Controller
     {
         private readonly IBarServices _barServices;
-        private readonly IReviewServices _reviewServices;
+        private readonly IBarReviewServices _reviewServices;
         private readonly UserManager<User> _userManager;
 
-        public ReviewsController(IBarServices barServices, IReviewServices reviewServices, UserManager<User> userManager)
+        public ReviewsController(IBarServices barServices, IBarReviewServices reviewServices, UserManager<User> userManager)
         {
             _barServices = barServices;
             _reviewServices = reviewServices;
@@ -40,10 +40,19 @@ namespace CocktailMagicianWeb.Controllers
         [HttpPost]
         public async Task<IActionResult> LeaveBarReview(ReviewViewModel viewModel)
         {
+            if (!ModelState.IsValid)
+            {
+                return View(viewModel);
+            }
             var user = await _userManager.GetUserAsync(HttpContext.User);
             var bar = await _barServices.GetBarAsync(viewModel.Id);
-            await _reviewServices.CreateReviewAsync(viewModel.Rating, viewModel.Comment, bar, null, user);
+            await _reviewServices.CreateBarReviewAsync(viewModel.Rating, viewModel.Comment, bar, user);
             return RedirectToAction("Index", "Home");
+        }
+        public async Task<IActionResult> LoadBarReviews(int Id)
+        {
+            var reviews = await _reviewServices.GetBarReviewsCollectionAsync(Id);
+            return Json(reviews);
         }
     }
 }

@@ -7,9 +7,9 @@ using System.Text;
 
 namespace CocktailMagician.Data.Configurations
 {
-    public class ReviewsConfig : IEntityTypeConfiguration<Review>
+    public class BarsReviewsConfig : IEntityTypeConfiguration<BarReview>
     {
-        public void Configure(EntityTypeBuilder<Review> builder)
+        public void Configure(EntityTypeBuilder<BarReview> builder)
         {
             builder.HasKey(r => r.Id);
 
@@ -18,6 +18,9 @@ namespace CocktailMagician.Data.Configurations
 
             builder.Property(r => r.Comment)
                 .HasMaxLength(300);
+
+            builder.Property(r => r.UserName)
+                .IsRequired();
           
         }
     }
