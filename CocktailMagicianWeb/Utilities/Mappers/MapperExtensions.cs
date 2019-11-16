@@ -39,5 +39,14 @@ namespace CocktailMagicianWeb.Utilities.Mappers
 
             return bar;
         }
+        public static UserViewModel MapToViewmodel(this User user, string userRole)
+        {
+            var viewModel = new UserViewModel();
+            viewModel.UserId = user.Id;
+            viewModel.Name = user.UserName;
+            viewModel.Role = userRole;
+            viewModel.IsBanned = user.IsBanned;
+            return viewModel;
+        }
     }
 }

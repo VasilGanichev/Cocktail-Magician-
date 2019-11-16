@@ -41,8 +41,11 @@
                             <div class="dropdown">
                                 <button class="dropbtn">Ingredients</button>
                                 <div class="dropdown-content">
-                                    <a class="nav-link text-dark" asp-controller="Ingredients" asp-action="AddIngredient">Add Ingredient</a>
-                                    <a class="nav-link text-dark" asp-controller="Ingredients" asp-action="ManageIngredients" method="get">Manage Ingredients</a>
+                                    @if (this.User.IsInRole("CocktailMagician"))
+                                    {
+                                        <a class="nav-link text-dark" asp-controller="Ingredients" asp-action="AddIngredient">Add Ingredient</a>
+                                        <a class="nav-link text-dark" asp-controller="Ingredients" asp-action="ManageIngredients" method="get">Manage Ingredients</a>
+                                    }
                                 </div>
                             </div>
                         </li>
@@ -50,17 +53,33 @@
                             <div class="dropdown">
                                 <button class="dropbtn">Cocktails</button>
                                 <div class="dropdown-content">
-                                    <a class="nav-link text-dark" asp-controller="Cocktails" asp-action="AddCocktail">Add Cocktail</a>
-                                    <a class="nav-link text-dark" asp-controller="Cocktails" asp-action="ManageCocktails">Manage Cocktails</a>
+                                    @if (this.User.IsInRole("CocktailMagician"))
+                                    {
+                                        <a class="nav-link text-dark" asp-controller="Cocktails" asp-action="AddCocktail">Add Cocktail</a>
+                                        <a class="nav-link text-dark" asp-controller="Cocktails" asp-action="ManageCocktails">Manage Cocktails</a>
+                                    }
+
                                 </div>
                             </div>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-controller="Bar" asp-action="SearchBars">Browse Our Bars</a>
+                        <li>
+                            <div class="dropdown">
+                                <button class="dropbtn">Bars</button>
+                                <div class="dropdown-content">
+                                    <a class="nav-link text-dark" asp-controller="Bar" asp-action="SearchBars">Browse Our Bars</a>
+                                    @if (this.User.IsInRole("CocktailMagician"))
+                                    {
+                                        <a class="nav-link text-dark" asp-controller="Bar" asp-action="CreateBar">Create Bar</a>
+                                    }
+                                </div>
+                            </div>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-controller="Bar" asp-action="CreateBar">Create Bar</a>
-                        </li>
+                        @if (this.User.IsInRole("CocktailMagician"))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link" asp-controller="CocktailMagician" asp-action="ManageUsers">Manage Users</a>
+                            </li>
+                        }
                     </ul>
                 </div>
             </div>
@@ -82,6 +101,8 @@
     <environment include="Development">
         <script src="~/lib/jquery/dist/jquery.js"></script>
         <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.js"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+        <link href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" rel="stylesheet" />
     </environment>
     <environment exclude="Development">
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"
@@ -98,6 +119,7 @@
         </script>
     </environment>
     <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="~/js/ManageUsers.js"></script>
     <script src="~/js/addCocktail.js"></script>
     <script src="~/js/LoadReview.js"></script>
     @RenderSection("Scripts", required: false)

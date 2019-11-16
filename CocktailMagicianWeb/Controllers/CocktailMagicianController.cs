@@ -3,11 +3,16 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using CocktailMagician.Data.Entities;
+using CocktailMagicianWeb.Models;
+using CocktailMagicianWeb.Models.Users;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace CocktailMagicianWeb.Controllers
 {
+    [Authorize(Roles = "CocktailMagician")]
     public class CocktailMagicianController : Controller
     {
         private readonly UserManager<User> userManager;
@@ -67,12 +72,12 @@ namespace CocktailMagicianWeb.Controllers
         public async Task Promote([FromBody]UserDataViewModel userData)
         {
             var user = await userManager.FindByIdAsync(userData.UserId);
-            await userManager.AddToRoleAsync(user, "Librarian");
+            await userManager.AddToRoleAsync(user, "CocktailMagician");
         }
         public async Task Demote([FromBody]UserDataViewModel userData)
         {
             var user = await userManager.FindByIdAsync(userData.UserId);
-            await userManager.RemoveFromRoleAsync(user, "Librarian");
+            await userManager.RemoveFromRoleAsync(user, "CocktailMagician");
         }
     }
 }
