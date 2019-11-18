@@ -10,6 +10,7 @@ namespace CocktailMagicianWeb.Models.Cocktails
     public class UpdateCocktailViewModel
     {
         public int Id { get; set; }
+        public byte[] CurrentPicture { get; set; }
         public byte[] Picture { get; set; }
         [Required, MinLength(3), MaxLength(15)]
         public string Name { get; set; }

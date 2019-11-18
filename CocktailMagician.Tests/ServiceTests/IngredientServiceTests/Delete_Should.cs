@@ -20,9 +20,9 @@ namespace CocktailMagician.Tests.ServiceTests.IngredientServiceTests
                 var name = "Rum";
                 var type = "alcohol";
                 var ingredient = sut.AddAsync(name, type).GetAwaiter().GetResult();
-                sut.DeleteAsync(ingredient.ID).GetAwaiter().GetResult();
+                sut.DeleteAsync(ingredient.Id).GetAwaiter().GetResult();
 
-                Assert.IsNull(assertContext.Ingredients.Find(ingredient.ID));
+                Assert.IsNull(assertContext.Ingredients.Find(ingredient.Id));
             }
         }
     }

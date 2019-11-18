@@ -1,25 +1,51 @@
-﻿@model CocktailViewModel
+﻿@model UpdateCocktailViewModel
 @{
     ViewData["Title"] = "UpdateCocktail";
 }
 
 <h4>Update Cocktail</h4>
-<form asp-controller="Cocktails" asp-action="UpdateCocktail" enctype="multipart/form-data">
+<form id="Ingredients" asp-controller="Cocktails" asp-action="UpdateCocktail" method="post" enctype="multipart/form-data">
     <input placeholder="Name..." asp-for="@Model.Name" class="form-control col-md-4">
     <span asp-validation-for="@Model.Name" class="text-danger"></span>
-    Image:
+    Current Image:
+    @if (Model.Picture is null)
+    {
+        <img src="~/images/no-image-icon-6.png" width="230" height="172" />
+    }
+    else
+    {
+        <img src="data:image/jpg;base64,@(Html.Raw(Convert.ToBase64String(Model.Picture)))" width="230" height="172" />
+
+    }
+    <br>
+    New Image:
     <input type="file" asp-for="Picture" />
     <br>
-    @foreach (var ingredient in Model.Ingredients)
+    <br>
+    <h5>Ingredients:</h5>
+    <br>
+    @for (int i = 0; i < Model.Ingredients.Count; i++)
     {
-        <select id="list"  class="drop" data-position="1">
-            <option id="alcohol" value="alcohol">Alcohol</option>
-            <option id="sweetener" value="sweetener">Sweetener</option>
-            <option id="juice" value="juice">Juice</option>
-            <option id="herb" value="herb">Herb</option>
-        </select>
-
-        <input name="Quantities" placeholder="mililiters/spoon..." class="form-control col-md-3"></input>
+        <div>
+            Ingredient @i:
+            <select id="list" asp-for="@Model.Ingredients[i].Type" class="drop" data-position="1">
+                <option id="alcohol" value="alcohol">Alcohol</option>
+                <option id="sweetener" value="sweetener">Sweetener</option>
+                <option id="juice" value="juice">Juice</option>
+                <option id="herb" value="herb">Herb</option>
+            </select>
+            <span asp-validation-for="@Model.Ingredients[i].Type" class="text-danger"></span>
+            <select id="list" asp-for="@Model.Ingredients[i].Name" data-position="1">
+                <option id="alcohol" value="@Model.Ingredients[i].Name">@Model.Ingredients[i].Name</option>
+            </select>
+            <span asp-validation-for="@Model.Ingredients[i].Name" class="text-danger"></span>
+            <input name="Quantities" asp-for="Quantities[i]" placeholder="mililiters/spoon..." class="form-control col-md-3">
+            <span asp-validation-for="@Model.Quantities[i]" class="text-danger"></span>
+        </div>
+        <br>
     }
+    <button type="button" id="addIngredient" class="btn" style="background-color:#ff0000; color:white">Add Ingredient </button>
+    <br>
+    <br>
+    <button type="submit" class="btn" style="background-color:#ff0000; color:white">Submit</button>
 </form>
-

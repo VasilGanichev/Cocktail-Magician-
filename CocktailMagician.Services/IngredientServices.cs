@@ -30,7 +30,7 @@ namespace CocktailMagician.Services
 
         public async Task<Ingredient> GetAsync(int id)
         {
-            var ingredient = await _context.Ingredients.FirstOrDefaultAsync(i => i.ID == id);
+            var ingredient = await _context.Ingredients.FirstOrDefaultAsync(i => i.Id == id);
             return ingredient;
         }
 
@@ -66,7 +66,7 @@ namespace CocktailMagician.Services
 
         public async Task DeleteAsync(int id)
         {
-            var ingredient = await _context.Ingredients.FirstOrDefaultAsync(i => i.ID == id);
+            var ingredient = await _context.Ingredients.FirstOrDefaultAsync(i => i.Id == id);
             _context.Ingredients.Remove(ingredient);
             await _context.SaveChangesAsync();
         }

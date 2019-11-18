@@ -21,7 +21,7 @@ namespace CocktailMagician.Tests.ServiceTests.IngredientServiceTests
                 var name = "Rum";
                 var type = "alcohol";
                 var ingredient = sut.AddAsync(name, type).GetAwaiter().GetResult();
-                var result = sut.GetAsync(ingredient.ID).GetAwaiter().GetResult();
+                var result = sut.GetAsync(ingredient.Id).GetAwaiter().GetResult();
 
                 Assert.AreEqual(ingredient, result);
             }

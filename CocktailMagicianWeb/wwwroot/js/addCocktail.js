@@ -1,5 +1,6 @@
 ﻿$('#Ingredients').on('click', '#addIngredient', function () {
     let ingredients = $('.drop').length + 1;
+    console.log(ingredients)
     const button = $(this)
     if (ingredients === 10) {
         button.replaceWith(` <div class="holder">
