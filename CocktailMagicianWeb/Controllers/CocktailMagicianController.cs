@@ -72,12 +72,14 @@ namespace CocktailMagicianWeb.Controllers
         public async Task Promote([FromBody]UserDataViewModel userData)
         {
             var user = await userManager.FindByIdAsync(userData.UserId);
+            await userManager.RemoveFromRoleAsync(user, "BarCrawler");
             await userManager.AddToRoleAsync(user, "CocktailMagician");
         }
         public async Task Demote([FromBody]UserDataViewModel userData)
         {
             var user = await userManager.FindByIdAsync(userData.UserId);
             await userManager.RemoveFromRoleAsync(user, "CocktailMagician");
+            await userManager.AddToRoleAsync(user, "BarCrawler");
         }
     }
 }

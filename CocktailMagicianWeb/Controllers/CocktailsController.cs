@@ -99,5 +99,10 @@ namespace CocktailMagicianWeb.Controllers
             var ingredients = await _ingredientServices.GetIngedientsByTypeAsync(type);
             return Json(ingredients);
         }
+        public async Task<IActionResult> GetCocktails()
+        {
+            var cocktails = await _cocktailServices.GetCollectionAsync();
+            return Json(cocktails);
+        }
     }
 }

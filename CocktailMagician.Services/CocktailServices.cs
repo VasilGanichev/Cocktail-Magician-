@@ -56,5 +56,9 @@ namespace CocktailMagician.Services
             cocktail.IsHidden = false;
             await _context.SaveChangesAsync();
         }
+        public async Task<IReadOnlyCollection<Cocktail>> GetCollectionAsync()
+        {
+            return await _context.Cocktails.ToListAsync();
+        }
     }
 }

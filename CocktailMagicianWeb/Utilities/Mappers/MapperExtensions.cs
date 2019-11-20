@@ -26,6 +26,7 @@ namespace CocktailMagicianWeb.Utilities.Mappers
             {
                 viewmodel.Rating = 0;
             }
+            viewmodel.Cocktails = bar.BarCocktails.Select(b => b.Cocktail.Name).ToList();
             return viewmodel;
         }
         public static Bar MapToModel(this BarViewModel viewModel)

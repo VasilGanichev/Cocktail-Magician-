@@ -11,6 +11,7 @@
 <div class="row">
     <div class="col-md-4">
         <form asp-action="EditBar" method="post" enctype="multipart/form-data">
+         
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="@Model.Name" class="control-label"></label>
@@ -39,6 +40,7 @@
             </div>
             <div>
                 <input asp-for="@Model.Id" class="form-control" hidden />
+                <input asp-for="@Model.Picture" class="form-control" hidden />
             </div>
             <div class="form-group">
                 <input type="submit" value="Edit" class="btn btn-primary" />

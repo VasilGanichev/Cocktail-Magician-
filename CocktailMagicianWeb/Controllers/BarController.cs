@@ -49,6 +49,10 @@ namespace CocktailMagicianWeb.Controllers
                 }
             }
             var barModel = bar.MapToModel();
+            foreach (var cocktail in bar.Cocktails)
+            {
+
+            }
             await this._barServices.CreateBarAsync(barModel);
             return RedirectToAction("Index", "Home");
         }
@@ -67,7 +71,7 @@ namespace CocktailMagicianWeb.Controllers
         public async Task<IActionResult> SearchBars(BarSearchViewModel viewModel)
         {
 
-            viewModel.SearchResults = (await this._barServices.SearchBooksByMultipleCriteriaAsync(viewModel.Name, viewModel.Address, viewModel.PhoneNumber)).Select(b => b.MapToViewModel()).ToList();
+            viewModel.SearchResults = (await this._barServices.SearchBarsByMultipleCriteriaAsync(viewModel.Name, viewModel.Address, viewModel.PhoneNumber)).Select(b => b.MapToViewModel()).ToList();
             return View(viewModel);
         }
         [HttpGet]
@@ -80,23 +84,23 @@ namespace CocktailMagicianWeb.Controllers
         }
         [HttpPost]
         [Authorize(Roles = "CocktailMagician")]
-        public async Task<IActionResult> EditBar(BarViewModel viewModel, List<IFormFile> Picture)
+        public async Task<IActionResult> EditBar(BarViewModel viewModel ,List<IFormFile> Picture)
         {
             if (!ModelState.IsValid)
             {
                 return View();
             }
-            foreach (var item in Picture)
-            {
-                if (item.Length > 0)
-                {
-                    using (var stream = new MemoryStream())
-                    {
-                        await item.CopyToAsync(stream);
-                        viewModel.Picture = stream.ToArray();
-                    }
-                }
-            }
+            //foreach (var item in Picture)
+            //{
+            //    if (item.Length > 0)
+            //    {
+            //        using (var stream = new MemoryStream())
+            //        {
+            //            await item.CopyToAsync(stream);
+            //            viewModel.Picture = stream.ToArray();
+            //        }
+            //    }
+            //}
             var bar = viewModel.MapToModel();
             await this._barServices.EditBarAsync(bar);
             return RedirectToAction("Index", "Home");

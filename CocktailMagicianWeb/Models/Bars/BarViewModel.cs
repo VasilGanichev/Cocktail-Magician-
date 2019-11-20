@@ -20,6 +20,7 @@ namespace CocktailMagicianWeb.Models
         public byte[] Picture { get; set; }
         public bool IsHidden { get; set; }
         public List<BarReview> BarReviews { get; set; } = new List<BarReview>();
+        public virtual List<string> Cocktails { get; set; } = new List<string>();
         public double Rating { get; set; }
 
     }

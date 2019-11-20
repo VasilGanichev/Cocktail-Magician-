@@ -17,19 +17,8 @@
 
             }
             else {
-                let reviews = []
-                for (let i = 0; i < responseData.length; i++) {
-                    reviews[i] = `<td>${responseData[i].userName} </td>
-                    <td>${responseData[i].rating}</td>
-                    <td>${responseData[i].comment}</td>`
-
-                }
-                thisBtn.replaceWith(`<table class="table table-hover">
-                 <th>User:</th>
-                 <th>Rating:</th>
-                 <th>Comment:</th>
-                 ${reviews}
-                 </table>`)
+                console.log(responseData)
+                thisBtn.replaceWith(responseData)
             }
         }
 
