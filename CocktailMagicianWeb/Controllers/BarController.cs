@@ -31,25 +31,15 @@ namespace CocktailMagicianWeb.Controllers
 
         [HttpPost]
         [Authorize(Roles = "CocktailMagician")]
-        public async Task<IActionResult> CreateBar(BarViewModel bar, List<IFormFile> Picture)
+        public async Task<IActionResult> CreateBar(BarViewModel barmodel, List<IFormFile> picturemodel)
         {
             if (!ModelState.IsValid)
             {
                 return View();
             }
-            foreach (var item in Picture)
-            {
-                if (item.Length > 0)
-                {
-                    using (var stream = new MemoryStream())
-                    {
-                        await item.CopyToAsync(stream);
-                        bar.Picture = stream.ToArray();
-                    }
-                }
-            }
-            var barModel = bar.MapToModel();
-            foreach (var cocktail in bar.Cocktails)
+
+            var barModel = barmodel.MapToModel();
+            foreach (var cocktail in barmodel.Cocktails)
             {
 
             }
@@ -84,23 +74,12 @@ namespace CocktailMagicianWeb.Controllers
         }
         [HttpPost]
         [Authorize(Roles = "CocktailMagician")]
-        public async Task<IActionResult> EditBar(BarViewModel viewModel ,List<IFormFile> Picture)
+        public async Task<IActionResult> EditBar(BarViewModel viewModel)
         {
             if (!ModelState.IsValid)
             {
                 return View();
             }
-            //foreach (var item in Picture)
-            //{
-            //    if (item.Length > 0)
-            //    {
-            //        using (var stream = new MemoryStream())
-            //        {
-            //            await item.CopyToAsync(stream);
-            //            viewModel.Picture = stream.ToArray();
-            //        }
-            //    }
-            //}
             var bar = viewModel.MapToModel();
             await this._barServices.EditBarAsync(bar);
             return RedirectToAction("Index", "Home");

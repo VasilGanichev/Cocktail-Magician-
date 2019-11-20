@@ -7,18 +7,24 @@ $('#createBarBtn').click(function (e) {
     e.preventDefault();
     var serialized = $('#createBarForm').serialize();
     var url = $(this).data('url');
-    var picture = $('#files').serialize();
+    console.log(serialized)
 
-    console.log(picture);
+    var fdata = new FormData();
 
-
+    var fileInput1 = $('#barImage')[0].files[0];
+    fdata.append("picture", fileInput1);
+    var data = JSON.stringify({
+        'barmodel': serialized,
+        'picturemodel': fdata
+    });
 
     $.ajax({
         url: url,
-        data: {
-             bar: $('#createBarForm').serialize() , picture: $('#pictureField').val() 
-        },
-        type: "post",
+        data: data,
+        dataType: 'json',
+        type: 'POST',
+        processData: false,
+        contentType: false,
         success: function (responseData) {
             console.log(responseData)
             if (responseData.length === 0) {

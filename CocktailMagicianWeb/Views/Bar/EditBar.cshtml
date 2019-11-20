@@ -29,9 +29,9 @@
                 <span asp-validation-for="@Model.PhoneNumber" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Picture" class="control-label"></label>
-                <input type="file" id="files" asp-for="Picture" />
-                <span asp-validation-for="Picture" class="text-danger"></span>
+                <label asp-for="NewPicture" class="control-label"></label>
+                <input type="file" id="files" asp-for="NewPicture" />
+                <span asp-validation-for="NewPicture" class="text-danger"></span>
             </div>
             <div class="form-group form-check">
                 <label class="form-check-label">
@@ -40,7 +40,6 @@
             </div>
             <div>
                 <input asp-for="@Model.Id" class="form-control" hidden />
-                <input asp-for="@Model.Picture" class="form-control" hidden />
             </div>
             <div class="form-group">
                 <input type="submit" value="Edit" class="btn btn-primary" />
