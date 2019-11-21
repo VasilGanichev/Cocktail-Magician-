@@ -20,6 +20,11 @@
                 <input asp-for="@Model.Ingredient" class="form-control" />
                 <span asp-validation-for="@Model.Ingredient" class="text-danger"></span>
             </div>
+            <div class="form-group">
+                <label class="control-label">Rating</label>
+                <input asp-for="@Model.AvgRating" class="form-control" />
+                <span asp-validation-for="@Model.AvgRating" class="text-danger"></span>
+            </div>
             <div class="form-group form-check">
                 <label class="form-check-label">
                     <input class="form-check-input" asp-for="@Model.IncludeOnlyAlcoholicDrinks" /> @Html.DisplayNameFor(model => model.IncludeOnlyAlcoholicDrinks)

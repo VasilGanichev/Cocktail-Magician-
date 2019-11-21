@@ -75,14 +75,14 @@ namespace CocktailMagicianWeb.Controllers
                 return View(viewModel);
             }
             var user = await _userManager.GetUserAsync(HttpContext.User);
-            var cocktail = await _cocktailServices.GetByIdAsync(viewModel.Id);
+            var cocktail = await _cocktailServices.GetAsync(viewModel.Id);
             await _cocktailReviewServices.CreateCocktailReviewAsync(viewModel.Rating, viewModel.Comment, cocktail, user);
             return RedirectToAction("Index", "Home");
         }
         public async Task<IActionResult> LoadCoctailReviews(int id)
         {
             var cocktailReviews = await _cocktailReviewServices.GetCocktailReviewsCollectionAsync(id);
-            return PartialView("_LoadedCocktailReviewsPartial",cocktailReviews);
+            return PartialView("_LoadedCocktailReviewsPartial", cocktailReviews);
         }
     }
 }

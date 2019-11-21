@@ -9,6 +9,7 @@ namespace CocktailMagicianWeb.Models.Cocktails
     {
         public string Name { get; set; }
         public string Ingredient { get; set; }
+        public double? AvgRating { get; set; }
         public bool IncludeOnlyAlcoholicDrinks { get; set; }
         public List<CocktailViewModel> SearchResults { get; set; }
        

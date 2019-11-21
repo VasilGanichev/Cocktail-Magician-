@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace CocktailMagician.Data.Migrations
 {
-    public partial class Initial2 : Migration
+    public partial class vurgal : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -88,14 +88,14 @@ namespace CocktailMagician.Data.Migrations
                 name: "Ingredients",
                 columns: table => new
                 {
-                    ID = table.Column<int>(nullable: false)
+                    Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     Name = table.Column<string>(nullable: false),
                     Type = table.Column<string>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Ingredients", x => x.ID);
+                    table.PrimaryKey("PK_Ingredients", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -237,14 +237,14 @@ namespace CocktailMagician.Data.Migrations
                 name: "BarCocktail",
                 columns: table => new
                 {
-                    ID = table.Column<int>(nullable: false)
+                    Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     BarID = table.Column<int>(nullable: false),
                     CocktailID = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_BarCocktail", x => x.ID);
+                    table.PrimaryKey("PK_BarCocktail", x => x.Id);
                     table.ForeignKey(
                         name: "FK_BarCocktail_Bars_BarID",
                         column: x => x.BarID,
@@ -311,7 +311,7 @@ namespace CocktailMagician.Data.Migrations
                         name: "FK_CocktailIngredients_Ingredients_IngredientID",
                         column: x => x.IngredientID,
                         principalTable: "Ingredients",
-                        principalColumn: "ID",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 

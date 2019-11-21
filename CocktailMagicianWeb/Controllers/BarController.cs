@@ -18,11 +18,13 @@ namespace CocktailMagicianWeb.Controllers
     {
         private readonly IBarServices _barServices;
         private readonly ICocktailServices _cocktailServices;
+        private readonly IBarCocktailServices _barCocktailServices;
 
-        public BarController(IBarServices barServices, ICocktailServices cocktailServices)
+        public BarController(IBarServices barServices, ICocktailServices cocktailServices, IBarCocktailServices barCocktailServices)
         {
             _barServices = barServices;
             _cocktailServices = cocktailServices;
+            _barCocktailServices = barCocktailServices;
         }
 
         [HttpGet]
@@ -40,13 +42,13 @@ namespace CocktailMagicianWeb.Controllers
             {
                 return View();
             }
-            var coctailsList = new List<Cocktail>(); 
-            var barModel = await barmodel.MapToModel();
+            var barModel = await barmodel.MapToEntity();
+            await _barServices.CreateBarAsync(barModel);
             foreach (var cocktail in barmodel.Cocktails)
             {
-                
+                var cocktailEntity = await _cocktailServices.GetAsync(cocktail);
+                await _barCocktailServices.CreateAsync(barModel, cocktailEntity);
             }
-            await this._barServices.CreateBarAsync(barModel);
             return RedirectToAction("Index", "Home");
         }
         public async Task<IActionResult> ListBars()
@@ -55,17 +57,26 @@ namespace CocktailMagicianWeb.Controllers
             barsResult.Bars = (await _barServices.GetVisibleCollectionAsync()).Select(b => b.MapToViewModel()).ToList();
             return View(barsResult);
         }
+
         [HttpGet]
         public async Task<IActionResult> SearchBars()
         {
             return View();
         }
+
         [HttpPost]
         public async Task<IActionResult> SearchBars(BarSearchViewModel viewModel)
         {
-
-            viewModel.SearchResults = (await this._barServices.SearchBarsByMultipleCriteriaAsync(viewModel.Name, viewModel.Address, viewModel.PhoneNumber)).Select(b => b.MapToViewModel()).ToList();
+            if(viewModel.AvgRating != null)
+            {
+                viewModel.SearchResults = (await this._barServices.SearchBarsByMultipleCriteriaAsync(viewModel.Name, viewModel.Address, viewModel.PhoneNumber, viewModel.ShowOnlyHiddenFiles)).Select(b => b.MapToViewModel()).Where(b => b.Rating == viewModel.AvgRating).ToList();
+            }
+            else
+            {
+                viewModel.SearchResults = (await this._barServices.SearchBarsByMultipleCriteriaAsync(viewModel.Name, viewModel.Address, viewModel.PhoneNumber, viewModel.ShowOnlyHiddenFiles)).Select(b => b.MapToViewModel()).ToList();
+            }
             return View(viewModel);
+
         }
         [HttpGet]
         [Authorize(Roles = "CocktailMagician")]
@@ -83,7 +94,7 @@ namespace CocktailMagicianWeb.Controllers
             {
                 return View();
             }
-            var bar = await viewModel.MapToModel();
+            var bar = await viewModel.MapToEntity();
             await this._barServices.EditBarAsync(bar);
             return RedirectToAction("Index", "Home");
         }

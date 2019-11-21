@@ -1,7 +1,6 @@
 ﻿using CocktailMagician.Data.Entities;
 using CocktailMagician.Services.Contracts;
 using CocktailMagicianWeb.Models.Cocktails;
-using CocktailMagicianWeb.Utilities;
 using CocktailMagicianWeb.Utilities.Mappers;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -74,14 +73,13 @@ namespace CocktailMagicianWeb.Controllers
             {
                 await _cocktailIngredientsServices.AddAsync(cocktail, ingredients[i], vm.Quantities[i]);
             }
-            var bars = await _barServices.GetCollectionAsync();
-            if (bars != null)
+
+            foreach (var bar in vm.Bars)
             {
-                foreach (var bar in bars)
-                {
-                    await _barCocktailServices.CreateAsync(bar, cocktail);
-                }
+                var barEntity = await _barServices.GetAsync(bar);
+                await _barCocktailServices.CreateAsync(barEntity, cocktail);
             }
+            
 
             return View();
         }
@@ -198,6 +196,35 @@ namespace CocktailMagicianWeb.Controllers
             {
                 await _barCocktailServices.DeleteAsync(bar, cocktail);
             }
+        }
+        public async Task<IActionResult> GetCocktails()
+        {
+            var cocktails = await _cocktailServices.GetCollectionAsync();
+            return Json(cocktails);
+        }
+        [HttpGet]
+        public IActionResult SearchCocktails()
+        {
+            return View();
+        }
+        [HttpPost]
+        public async Task<IActionResult> SearchCocktails(SearchCocktailViewModel viewModel)
+        {
+            if (viewModel.AvgRating != null)
+            {
+                viewModel.SearchResults = (await _cocktailServices.SearchByMultipleCriteriaAsync(viewModel.Name, viewModel.Ingredient, viewModel.IncludeOnlyAlcoholicDrinks)).Select(c => c.MapToViewModel()).Where(b => b.Rating == viewModel.AvgRating).ToList();
+            }
+            else
+            {
+                viewModel.SearchResults = (await _cocktailServices.SearchByMultipleCriteriaAsync(viewModel.Name, viewModel.Ingredient, viewModel.IncludeOnlyAlcoholicDrinks)).Select(c => c.MapToViewModel()).ToList();
+            }
+            return View(viewModel);
+        }
+        public async Task<IActionResult> CocktailDetails(int id)
+        {
+            var cocktailModel = (await _cocktailServices.GetAsync(id)).MapToViewModel();
+            return View(cocktailModel);
+
         }
     }
 }

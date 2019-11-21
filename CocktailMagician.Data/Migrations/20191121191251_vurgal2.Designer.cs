@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CocktailMagician.Data.Migrations
 {
     [DbContext(typeof(CocktailDB))]
-    [Migration("20191116162111_Initial2")]
-    partial class Initial2
+    [Migration("20191121191251_vurgal2")]
+    partial class vurgal2
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -51,7 +51,7 @@ namespace CocktailMagician.Data.Migrations
 
             modelBuilder.Entity("CocktailMagician.Data.Entities.BarCocktail", b =>
                 {
-                    b.Property<int>("ID")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
@@ -59,7 +59,7 @@ namespace CocktailMagician.Data.Migrations
 
                     b.Property<int>("CocktailID");
 
-                    b.HasKey("ID");
+                    b.HasKey("Id");
 
                     b.HasIndex("BarID");
 
@@ -165,7 +165,7 @@ namespace CocktailMagician.Data.Migrations
 
             modelBuilder.Entity("CocktailMagician.Data.Entities.Ingredient", b =>
                 {
-                    b.Property<int>("ID")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
@@ -175,7 +175,7 @@ namespace CocktailMagician.Data.Migrations
                     b.Property<string>("Type")
                         .IsRequired();
 
-                    b.HasKey("ID");
+                    b.HasKey("Id");
 
                     b.ToTable("Ingredients");
                 });

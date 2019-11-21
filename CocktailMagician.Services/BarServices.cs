@@ -68,7 +68,7 @@ namespace CocktailMagician.Services
             await this.context.SaveChangesAsync();
 
         }
-        public async Task<IReadOnlyCollection<Bar>> SearchBarsByMultipleCriteriaAsync(string name, string adress, string phonenumber)
+        public async Task<IReadOnlyCollection<Bar>> SearchBarsByMultipleCriteriaAsync(string name, string adress, string phonenumber, bool displayOnlyHiddenFiles)
         {
             var barsResult = await this.context.Bars
               .Include(r => r.BarReviews)
@@ -76,7 +76,9 @@ namespace CocktailMagician.Services
               .ThenInclude(b => b.Cocktail)
               .Where(b => ((name == null) || (b.Name.Contains(name)))
               && ((adress == null) || (b.Address.Contains(adress)))
-              && ((phonenumber == null) || (b.PhoneNumber.Contains(phonenumber))))
+              && ((phonenumber == null) || (b.PhoneNumber.Contains(phonenumber)))
+              && (b.IsHidden == displayOnlyHiddenFiles)
+              )
                 .ToListAsync();
             return barsResult;
         }

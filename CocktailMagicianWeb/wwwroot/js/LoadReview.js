@@ -31,19 +31,19 @@ $('#Load-Cocktails-Reviews').click(function (e) {
     console.log(thisCocktailBtn);
     console.log(cocktail);
     $.ajax({
-        url: '/Reviews/LoadCocktailsReviews',
+        url: '/Reviews/LoadCoctailReviews',
         data: { id: cocktail },
         type: "get",
-        success: function (responseData) {
-            console.log(responseData)
-            if (responseData.length === 0) {
+        success: function (response) {
+            console.log(response)
+            if (response.length === 0) {
                 thisCocktailBtn.replaceWith('<text> No reviews found on this bar!</text>')
                 console.log(thisCocktailBtn)
 
             }
             else {
-                console.log(responseData)
-                thisCocktailBtn.replaceWith(responseData)
+                console.log(response)
+                thisCocktailBtn.replaceWith(response)
             }
         }
 
