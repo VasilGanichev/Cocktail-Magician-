@@ -1,11 +1,42 @@
-﻿@model CocktailViewModel
+﻿<style type="text/css">
+    #element1 {
+        display: inline-block;
+        width: 45%;
+        padding: 10px;
+    }
+
+    #element2 {
+        display: inline-block;
+        width: 45%;
+        padding: 10px;
+    }
+
+    .multiselect {
+        width: 20em;
+        height: 10em;
+        border: solid 1px #c0c0c0;
+        overflow: auto;
+    }
+
+        .multiselect label {
+            display: block;
+        }
+
+    .multiselect-on {
+        color: #ffffff;
+        background-color: #000099;
+    }
+</style>
+
+
+@model CocktailViewModel
 @{
     ViewData["Title"] = "AddCocktail";
 }
 
 <h4>Add Cocktail</h4>
 <div>
-    <form id="Ingredients" asp-controller="Cocktails" asp-action="AddCocktail" enctype="multipart/form-data">
+    <form id="Ingredients" class="addCocktail" asp-controller="Cocktails" asp-action="AddCocktail" enctype="multipart/form-data">
         <input placeholder="Name..." asp-for="@Model.Name" class="form-control col-md-4">
         <span asp-validation-for="@Model.Name" class="text-danger"></span>
         Image:
@@ -14,26 +45,6 @@
         <br>
         A cocktail must have at least two ingredients.
         <div id="list">
-            @*<div>
-                Ingredient 1:
-                <select id="list" asp-for="@Model.Ingredients" class="drop" data-position="1">
-                    <option id="alcohol" value="alcohol">Alcohol</option>
-                    <option id="sweetener" value="sweetener">Sweetener</option>
-                    <option id="juice" value="juice">Juice</option>
-                    <option id="herb" value="herb">Herb</option>
-                </select>
-            </div>
-            <br>
-            <div>
-                Ingredient 2:
-                <select id="list" asp-for="@Model.Ingredients" class="drop" data-position="2">
-                    <option id="alcohol" value="alcohol">Alcohol</option>
-                    <option id="sweetener" value="sweetener">Sweetener</option>
-                    <option id="juice" value="juice">Juice</option>
-                    <option id="herb" value="herb">Herb</option>
-                </select>
-            </div>*@
-            <br>
             <button type="button" id="addIngredient" class="btn" style="background-color:#ff0000; color:white">Add Ingredient </button>
             <br>
             <br>
@@ -41,7 +52,11 @@
 
         </div>
         <br>
-        <br>
         <button type="submit" class="btn" style="background-color:#ff0000; color:white" />Submit
     </form>
 </div>
+
+@section Scripts
+    {
+    <partial name="_ValidationScriptsPartial">
+}

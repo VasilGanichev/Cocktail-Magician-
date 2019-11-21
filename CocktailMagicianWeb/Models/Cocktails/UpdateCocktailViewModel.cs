@@ -15,8 +15,10 @@ namespace CocktailMagicianWeb.Models.Cocktails
         public string Name { get; set; }
         public bool IsHidden { get; set; }
         [Required, MinLength(2)]
-        public List<IngredientViewModel> Ingredients { get; set; } = new List<IngredientViewModel>(10);
-        public List<BarViewModel> Bars { get; set; } = new List<BarViewModel>(20);
+        public List<IngredientViewModel> CurrentIngredients { get; set; } = new List<IngredientViewModel>(10);
+        public List<string> Ingredients { get; set; } = new List<string>(20);
+        public List<string> OfferingBars { get; set; } = new List<string>(20);
+        public List<string> AllBars { get; set; } = new List<string>(20);
         [Required, MinLength(1)]
         public List<int> Quantities { get; set; } = new List<int>(10);
     }

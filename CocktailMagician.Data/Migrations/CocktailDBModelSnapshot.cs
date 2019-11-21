@@ -123,13 +123,15 @@ namespace CocktailMagician.Data.Migrations
 
                     b.Property<int>("IngredientID");
 
+                    b.Property<string>("IngredientName");
+
                     b.Property<int>("Quantity");
 
                     b.HasKey("ID");
 
                     b.HasIndex("CocktailID");
 
-                    b.HasIndex("IngredientID");
+                    b.HasIndex("IngredientName");
 
                     b.ToTable("CocktailIngredients");
                 });
@@ -163,17 +165,15 @@ namespace CocktailMagician.Data.Migrations
 
             modelBuilder.Entity("CocktailMagician.Data.Entities.Ingredient", b =>
                 {
-                    b.Property<int>("ID")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
                     b.Property<string>("Name")
-                        .IsRequired();
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int>("Id");
 
                     b.Property<string>("Type")
                         .IsRequired();
 
-                    b.HasKey("ID");
+                    b.HasKey("Name");
 
                     b.ToTable("Ingredients");
                 });
@@ -382,8 +382,7 @@ namespace CocktailMagician.Data.Migrations
 
                     b.HasOne("CocktailMagician.Data.Entities.Ingredient", "Ingredient")
                         .WithMany("CocktailIngredients")
-                        .HasForeignKey("IngredientID")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("IngredientName");
                 });
 
             modelBuilder.Entity("CocktailMagician.Data.Entities.CocktailReview", b =>

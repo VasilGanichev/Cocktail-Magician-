@@ -22,7 +22,7 @@ namespace CocktailMagician.Tests.ServiceTests.IngredientServiceTests
                 var type = "alcohol";
                 var ingredient = sut.AddAsync(name, type).GetAwaiter().GetResult();
                 var newName = "Test12";
-                sut.UpdateAsync(ingredient.ID, newName).GetAwaiter().GetResult();
+                sut.UpdateAsync(ingredient.Id, newName).GetAwaiter().GetResult();
 
                 Assert.AreEqual(newName, ingredient.Name);
             }

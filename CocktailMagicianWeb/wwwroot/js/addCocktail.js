@@ -1,5 +1,6 @@
 ﻿$('#Ingredients').on('click', '#addIngredient', function () {
     let ingredients = $('.drop').length + 1;
+    console.log(ingredients)
     const button = $(this)
     if (ingredients === 10) {
         button.replaceWith(` <div class="holder">
@@ -11,7 +12,6 @@
         <option value="herb">Herb</option>
         </select> 
         </div>
-        <br>
         A cocktail can contain maximum 10 ingredients`)
     }
     console.log(ingredients);
@@ -25,7 +25,6 @@
         <option value="herb">Herb</option>
         </select> 
         </div>
-        <br>
         <button id="addIngredient" class="btn" style ="background-color:#ff0000; color:white"> Add Ingredient</button>`)
     const thisSelect = $('.drop').last();
     console.log(thisSelect)
@@ -50,7 +49,22 @@
                 }
                 console.log(` <select> ${options}  </select>`)
                 console.log(thisSelect)
-                thisSelect.parent().append(` <select name="Ingredients"> ${options}  </select>`).append('<input name="Quantities" placeholder="mililiters..." class="form-control col-md-3"></input>')
+                thisSelect.parent()
+                    .append(` <select name="Ingredients"> ${options}  </select>`)
+                    .append('<input name="Quantities" id="element1" placeholder="mililiters..." class="form-control col-md-2"></input>')
+                    .append('<span asp-validation-for="@Model.Quantities" class="text-danger"></span>')
+                    .append('<button type="button" class= "cancel btn"> <i id="element2" class="fa fa-close"></i></button>')
+            }
+            $('.quantities').each(function () {
+                $(this).rules("add",
+                    {
+                        required: true
+                    })
+            });
+            if ($('#Ingredients').validate().form()) {
+                console.log("validates");
+            } else {
+                console.log("does not validate");
             }
         }
     })
@@ -83,9 +97,21 @@ $('#Ingredients').on('change', 'select', function (e) {
                     }
                     console.log(` <select> ${options}  </select>`)
                     console.log(thisSelect)
-                    thisSelect.parent().append(` <select name="Ingredients"> ${options}  </select>`)
-                        .append('<input name="Quantities" placeholder="mililiters/spoon..." class="form-control col-md-3"></input>')
-
+                    thisSelect.parent().append(`<select name="Ingredients"> ${options}  </select>`)
+                        .append('<input name="Quantities" id="element1" placeholder="mililiters/spoon..." class="form-control col-md-2 quantities"></input>')
+                        .append('<span asp-validation-for="@Model.Quantities" class="text-danger"></span>')
+                        .append('<button type="button" class= "cancel btn"> <i id="element2" class="fa fa-close"></i></button>')
+                }
+                $('.quantities').each(function () {
+                    $(this).rules("add",
+                        {
+                            required: true
+                        })
+                });
+                if ($('#Ingredients').validate().form()) {
+                    console.log("validates");
+                } else {
+                    console.log("does not validate");
                 }
             }
         })
@@ -117,7 +143,22 @@ $('#Ingredients').on('change', 'select', function (e) {
                     }
                     console.log(` <select> ${options}  </select>`)
                     console.log(thisSelect)
-                    thisSelect.parent().append(`<select name="Ingredients"> ${options}  </select>`).append('<input name="Quantities" placeholder="mililiters..." class="form-control col-md-3"></input>')
+                    thisSelect.parent()
+                        .append(`<select name="Ingredients"> ${options}  </select>`)
+                        .append('<input name="Quantities" id="element1" placeholder="mililiters..." class="form-control col-md-2 quantities"></input>')
+                        .append('<span asp-validation-for="@Model.Quantities" class="text-danger"></span>')
+                        .append('<button type="button" class= "cancel btn"> <i id="element2" class="fa fa-close"></i></button>')
+                }
+                $('.quantities').each(function () {
+                    $(this).rules("add",
+                        {
+                            required: true
+                        })
+                });
+                if ($('#Ingredients').validate().form()) {
+                    console.log("validates");
+                } else {
+                    console.log("does not validate");
                 }
             }
         })
@@ -149,7 +190,22 @@ $('#Ingredients').on('change', 'select', function (e) {
                     }
                     console.log(` <select> ${options}  </select>`)
                     console.log(thisSelect)
-                    thisSelect.parent().append(` <select name="Ingredients"> ${options}  </select>`).append('<input name="Quantities" placeholder="stalk..." class="form-control col-md-3"></input>')
+                    thisSelect.parent()
+                        .append(` <select name="Ingredients"> ${options}  </select>`)
+                        .append('<input name="Quantities" id="element1" placeholder="stalk..." class="form-control col-md-2 quantities"></input>')
+                        .append('<span asp-validation-for="@Model.Quantities" class="text-danger"></span>')
+                        .append('<button type="button" class= "cancel btn"> <i id="element2" class="fa fa-close"></i></button>')
+                }
+                $('.quantities').each(function () {
+                    $(this).rules("add",
+                        {
+                            required: true
+                        })
+                });
+                if ($('#Ingredients').validate().form()) {
+                    console.log("validates");
+                } else {
+                    console.log("does not validate");
                 }
             }
         })
@@ -182,7 +238,22 @@ $('#Ingredients').on('change', 'select', function (e) {
                     }
                     console.log(` <select> ${options}  </select>`)
                     console.log(thisSelect)
-                    thisSelect.parent().append(`<select name="Ingredients"> ${options}  </select>`).append('<input name="Quantities" placeholder="mililiters..." class="form-control col-md-3"></input>')
+                    thisSelect.parent()
+                        .append(`<select name="Ingredients"> ${options}  </select>`)
+                        .append('<input name="Quantities" id="element1" placeholder="mililiters..." class="form-control col-md-2 quantities"></input>')
+                        .append('<span asp-validation-for="@Model.Quantities" class="text-danger"></span>')
+                        .append('<button type="button" class= "cancel btn"> <i id="element2" class="fa fa-close"></i></button>')
+                }
+                $('.quantities').each(function () {
+                    $(this).rules("add",
+                        {
+                            required: true
+                        })
+                });
+                if ($('#Ingredients').validate().form()) {
+                    console.log("validates");
+                } else {
+                    console.log("does not validate");
                 }
             }
         })
@@ -204,11 +275,15 @@ $('#Ingredients').on('click', '#addCocktailToBars', function (e) {
             else {
                 let options = []
                 for (let i = 0; i < responseData.length; i++) {
-                    options[i] = `<option value="${responseData[i].name}"> ${responseData[i].name} </option>`
+                    options[i] = `<label> <input class="checkbox" type="checkbox" data-bar="${responseData[i].name}" value="${responseData[i].name}"> ${responseData[i].name} </input></label>`
                 }
-                console.log(` <select> ${options}  </select>`)
-                btn.replaceWith(`<select multiple name="Bars"> ${options}  </select>`)
+                console.log(` <select> ${options} </select>`)
+                btn.replaceWith(`<div class="multiselect"> ${options} </div> <button id="save" type="button" class="btn" style="background-color:#ff0000; color:white"> Save </button>`)
             }
         }
     })
+})
+
+$('.addCocktail').on('click', '.cancel', function () {
+    $(this).parent('div').empty()
 })
