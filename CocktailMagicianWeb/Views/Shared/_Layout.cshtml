@@ -53,6 +53,7 @@
                             <div class="dropdown">
                                 <button class="dropbtn">Cocktails</button>
                                 <div class="dropdown-content">
+                                    <a class="nav-link text-dark" asp-controller="Cocktails" asp-action="SearchCocktails">Browse Cocktails</a>
                                     @if (this.User.IsInRole("CocktailMagician"))
                                     {
                                         <a class="nav-link text-dark" asp-controller="Cocktails" asp-action="AddCocktail">Add Cocktail</a>

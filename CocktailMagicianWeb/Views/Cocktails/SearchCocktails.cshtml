@@ -1,0 +1,126 @@
+﻿@model CocktailMagicianWeb.Models.Cocktails.SearchCocktailViewModel
+@{
+    ViewData["Title"] = "SearchCoctails";
+}
+
+<h1>SearchCoctails</h1>
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="SearchCocktails" method="post" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="@Model.Name" class="control-label"></label>
+                <input asp-for="@Model.Name" class="form-control" />
+                <span asp-validation-for="@Model.Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="@Model.Ingredient" class="control-label"></label>
+                <input asp-for="@Model.Ingredient" class="form-control" />
+                <span asp-validation-for="@Model.Ingredient" class="text-danger"></span>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="@Model.IncludeOnlyAlcoholicDrinks" /> @Html.DisplayNameFor(model => model.IncludeOnlyAlcoholicDrinks)
+                </label>
+            </div>
+            <div class="search" data-info="Search!">
+                <br />
+                <button type="submit" class="btn btn-primary" id="searchBtn">&#x1F50D;</button>
+            </div>
+        </form>
+    </div>
+</div>
+<br />
+
+<div>
+    <table class="table table-hover">
+        @if (Model != null)
+        {
+            if (!Model.SearchResults.Any())
+            {
+                <br />
+                <br />
+                <br />
+                <p class="alert alert-info">There are no bars found!</p>
+            }
+            else
+            {
+                <h2>Results:</h2>
+                <tr>
+                    <th>Image</th>
+                    <th>Name</th>
+                    <th>Ingredients</th>
+                </tr>
+                foreach (var cocktail in Model.SearchResults)
+                {
+                    <tr>
+
+                        @if (cocktail.Picture == null)
+                        {
+                            <td>
+                                <img src="~/images/no-image-icon-6.png" width="230" height="172" />
+                            </td>
+                        }
+                        else
+                        {
+                            <td>
+                                <img src="data:image/jpg;base64,@(Html.Raw(Convert.ToBase64String(cocktail.Picture)))" width="230" height="172" />
+                            </td>
+                        }
+                        <td>
+                            @cocktail.Name
+                        </td>
+                        <td>
+                            @foreach (var ingredient in cocktail.Ingredients)
+                            {
+                                <p>
+                                    @ingredient
+                                </p>
+                            }
+                        </td>
+                        <td>
+                            @if (this.User.IsInRole("CocktailMagician"))
+                            {
+                                <button class="btn btn-info" onclick="location.href='@Url.Action("EditCocktail", "Cocktail", new { Id = @cocktail.Id })'">Edit</button>
+                            }
+                        </td>
+                        <td>
+                            <button class="btn btn-info" onclick="location.href='@Url.Action("BarDetails", "Bar", new { Id = @cocktail.Id })'">Details</button>
+                        </td>
+
+                    </tr>
+                }
+
+            }
+        }
+    </table>
+</div>
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    <script>
+        $(document).ready(function () {
+            jQuery.noConflict();
+            var $searchBar = $('#searchBar');
+            var pageUrl = location.href;
+            console.log(pageUrl);
+
+            toastr.options.timeOut = 0;
+            toastr.options.extendedTimeOut = 0;
+            toastr.options.positionClass = "toast-top-center";
+            $('.search').mouseenter(function () {
+                var text = $(this).data('info');
+
+                toastr.info(text);
+            });
+            $('.search').mouseleave(function () {
+                toastr.remove();
+            });
+
+            $('.search').mouseleave(function () {
+                toastr.remove();
+            });
+        });
+    </script>
+}

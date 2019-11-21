@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-
+using CocktailMagician.Services.Utilities;
 namespace CocktailMagician.Services
 {
     public class CocktailServices : ICocktailServices
@@ -35,6 +35,12 @@ namespace CocktailMagician.Services
             var cocktails = await _context.Cocktails.Where(c => c.Name.Contains(input)).ToListAsync();
             return cocktails;
         }
+        public async Task<Cocktail> FindCocktailByNameAsync(string name)
+        {
+            var cocktail = await _context.Cocktails.FirstOrDefaultAsync(c => c.Name == name);
+            cocktail.EnsureNotNull();
+            return cocktail;
+        }
 
         public async Task<Cocktail> GetByIdAsync(int id)
         {
@@ -59,6 +65,32 @@ namespace CocktailMagician.Services
         public async Task<IReadOnlyCollection<Cocktail>> GetCollectionAsync()
         {
             return await _context.Cocktails.ToListAsync();
+        }
+        public async Task<List<Cocktail>> SearchByMultipleCriteriaAsync(string name, string ingredientName, bool IncludeOnlyAlcohol)
+        {
+            List<Cocktail> cocktailsResult = new List<Cocktail>();
+            if (IncludeOnlyAlcohol)
+            {
+                cocktailsResult = await _context.Cocktails
+                  .Include(r => r.CocktailReviews)
+                    .Include(b => b.Ingredients)
+                    .ThenInclude(b => b.Ingredient)
+                    .Where(b => ((name == null) || (b.Name.Contains(name))) &&
+                    ((ingredientName == null) || (b.Ingredients.FirstOrDefault(i => i.Ingredient.Name == name) != null)) &&
+                   (!((b.Ingredients.Select(i => i.Ingredient.Type)).Contains("alcohol"))))
+                    .ToListAsync();
+            }
+            else
+            {
+                cocktailsResult = await _context.Cocktails
+                .Include(r => r.CocktailReviews)
+                  .Include(b => b.Ingredients)
+                  .ThenInclude(b => b.Ingredient)
+                  .Where(b => ((name == null) || (b.Name.Contains(name))) &&
+                  ((ingredientName == null) || (b.Ingredients.FirstOrDefault(i => i.Ingredient.Name == name) != null) )).ToListAsync();
+            }
+
+            return cocktailsResult;
         }
     }
 }

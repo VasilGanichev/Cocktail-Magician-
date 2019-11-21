@@ -10,16 +10,19 @@ using Microsoft.AspNetCore.Mvc;
 using CocktailMagicianWeb.Utilities.Mappers;
 using CocktailMagicianWeb.Models;
 using Microsoft.AspNetCore.Authorization;
+using CocktailMagicianWeb.Models.Bars;
 
 namespace CocktailMagicianWeb.Controllers
 {
     public class BarController : Controller
     {
         private readonly IBarServices _barServices;
+        private readonly ICocktailServices _cocktailServices;
 
-        public BarController(IBarServices barServices)
+        public BarController(IBarServices barServices, ICocktailServices cocktailServices)
         {
-            this._barServices = barServices;
+            _barServices = barServices;
+            _cocktailServices = cocktailServices;
         }
 
         [HttpGet]
@@ -31,17 +34,17 @@ namespace CocktailMagicianWeb.Controllers
 
         [HttpPost]
         [Authorize(Roles = "CocktailMagician")]
-        public async Task<IActionResult> CreateBar(BarViewModel barmodel, List<IFormFile> picturemodel)
+        public async Task<IActionResult> CreateBar(BarViewModel barmodel)
         {
             if (!ModelState.IsValid)
             {
                 return View();
             }
-
-            var barModel = barmodel.MapToModel();
+            var coctailsList = new List<Cocktail>(); 
+            var barModel = await barmodel.MapToModel();
             foreach (var cocktail in barmodel.Cocktails)
             {
-
+                
             }
             await this._barServices.CreateBarAsync(barModel);
             return RedirectToAction("Index", "Home");
@@ -80,7 +83,7 @@ namespace CocktailMagicianWeb.Controllers
             {
                 return View();
             }
-            var bar = viewModel.MapToModel();
+            var bar = await viewModel.MapToModel();
             await this._barServices.EditBarAsync(bar);
             return RedirectToAction("Index", "Home");
         }

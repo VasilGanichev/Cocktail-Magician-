@@ -104,5 +104,23 @@ namespace CocktailMagicianWeb.Controllers
             var cocktails = await _cocktailServices.GetCollectionAsync();
             return Json(cocktails);
         }
+        [HttpGet]
+        public async Task<IActionResult> SearchCocktails()
+        {
+            return View();
+        }
+        [HttpPost]
+        public async Task<IActionResult> SearchCocktails(SearchCocktailViewModel viewModel)
+        {
+            viewModel.SearchResults = (await _cocktailServices.SearchByMultipleCriteriaAsync(viewModel.Name, viewModel.Ingredient,viewModel.IncludeOnlyAlcoholicDrinks)).Select(c => c.MapToViewModel()).ToList();
+            return View(viewModel);
+        }
+        public async Task<IActionResult> CocktailDetails(int id)
+        {
+            var cocktailModel = (await _cocktailServices.GetByIdAsync(id)).MapToViewModel();
+            return View(cocktailModel);
+
+        }
+
     }
 }

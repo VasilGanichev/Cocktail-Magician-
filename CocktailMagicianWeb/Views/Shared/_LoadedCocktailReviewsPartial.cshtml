@@ -1,0 +1,27 @@
+﻿@model List<CocktailMagician.Data.Entities.CocktailReview>
+@{
+        ViewData["Title"] = "_LoadedCocktailReviewsPartial";
+}
+
+<h1>_LoadedCocktailReviewsPartial</h1>
+
+<table class="table table-hover">
+    <th>User:</th>
+    <th>Rating:</th>
+    <th>Comment:</th>
+    @foreach (var barReview in Model)
+    {
+        <tr>
+            <td>
+                @barReview.UserName
+            </td>
+            <td>
+                @barReview.Rating
+            </td>
+            <td>
+                @barReview.Comment
+            </td>
+
+        </tr>
+    }
+</table>

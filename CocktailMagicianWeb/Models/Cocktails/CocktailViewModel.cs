@@ -10,6 +10,7 @@ namespace CocktailMagicianWeb.Models.Cocktails
         [Required, MinLength(3), MaxLength(15)]
         public string Name { get; set; }
         public bool  IsHidden { get; set; }
+        public double Rating { get; set; }
         [Required, MinLength(2)]
         public List<string> Ingredients { get; set; } = new List<string>(10);
         public List<string> Bars { get; set; } = new List<string>(20);

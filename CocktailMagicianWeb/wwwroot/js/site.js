@@ -1,42 +1,37 @@
-﻿// Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
-// for details on configuring this project to bundle and minify static web assets.
+﻿//// Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
+//// for details on configuring this project to bundle and minify static web assets.
 
-// Write your JavaScript code.
+//// Write your JavaScript code.
 
-$('#createBarBtn').click(function (e) {
-    e.preventDefault();
-    var serialized = $('#createBarForm').serialize();
-    var url = $(this).data('url');
-    console.log(serialized)
+//$('#createBarBtn').click(function (e) {
+//    e.preventDefault();
+//    var serialized = $('#createBarForm').serializeArray();
+//    var url = '/Bar/CreateBar';
+//    var fdata = new FormData();
 
-    var fdata = new FormData();
+//    var fileInput1 = $('#barImage')[0].files[0];
+//    fdata.append("picture", fileInput1);
+//    //serialized.NewPicture = fdata
+//    console.log(serialized)
+//    console.log(fdata)
+//    //url = url + `?barmodel=${serialized}`
 
-    var fileInput1 = $('#barImage')[0].files[0];
-    fdata.append("picture", fileInput1);
-    var data = JSON.stringify({
-        'barmodel': serialized,
-        'picturemodel': fdata
-    });
+//    $.ajax({
+//        url: url,
+//        method: 'POST',
+//        data: serialized,
+//        dataType: 'json',
+//        success: function (responseData) {
 
-    $.ajax({
-        url: url,
-        data: data,
-        dataType: 'json',
-        type: 'POST',
-        processData: false,
-        contentType: false,
-        success: function (responseData) {
-            console.log(responseData)
-            if (responseData.length === 0) {
-                thisBtn.replaceWith('<text> No reviews found on this bar!</text>')
-                console.log(thisBtn)
+//            if (responseData.length === 0) {
+                
+//                console.log('asd')
 
-            }
-            else {
-                console.log(responseData)
-                thisBtn.replaceWith(responseData)
-            }
-        }
+//            }
+//            else {
+             
+//            }
+//        }
 
-    })
-});
+//    })
+//});

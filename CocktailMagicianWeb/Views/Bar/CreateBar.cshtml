@@ -28,8 +28,8 @@
                 <span asp-validation-for="@Model.PhoneNumber" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="NewPicture" class="control-label"></label>
-                <input type="file" id="barImage" asp-for="NewPicture" />
+                <label asp-for="@Model.NewPicture" class="control-label"></label>
+                <input type="file" id="barImage" asp-for="@Model.NewPicture" class="form-control"/>
                 <span asp-validation-for="NewPicture" class="text-danger"></span>
             </div>
             <div class="form-group form-check">

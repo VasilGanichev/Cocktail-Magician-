@@ -2,6 +2,7 @@
 using CocktailMagicianWeb.Models;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -16,7 +17,7 @@ namespace CocktailMagicianWeb.Utilities.Mappers
             viewmodel.Name = bar.Name;
             viewmodel.Address = bar.Address;
             viewmodel.PhoneNumber = bar.PhoneNumber;
-            viewmodel.Picture = bar.Picture;
+            viewmodel.CurrentPicture = bar.Picture;
             viewmodel.BarReviews = bar.BarReviews;
             try
             {
@@ -29,14 +30,22 @@ namespace CocktailMagicianWeb.Utilities.Mappers
             viewmodel.Cocktails = bar.BarCocktails.Select(b => b.Cocktail.Name).ToList();
             return viewmodel;
         }
-        public static Bar MapToModel(this BarViewModel viewModel)
+        public async static Task<Bar> MapToModel(this BarViewModel viewModel)
         {
             var bar = new Bar();
             bar.Id = viewModel.Id;
             bar.Name = viewModel.Name;
             bar.Address = viewModel.Address;
             bar.PhoneNumber = viewModel.PhoneNumber;
-            bar.Picture = viewModel.Picture;
+            if(viewModel.NewPicture != null)
+            {
+                using (var stream = new MemoryStream())
+                {
+                    await viewModel.NewPicture.CopyToAsync(stream);
+                    viewModel.CurrentPicture = stream.ToArray();
+                }
+            }
+            bar.Picture = viewModel.CurrentPicture;
 
             return bar;
         }

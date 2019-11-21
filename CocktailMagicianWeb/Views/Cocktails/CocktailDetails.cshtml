@@ -1,0 +1,92 @@
+﻿@model CocktailViewModel
+@{
+    ViewData["Title"] = "CocktailDetails";
+}
+<style>
+    img {
+        max-width: 100%;
+        height: auto;
+    }
+
+    table {
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+    tr:nth-child(even) {
+        background-color: #f2f2f2
+    }
+
+    th {
+        background-color: #4CAF50;
+        color: white;
+    }
+
+    .cocktailDesc {
+        display: inline-block;
+        padding: 4px;
+    }
+</style>
+
+}
+
+
+
+
+
+<h1>Bar Details:</h1>
+<div class="row">
+    <br />
+    <div class="cocktailDesc">
+        @try
+        {
+            <img src="data:image/jpg;base64,@(Html.Raw(Convert.ToBase64String(Model.Picture)))" width="460" height="350" />
+
+        }
+        catch (Exception)
+        {
+            <img src="~/no-image-icon-6.png" width="230" height="172" />
+        }
+
+    </div>
+    <div class=" barDesc">
+        <table class="table table-hover">
+            @if (Model != null)
+            {
+                <th>Name:</th>
+                <th>Ingredients:</th>
+                <th>Rated: </th>
+                <th>Available in:</th>
+
+            }
+            <tr>
+                <td>
+                    @Model.Name
+                </td>
+                <td>
+                    @foreach (var ingredient in Model.Ingredients)
+                    {
+                        <p>
+                            @ingredient
+                        </p>
+                    }
+                </td>
+                <td>
+                    @Model.Rating
+                </td>
+                <td>
+                    @foreach (var bars in Model.Bars)
+                    {
+                        <p>
+                            @bars
+                        </p>
+                    }
+                </td>
+            </tr>
+        </table>
+        <button class="btn btn-info" onclick="location.href='@Url.Action("LeaveCocktailReview", "Reviews", new { Id = Model.Id })'">Leave Review</button>
+
+    </div>
+</div>
+<button class="btn btn-info" id="Load-Cocktail-Reviews" data-cocktail="@Model.Id">Load Reviews</button>
+

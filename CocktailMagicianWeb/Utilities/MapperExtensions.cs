@@ -1,6 +1,8 @@
 ﻿using CocktailMagician.Data.Entities;
 using CocktailMagicianWeb.Models.Ingredients;
 using CocktailMagicianWeb.Models.Cocktails;
+using System;
+using System.Linq;
 
 namespace CocktailMagicianWeb.Utilities
 {
@@ -29,6 +31,14 @@ namespace CocktailMagicianWeb.Utilities
             vm.Name = cocktail.Name;
             vm.IsHidden = cocktail.IsHidden;
             vm.Picture = cocktail.Picture;
+            try
+            {
+                vm.Rating = cocktail.CocktailReviews.Select(b => b.Rating).Average();
+            }
+            catch (Exception)
+            {
+                vm.Rating = 0;
+            }
             return vm;
         }
     }
