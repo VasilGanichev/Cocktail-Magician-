@@ -83,11 +83,11 @@
                         <td>
                             @if (this.User.IsInRole("CocktailMagician"))
                             {
-                                <button class="btn btn-info" onclick="location.href='@Url.Action("EditCocktail", "Cocktail", new { Id = @cocktail.Id })'">Edit</button>
+                                <button class="btn btn-info" onclick="location.href='@Url.Action("ManageCocktails", "Cocktails", new { Id = @cocktail.Id })'">Edit</button>
                             }
                         </td>
                         <td>
-                            <button class="btn btn-info" onclick="location.href='@Url.Action("BarDetails", "Bar", new { Id = @cocktail.Id })'">Details</button>
+                            <button class="btn btn-info" onclick="location.href='@Url.Action("CocktailDetails", "Cocktails", new { Id = @cocktail.Id })'">Details</button>
                         </td>
 
                     </tr>

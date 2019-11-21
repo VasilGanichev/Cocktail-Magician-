@@ -31,6 +31,7 @@ namespace CocktailMagicianWeb.Utilities
             vm.Name = cocktail.Name;
             vm.IsHidden = cocktail.IsHidden;
             vm.Picture = cocktail.Picture;
+            vm.CocktailReviews = cocktail.CocktailReviews;
             try
             {
                 vm.Rating = cocktail.CocktailReviews.Select(b => b.Rating).Average();

@@ -58,6 +58,16 @@ namespace CocktailMagicianWeb.Controllers
             var reviews = await _barReviewServices.GetBarReviewsCollectionAsync(id);
             return PartialView("_LoadedBarReviewsPartial", reviews);
         }
+        [HttpGet]
+        public IActionResult LeaveCocktailReview(int Id)
+        {
+            var viewModel = new ReviewViewModel
+            {
+                Id = Id,
+            };
+            return View(viewModel);
+        }
+        [HttpPost]
         public async Task<IActionResult> LeaveCocktailReview(ReviewViewModel viewModel)
         {
             if(!ModelState.IsValid)

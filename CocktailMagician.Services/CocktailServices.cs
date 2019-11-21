@@ -44,7 +44,10 @@ namespace CocktailMagician.Services
 
         public async Task<Cocktail> GetByIdAsync(int id)
         {
-            var cocktail = await _context.Cocktails.FirstOrDefaultAsync(c => c.Id == id);
+            var cocktail = await _context.Cocktails
+                .Include(r => r.CocktailReviews)
+                  .Include(b => b.Ingredients)
+                .FirstOrDefaultAsync(c => c.Id == id);
 
             return cocktail;
         }
