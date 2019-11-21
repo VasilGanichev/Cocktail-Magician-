@@ -37,6 +37,7 @@ namespace CocktailMagician.Services
         private async Task<Ingredient> GetIngredientByNameAsync(string name)
         {
             var ingredient = await _context.Ingredients.FirstOrDefaultAsync(i => i.Name == name);
+
             return ingredient;
         }
 

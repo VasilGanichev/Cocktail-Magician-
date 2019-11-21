@@ -1,4 +1,5 @@
 ﻿
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using CocktailMagician.Data;
 using CocktailMagician.Data.Entities;
@@ -32,11 +33,32 @@ namespace CocktailMagician.Services
             return cocktailIngredient;
         }
 
-        public async Task<bool> PairExists(Ingredient ingredient, Cocktail cocktail)
+        public async Task DeleteAsync(string cocktailName, string ingredientName)
         {
-            var boolCheck = await _context.CocktailIngredients.Include(c => c.Ingredient).Include(c => c.Cocktail).AnyAsync(c => c.Ingredient == ingredient && c.Cocktail == cocktail);
+            var cocktailIngredient = await _context.CocktailIngredients.FirstOrDefaultAsync(c => c.Cocktail.Name == cocktailName && c.Ingredient.Name == ingredientName);
+            _context.CocktailIngredients.Remove(cocktailIngredient);
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task UpdateAsync(Ingredient ingredient, Cocktail cocktail, int quantity)
+        {
+            var cocktailIngredient = await _context.CocktailIngredients.FirstOrDefaultAsync(c => c.Cocktail.Name == cocktail.Name && c.Ingredient.Name == ingredient.Name);
+            cocktailIngredient.Quantity = quantity;
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task<bool> PairExistsAsync(Ingredient ingredient, Cocktail cocktail)
+        {
+            var boolCheck = await _context.CocktailIngredients.Include(c => c.Ingredient).Include(c => c.Cocktail).AnyAsync(c => c.Ingredient.Name == ingredient.Name && c.Cocktail == cocktail);
 
             return boolCheck;
+        }
+
+        public async Task<bool> IsPairUpdatedAsync(Ingredient ingredient, Cocktail cocktail, int quantity)
+        {
+            var boolCheck = await _context.CocktailIngredients.Include(c => c.Ingredient).Include(c => c.Cocktail).AnyAsync(c => c.Ingredient.Name == ingredient.Name && c.Cocktail == cocktail && c.Quantity == quantity);
+
+            return !boolCheck;
         }
     }
 }

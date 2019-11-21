@@ -9,5 +9,6 @@ namespace CocktailMagician.Services.Contracts
     public interface IBarCocktailServices
     {
         Task<BarCocktail>CreateAsync(Bar bar, Cocktail cocktail);
+        Task DeleteAsync(Bar bar, Cocktail cocktail);
     }
 }

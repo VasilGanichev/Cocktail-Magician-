@@ -72,5 +72,12 @@ namespace CocktailMagician.Services
                 .ToListAsync();
             return barsResult;
         }
+
+        public async Task<Bar> GetAsync(string barName)
+        {
+            var bar = await context.Bars.FirstOrDefaultAsync(b => b.Name == barName);
+
+            return bar;
+        }
     }
 }

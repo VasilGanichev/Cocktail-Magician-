@@ -16,5 +16,6 @@ namespace CocktailMagician.Services.Contracts
         Task<IReadOnlyCollection<Bar>> GetVisibleCollectionAsync();
         Task<Bar> GetBarAsync(int id);
         Task EditBarAsync(Bar bar);
+        Task<Bar> GetAsync(string barName);
     }
 }

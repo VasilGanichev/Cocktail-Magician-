@@ -3,6 +3,10 @@ using CocktailMagicianWeb.Models.Ingredients;
 using CocktailMagicianWeb.Models.Cocktails;
 using System.Linq;
 using CocktailMagicianWeb.Utilities.Mappers;
+using Microsoft.AspNetCore.Http;
+using System.Collections.Generic;
+using System.IO;
+using System.Threading.Tasks;
 
 namespace CocktailMagicianWeb.Utilities
 {
@@ -34,17 +38,21 @@ namespace CocktailMagicianWeb.Utilities
             return vm;
         }
 
-        public static UpdateCocktailViewModel MapToViewUpdateModel(this Cocktail cocktail)
+        public static UpdateCocktailViewModel MapToViewUpdateModel(this Cocktail cocktail, IReadOnlyCollection<Bar> allBars)
         {
             var vm = new UpdateCocktailViewModel();
             vm.Id = cocktail.Id;
             vm.Name = cocktail.Name;
             vm.IsHidden = cocktail.IsHidden;
-            vm.CurrentPicture = cocktail.Picture;
             vm.Picture = cocktail.Picture;
             vm.Quantities = cocktail.Ingredients.Select(i => i.Quantity).ToList();
-            vm.Ingredients = cocktail.Ingredients.Select(c => c.Ingredient.MapToViewModel()).ToList();
-            vm.Bars = cocktail.Bars.Select(c => c.Bar.MapToViewModel()).ToList();
+            vm.CurrentIngredients = cocktail.Ingredients.Select(c => c.Ingredient.MapToViewModel()).ToList();
+            vm.AllBars = allBars.Select(b => b.Name).ToList();
+            if (cocktail.Bars.Count != 0)
+            {
+            vm.OfferingBars = cocktail.Bars.Select(c => c.Bar.Name).ToList();
+            }
+
             return vm;
         }
 
@@ -54,13 +62,9 @@ namespace CocktailMagicianWeb.Utilities
             {
                 Id = vm.Id,
                 Name = vm.Name,
-                Picture = vm.Picture,
-                IsHidden = vm.IsHidden
+                IsHidden = vm.IsHidden,
+                Picture = vm.Picture
             };
-            if (cocktail.Picture == null)
-            {
-                cocktail.Picture = vm.CurrentPicture;
-            }
 
             return cocktail;
         }

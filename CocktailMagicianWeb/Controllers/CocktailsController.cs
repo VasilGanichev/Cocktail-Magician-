@@ -70,7 +70,7 @@ namespace CocktailMagicianWeb.Controllers
             }
             var cocktail = await _cocktailServices.AddAsync(vm.Name, vm.Picture);
             var ingredients = await _ingredientServices.GetMultipleIngredientsByNameAsync(vm.Ingredients);
-            for (int i = 0; i < ingredients.Count; i++)
+            for (int i = 0; i < vm.Quantities.Count; i++)
             {
                 await _cocktailIngredientsServices.AddAsync(cocktail, ingredients[i], vm.Quantities[i]);
             }
@@ -89,32 +89,70 @@ namespace CocktailMagicianWeb.Controllers
         [HttpGet]
         public async Task<IActionResult> UpdateCocktail(int id)
         {
-            var cocktail = await _cocktailServices.GetByIdAsync(id);
-            var vm = cocktail.MapToViewUpdateModel();
+            var cocktail = await _cocktailServices.GetAsync(id);
+            var allBars = await _barServices.GetCollectionAsync();
+            var vm = cocktail.MapToViewUpdateModel(allBars);
             return View(vm);
         }
 
         [HttpPost]
-        public async Task<IActionResult> UpdateCocktail(UpdateCocktailViewModel vm)
+        public async Task<IActionResult> UpdateCocktail(UpdateCocktailViewModel vm, List<IFormFile> Picture)
         {
-            var cocktail = vm.MapToEntity();
-            await _cocktailServices.UpdateCocktail(cocktail);
-            var ingredients = vm.Ingredients.Select(i => i.MapToEntity()).ToList();
-            for (int i = 0; i < ingredients.Count; i++)
+            byte[] picture;
+
+            if (Picture.Count == 0)
             {
-                if (! await _cocktailIngredientsServices.PairExists(ingredients[i], cocktail))
+                picture = await _cocktailServices.GetCocktailCurrentPicture(vm.Id);
+                vm.Picture = picture;
+            }
+            else
+            {
+                foreach (var item in Picture)
                 {
-                    await _cocktailIngredientsServices.AddAsync(cocktail, ingredients[i], vm.Quantities[i]);
+                    if (item.Length > 0)
+                    {
+                        using (var stream = new MemoryStream())
+                        {
+                            await item.CopyToAsync(stream);
+                            vm.Picture = stream.ToArray();
+                        }
+                    }
                 }
             }
-            return View(vm);
-        }
 
-        //public async Task<IActionResult> UpdateCocktail(int id)
-        //{
-        //    var bars = await _barServices.GetCollectionAsync();
-        //    return Json(bars);
-        //}
+            var cocktail = vm.MapToEntity();
+            await _cocktailServices.UpdateCocktail(cocktail);
+            var currentIngredients = vm.CurrentIngredients.Select(c => c.MapToEntity()).ToList();
+            for (int i = 0; i < currentIngredients.Count; i++)
+            {
+                if (await _cocktailIngredientsServices.IsPairUpdatedAsync(currentIngredients[i], cocktail, vm.Quantities[i]))
+                {
+                    if (vm.Quantities[i] == 0)
+                    {
+                        continue;
+                    }
+
+                    await _cocktailIngredientsServices.UpdateAsync(currentIngredients[i], cocktail, vm.Quantities[i]);
+                }
+            }
+
+            var newIngredients = await _ingredientServices.GetMultipleIngredientsByNameAsync(vm.Ingredients);
+            for (int i = 0; i < newIngredients.Count; i++)
+            {
+                if (!await _cocktailIngredientsServices.PairExistsAsync(newIngredients[i], cocktail))
+                {
+                    // Update
+                    if (vm.Quantities[i] == 0)
+                    {
+                        continue;
+                    }
+
+                    await _cocktailIngredientsServices.AddAsync(cocktail, newIngredients[i], vm.Quantities[i]);
+                }
+            }
+
+            return View("ManageCocktails");
+        }
 
         public async Task HideCocktail([FromBody]CocktailViewModel vm)
         {
@@ -131,6 +169,35 @@ namespace CocktailMagicianWeb.Controllers
             var ingredients = await _ingredientServices.GetIngedientsByTypeAsync(type);
 
             return Json(ingredients);
+        }
+
+        public async Task RemoveIngredient(string cocktail, string ingredient)
+        {
+            await _cocktailIngredientsServices.DeleteAsync(cocktail, ingredient);
+        }
+
+        public async Task UpdateBarCocktailPairs(string cocktailName, string[] currentlyCheckedBars)
+        {
+            var cocktail = await _cocktailServices.GetAsync(cocktailName);
+            var originalOfferingBars = cocktail.Bars.Select(b => b.Bar).ToList();
+            var userCheckBars = new List<Bar>(100);
+            foreach (var name in currentlyCheckedBars)
+            {
+                var bar = await _barServices.GetAsync(name);
+                userCheckBars.Add(bar);
+            }
+
+            var pairsToDelete = originalOfferingBars.Except(userCheckBars);
+            var newPairs = userCheckBars.Except(originalOfferingBars);
+            foreach (var bar in newPairs)
+            {
+                await _barCocktailServices.CreateAsync(bar, cocktail);
+            }
+
+            foreach (var bar in pairsToDelete)
+            {
+                await _barCocktailServices.DeleteAsync(bar, cocktail);
+            }
         }
     }
 }
