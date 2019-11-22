@@ -57,6 +57,10 @@ namespace CocktailMagicianWeb.Controllers
             barsResult.Bars = (await _barServices.GetVisibleCollectionAsync()).Select(b => b.MapToViewModel()).ToList();
             return View(barsResult);
         }
+        public IActionResult TestView()
+        {
+            return View();
+        }
 
         [HttpGet]
         public async Task<IActionResult> SearchBars()

@@ -24,12 +24,13 @@
 
     })
 })
-$('#Load-Cocktails-Reviews').click(function (e) {
+$('#Load-Cocktails-Reviews').ready().click(function (e) {
     e.preventDefault();
     const thisCocktailBtn = $(this);
     const cocktail = $(this).data('cocktail')
     console.log(thisCocktailBtn);
     console.log(cocktail);
+    const commentBox = $('#CommentBox')
     $.ajax({
         url: '/Reviews/LoadCoctailReviews',
         data: { id: cocktail },
@@ -43,7 +44,8 @@ $('#Load-Cocktails-Reviews').click(function (e) {
             }
             else {
                 console.log(response)
-                thisCocktailBtn.replaceWith(response)
+                thisCocktailBtn.remove
+                commentBox.append(response)
             }
         }
 

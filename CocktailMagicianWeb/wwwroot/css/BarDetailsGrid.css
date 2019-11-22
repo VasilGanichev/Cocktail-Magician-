@@ -1,0 +1,38 @@
+﻿.grid-container {
+    display: grid;
+    grid-template-columns: 0.1fr 2fr 1.9fr 0.1fr 2.5fr 0.1fr 1.4fr 0.1fr 1.5fr 2fr 0.1fr;
+    grid-template-rows: 0.4fr 3.9fr 0.6fr 0.2fr 1.1fr 3.8fr 0.2fr;
+    grid-template-areas: ". . . . . . . . . . ." ". picture picture . description . cocktails . googlemaps googlemaps ." ". picture picture . description . cocktails . googlemaps googlemaps ." ". . . . . . . . . . ." ". . buttons buttons buttons buttons buttons buttons buttons . ." ". . comments comments comments comments comments comments comments . ." ". . . . . . . . . . .";
+}
+
+.picture {
+    grid-area: picture;
+}
+
+.googlemaps {
+    grid-area: googlemaps;
+}
+
+.cocktails {
+    grid-area: cocktails;
+}
+
+.description {
+    grid-area: description;
+}
+
+.buttons {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 1.4fr 0.8fr;
+    grid-template-areas: ". buttonholder ." ". buttonholder .";
+    grid-area: buttons;
+}
+
+.buttonholder {
+    grid-area: buttonholder;
+}
+
+.comments {
+    grid-area: comments;
+}

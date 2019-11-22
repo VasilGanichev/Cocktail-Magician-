@@ -1,0 +1,10 @@
+﻿@font-face {
+    font-family: 'loki_colaregular';
+    src: url('../fonts/lokicola-webfont.woff2') format('woff2'), url('../fonts/lokicola-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+.cola {
+    font-family: 'loki_colaregular';
+    color: #ff0000;
+}
