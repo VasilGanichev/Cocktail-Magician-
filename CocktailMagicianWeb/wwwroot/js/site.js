@@ -5,22 +5,21 @@
 
 //$('#createBarBtn').click(function (e) {
 //    e.preventDefault();
-//    var serialized = $('#createBarForm').serializeArray();
+//    var serialized = $('#createBarForm').serialize();
 //    var url = '/Bar/CreateBar';
 //    var fdata = new FormData();
 
-//    var fileInput1 = $('#barImage')[0].files[0];
-//    fdata.append("picture", fileInput1);
-//    //serialized.NewPicture = fdata
-//    console.log(serialized)
-//    console.log(fdata)
-//    //url = url + `?barmodel=${serialized}`
+//  //  var fileInput1 = $('#barImage')[0].files[0];
+//    var file_data = $('#barImage').prop('files')[0];
+//    fdata.append("picture", file_data);
+//    url = url + `?${serialized}`
 
 //    $.ajax({
 //        url: url,
 //        method: 'POST',
-//        data: serialized,
-//        dataType: 'json',
+//        data: fdata,
+//        contentType: false,
+//        processData: false,
 //        success: function (responseData) {
 
 //            if (responseData.length === 0) {

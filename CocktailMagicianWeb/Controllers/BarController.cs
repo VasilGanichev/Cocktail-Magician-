@@ -36,15 +36,15 @@ namespace CocktailMagicianWeb.Controllers
 
         [HttpPost]
         [Authorize(Roles = "CocktailMagician")]
-        public async Task<IActionResult> CreateBar(BarViewModel barmodel)
+        public async Task<IActionResult> CreateBar([FromQuery]BarViewModel barViewModel)
         {
             if (!ModelState.IsValid)
             {
                 return View();
             }
-            var barModel = await barmodel.MapToEntity();
+            var barModel = await barViewModel.MapToEntity();
             await _barServices.CreateBarAsync(barModel);
-            foreach (var cocktail in barmodel.Cocktails)
+            foreach (var cocktail in barViewModel.Cocktails)
             {
                 var cocktailEntity = await _cocktailServices.GetAsync(cocktail);
                 await _barCocktailServices.CreateAsync(barModel, cocktailEntity);
