@@ -10,6 +10,8 @@ namespace CocktailMagicianWeb.Models
         public string Name { get; set; }
         public string Address { get; set; }
         public string PhoneNumber { get; set; }
+        public double? AvgRating { get; set; }
+        public bool ShowOnlyHiddenFiles { get; set; }
         public IReadOnlyCollection<BarViewModel> SearchResults { get; set; }
     }
 }

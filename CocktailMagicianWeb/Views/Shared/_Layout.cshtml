@@ -55,6 +55,7 @@
                             <div class="dropdown">
                                 <button class="dropbtn">Cocktails</button>
                                 <div class="dropdown-content">
+                                    <a class="nav-link text-dark" asp-controller="Cocktails" asp-action="SearchCocktails">Browse Cocktails</a>
                                     @if (this.User.IsInRole("CocktailMagician"))
                                     {
                                         <a class="nav-link text-dark" asp-controller="Cocktails" asp-action="AddCocktail">Add Cocktail</a>
@@ -125,6 +126,8 @@
     <script src="~/js/AddCocktail.js"></script>
     <script src="~/js/LoadReview.js"></script>
     <script src="~/js/UpdateCocktail.js"></script>
+    <script src="~/js/addCocktail.js"></script>
+    <script src="~/js/AddCocktailToBar.js"></script>
     @RenderSection("Scripts", required: false)
 </body>
 </html>

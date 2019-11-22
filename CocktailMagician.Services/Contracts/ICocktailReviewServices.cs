@@ -12,5 +12,6 @@ namespace CocktailMagician.Services.Contracts
         Task<CocktailReview> CreateCocktailReviewAsync(double rating, string comment, Cocktail cocktail, User user);
         Task DeleteAsync(int id);
         Task EditCocktailReview(CocktailReview review, double newRating, string newComment);
+        Task<List<CocktailReview>> GetCocktailReviewsCollectionAsync(int cocktailId);
     }
 }

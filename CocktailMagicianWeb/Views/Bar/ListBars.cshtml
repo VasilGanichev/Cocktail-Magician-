@@ -24,7 +24,7 @@
         foreach (var bar in Model.Bars)
         {
             <tr>
-                    @if ((Html.Raw(Convert.ToBase64String(bar.Picture))) == null)
+                    @if ((Html.Raw(Convert.ToBase64String(bar.CurrentPicture))) == null)
                     {
                     <td>
                         <img src="~/images/no-image-icon-6.png" width="230" height="172" />
@@ -33,7 +33,7 @@
                       else
                       {
                         <td>
-                          <img src="data:image/jpg;base64,@(Html.Raw(Convert.ToBase64String(bar.Picture)))" width="230" height="172" />
+                          <img src="data:image/jpg;base64,@(Html.Raw(Convert.ToBase64String(bar.CurrentPicture)))" width="230" height="172" />
 
                         </td>
 

@@ -1,31 +1,14 @@
-﻿@model BarSearchViewModel
-
+﻿@model CocktailMagicianWeb.Models.Cocktails.SearchCocktailViewModel
 @{
-    ViewData["Title"] = "SearchBars";
-    <style>
-        img {
-            max-width: 100%;
-            height: auto;
-        }
-    </style>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <script src="~/lib/jquery/dist/jquery.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
-    <link href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" rel="stylesheet" />
-
+    ViewData["Title"] = "SearchCoctails";
 }
 
-
-<h1>SearchBars</h1>
+<h1>SearchCoctails</h1>
 
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="SearchBars" method="post" enctype="multipart/form-data">
+        <form asp-action="SearchCocktails" method="post" enctype="multipart/form-data">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="@Model.Name" class="control-label"></label>
@@ -33,29 +16,20 @@
                 <span asp-validation-for="@Model.Name" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="@Model.Address" class="control-label"></label>
-                <input asp-for="@Model.Address" class="form-control" />
-                <span asp-validation-for="@Model.Address" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="@Model.PhoneNumber" class="control-label"></label>
-                <input asp-for="@Model.PhoneNumber" class="form-control" />
-                <span asp-validation-for="@Model.PhoneNumber" class="text-danger"></span>
+                <label asp-for="@Model.Ingredient" class="control-label"></label>
+                <input asp-for="@Model.Ingredient" class="form-control" />
+                <span asp-validation-for="@Model.Ingredient" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label class="control-label">Rating</label>
                 <input asp-for="@Model.AvgRating" class="form-control" />
                 <span asp-validation-for="@Model.AvgRating" class="text-danger"></span>
             </div>
-            @if (this.User.IsInRole("CocktailMagician"))
-            {
-                <div class="form-group form-check">
-                    <label class="form-check-label">
-                        <input class="form-check-input" asp-for="@Model.ShowOnlyHiddenFiles" /> Display only hidden files
-                    </label>
-                </div>
-            }
-
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="@Model.IncludeOnlyAlcoholicDrinks" /> @Html.DisplayNameFor(model => model.IncludeOnlyAlcoholicDrinks)
+                </label>
+            </div>
             <div class="search" data-info="Search!">
                 <br />
                 <button type="submit" class="btn btn-primary" id="searchBtn">&#x1F50D;</button>
@@ -82,14 +56,13 @@
                 <tr>
                     <th>Image</th>
                     <th>Name</th>
-                    <th>Address</th>
-                    <th>Phone</th>
+                    <th>Ingredients</th>
                 </tr>
-                foreach (var bar in Model.SearchResults)
+                foreach (var cocktail in Model.SearchResults)
                 {
                     <tr>
 
-                        @if (bar.CurrentPicture == null)
+                        @if (cocktail.Picture == null)
                         {
                             <td>
                                 <img src="~/images/no-image-icon-6.png" width="230" height="172" />
@@ -98,26 +71,28 @@
                         else
                         {
                             <td>
-                                <img src="data:image/jpg;base64,@(Html.Raw(Convert.ToBase64String(bar.CurrentPicture)))" width="230" height="172" />
+                                <img src="data:image/jpg;base64,@(Html.Raw(Convert.ToBase64String(cocktail.Picture)))" width="230" height="172" />
                             </td>
                         }
                         <td>
-                            @bar.Name
+                            @cocktail.Name
                         </td>
                         <td>
-                            @bar.Address
-                        </td>
-                        <td>
-                            @bar.PhoneNumber
+                            @foreach (var ingredient in cocktail.Ingredients)
+                            {
+                                <p>
+                                    @ingredient
+                                </p>
+                            }
                         </td>
                         <td>
                             @if (this.User.IsInRole("CocktailMagician"))
                             {
-                                <button class="btn btn-info" onclick="location.href='@Url.Action("EditBar", "Bar", new { Id = @bar.Id })'">Edit</button>
+                                <button class="btn btn-info" onclick="location.href='@Url.Action("ManageCocktails", "Cocktails", new { Id = @cocktail.Id })'">Edit</button>
                             }
                         </td>
                         <td>
-                            <button class="btn btn-info" onclick="location.href='@Url.Action("BarDetails", "Bar", new { Id = @bar.Id })'">Details</button>
+                            <button class="btn btn-info" onclick="location.href='@Url.Action("CocktailDetails", "Cocktails", new { Id = @cocktail.Id })'">Details</button>
                         </td>
 
                     </tr>
@@ -154,4 +129,3 @@
         });
     </script>
 }
-

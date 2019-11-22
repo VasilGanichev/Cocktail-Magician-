@@ -45,7 +45,12 @@ namespace CocktailMagician.Services
 
         public async Task<Cocktail> GetAsync(int id)
         {
-            var cocktail = await _context.Cocktails.Include(c => c.Bars).ThenInclude(c => c.Bar).Include(c => c.Ingredients).ThenInclude(i => i.Ingredient).FirstOrDefaultAsync(c => c.Id == id);
+            var cocktail = await _context.Cocktails
+                .Include(c => c.CocktailReviews)
+                .Include(c => c.Bars)
+                .ThenInclude(c => c.Bar)
+                .Include(c => c.Ingredients)
+                .ThenInclude(i => i.Ingredient).FirstOrDefaultAsync(c => c.Id == id);
 
             return cocktail;
         }
@@ -75,6 +80,37 @@ namespace CocktailMagician.Services
             var cocktail = await GetAsync(id);
             cocktail.IsHidden = false;
             await _context.SaveChangesAsync();
+        }
+        public async Task<List<Cocktail>> SearchByMultipleCriteriaAsync(string name, string ingredientName, bool IncludeOnlyAlcohol)
+        {
+            List<Cocktail> cocktailsResult = new List<Cocktail>();
+            if (IncludeOnlyAlcohol)
+            {
+                cocktailsResult = await _context.Cocktails
+                  .Include(r => r.CocktailReviews)
+                    .Include(b => b.Ingredients)
+                    .ThenInclude(b => b.Ingredient)
+                    .Where(b => ((name == null) || (b.Name.Contains(name))) &&
+                    ((ingredientName == null) || (b.Ingredients.FirstOrDefault(i => i.Ingredient.Name == name) != null)) &&
+                   (((b.Ingredients.Select(i => i.Ingredient.Type)).Contains("alcohol"))))
+                    .ToListAsync();
+            }
+            else
+            {
+                cocktailsResult = await _context.Cocktails
+                .Include(r => r.CocktailReviews)
+                  .Include(b => b.Ingredients)
+                  .ThenInclude(b => b.Ingredient)
+                  .Where(b => ((name == null) || (b.Name.Contains(name))) &&
+                  ((ingredientName == null) || (b.Ingredients.FirstOrDefault(i => i.Ingredient.Name == name) != null))).ToListAsync();
+            }
+
+            return cocktailsResult;
+        }
+
+        public async Task<IReadOnlyCollection<Cocktail>> GetCollectionAsync()
+        {
+            return await _context.Cocktails.ToListAsync();
         }
     }
 }

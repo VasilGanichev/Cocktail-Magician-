@@ -5,6 +5,7 @@ using CocktailMagician.Services.Utilities;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -57,5 +58,10 @@ namespace CocktailMagician.Services
             throw new NotImplementedException();
         }
 
+        public async Task<List<CocktailReview>> GetCocktailReviewsCollectionAsync(int cocktailId)
+        {
+            var reviews = await (this.context.CocktailReviews.Where(r => r.CocktailId == cocktailId)).ToListAsync();
+            return reviews;
+        }
     }
 }

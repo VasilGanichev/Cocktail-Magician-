@@ -21,7 +21,11 @@ namespace CocktailMagician.Services
         }
         public async Task<Bar> GetBarAsync(int id)
         {
-            var bar = await this.context.Bars.Include(b => b.BarReviews).FirstOrDefaultAsync(b => b.Id == id);
+            var bar = await this.context.Bars
+                .Include(b => b.BarReviews)
+                .Include(b => b.BarCocktails)
+                .ThenInclude(b => b.Cocktail)
+                .FirstOrDefaultAsync(b => b.Id == id);
             bar.EnsureNotNull();
             return bar;
         }
@@ -43,7 +47,7 @@ namespace CocktailMagician.Services
             await this.context.Bars.AddAsync(bar);
             await this.context.SaveChangesAsync();
         }
-        public async Task CreateBarAsync(string name, string adress,string phoneNumber, byte[] picture)
+        public async Task CreateBarAsync(string name, string adress, string phoneNumber, byte[] picture)
         {
             var bar = new Bar
             {
@@ -64,11 +68,17 @@ namespace CocktailMagician.Services
             await this.context.SaveChangesAsync();
 
         }
-        public async Task<IReadOnlyCollection<Bar>> SearchBooksByMultipleCriteriaAsync(string name, string adress, string phonenumber)
+        public async Task<IReadOnlyCollection<Bar>> SearchBarsByMultipleCriteriaAsync(string name, string adress, string phonenumber, bool displayOnlyHiddenFiles)
         {
-            var barsResult = await this.context.Bars.Include(r => r.BarReviews).Where(b => ((name == null) || (b.Name.Contains(name)))
+            var barsResult = await this.context.Bars
+              .Include(r => r.BarReviews)
+              .Include(b => b.BarCocktails)
+              .ThenInclude(b => b.Cocktail)
+              .Where(b => ((name == null) || (b.Name.Contains(name)))
               && ((adress == null) || (b.Address.Contains(adress)))
-              && ((phonenumber == null) || (b.PhoneNumber.Contains(phonenumber))))
+              && ((phonenumber == null) || (b.PhoneNumber.Contains(phonenumber)))
+              && (b.IsHidden == displayOnlyHiddenFiles)
+              )
                 .ToListAsync();
             return barsResult;
         }
