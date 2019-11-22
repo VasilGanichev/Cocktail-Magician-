@@ -164,18 +164,6 @@ namespace CocktailMagicianWeb.Controllers
             await _cocktailServices.UnhideAsync(vm.Id);
         }
 
-        public async Task<IActionResult> GetIngedientsByType(string type)
-        {
-            var ingredients = await _ingredientServices.GetIngedientsByTypeAsync(type);
-
-            return Json(ingredients);
-        }
-
-        public async Task RemoveIngredient(string cocktail, string ingredient)
-        {
-            await _cocktailIngredientsServices.DeleteAsync(cocktail, ingredient);
-        }
-
         public async Task UpdateBarCocktailPairs(string cocktailName, string[] currentlyCheckedBars)
         {
             var cocktail = await _cocktailServices.GetAsync(cocktailName);

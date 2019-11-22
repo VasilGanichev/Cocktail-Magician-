@@ -30,7 +30,7 @@
     console.log(thisSelect)
 
     $.ajax({
-        url: '/Cocktails/GetIngedientsByType',
+        url: '/Ingredients/GetIngedientsByType',
         data: { type: 'alcohol' },
         cache: true,
         type: 'GET',
@@ -51,20 +51,23 @@
                 console.log(thisSelect)
                 thisSelect.parent()
                     .append(` <select name="Ingredients"> ${options}  </select>`)
-                    .append('<input name="Quantities" id="element1" placeholder="mililiters..." class="form-control col-md-2"></input>')
+                    .append('<input name="Quantities" id="element1" data-val="true"  data-val-required="A date is required." value="0" placeholder="mililiters..." class="form-control col-md-2 required"></input>')
                     .append('<span asp-validation-for="@Model.Quantities" class="text-danger"></span>')
                     .append('<button type="button" class= "cancel btn"> <i id="element2" class="fa fa-close"></i></button>')
-            }
-            $('.quantities').each(function () {
-                $(this).rules("add",
-                    {
-                        required: true
-                    })
-            });
-            if ($('#Ingredients').validate().form()) {
-                console.log("validates");
-            } else {
-                console.log("does not validate");
+
+                //Remove current form validation information
+                $("form")
+                    .removeData("validator")
+                    .removeData("unobtrusiveValidation");
+
+                //Parse the form again
+                $.validator
+                    .unobtrusive
+                    .parse("form");
+
+                $(function () {
+                    $("form").validate();
+                });
             }
         }
     })
@@ -78,7 +81,7 @@ $('#Ingredients').on('change', 'select', function (e) {
         console.log(position)
         e.preventDefault()
         $.ajax({
-            url: '/Cocktails/GetIngedientsByType',
+            url: '/Ingredients/GetIngedientsByType',
             data: { type: type },
             cache: true,
             type: 'GET',
@@ -98,7 +101,7 @@ $('#Ingredients').on('change', 'select', function (e) {
                     console.log(` <select> ${options}  </select>`)
                     console.log(thisSelect)
                     thisSelect.parent().append(`<select name="Ingredients"> ${options}  </select>`)
-                        .append('<input name="Quantities" id="element1" placeholder="mililiters/spoon..." class="form-control col-md-2 quantities"></input>')
+                        .append('<input name="Quantities"  data-val="true"  data-val-required="A date is required." id="element1" placeholder="mililiters/spoon..." class="form-control col-md-2 quantities"></input>')
                         .append('<span asp-validation-for="@Model.Quantities" class="text-danger"></span>')
                         .append('<button type="button" class= "cancel btn"> <i id="element2" class="fa fa-close"></i></button>')
                 }
@@ -124,7 +127,7 @@ $('#Ingredients').on('change', 'select', function (e) {
         const type = $(this).val()
         e.preventDefault()
         $.ajax({
-            url: '/Cocktails/GetIngedientsByType',
+            url: '/Ingredients/GetIngedientsByType',
             data: { type: type },
             cache: true,
             type: 'GET',
@@ -145,7 +148,7 @@ $('#Ingredients').on('change', 'select', function (e) {
                     console.log(thisSelect)
                     thisSelect.parent()
                         .append(`<select name="Ingredients"> ${options}  </select>`)
-                        .append('<input name="Quantities" id="element1" placeholder="mililiters..." class="form-control col-md-2 quantities"></input>')
+                        .append('<input name="Quantities"  data-val="true"  data-val-required="A date is required." id="element1" placeholder="mililiters..." class="form-control col-md-2 quantities"></input>')
                         .append('<span asp-validation-for="@Model.Quantities" class="text-danger"></span>')
                         .append('<button type="button" class= "cancel btn"> <i id="element2" class="fa fa-close"></i></button>')
                 }
@@ -171,7 +174,7 @@ $('#Ingredients').on('change', 'select', function (e) {
         const type = $(this).val()
         e.preventDefault()
         $.ajax({
-            url: '/Cocktails/GetIngedientsByType',
+            url: '/Ingredients/GetIngedientsByType',
             data: { type: type },
             cache: true,
             type: 'GET',
@@ -192,7 +195,7 @@ $('#Ingredients').on('change', 'select', function (e) {
                     console.log(thisSelect)
                     thisSelect.parent()
                         .append(` <select name="Ingredients"> ${options}  </select>`)
-                        .append('<input name="Quantities" id="element1" placeholder="stalk..." class="form-control col-md-2 quantities"></input>')
+                        .append('<input name="Quantities"  data-val="true"  data-val-required="A date is required." id="element1" placeholder="stalk..." class="form-control col-md-2 quantities"></input>')
                         .append('<span asp-validation-for="@Model.Quantities" class="text-danger"></span>')
                         .append('<button type="button" class= "cancel btn"> <i id="element2" class="fa fa-close"></i></button>')
                 }
@@ -218,7 +221,7 @@ $('#Ingredients').on('change', 'select', function (e) {
         const type = $(this).val()
         e.preventDefault()
         $.ajax({
-            url: '/Cocktails/GetIngedientsByType',
+            url: '/Ingredients/GetIngedientsByType',
             data: { type: type },
             cache: true,
             type: 'GET',
@@ -240,7 +243,7 @@ $('#Ingredients').on('change', 'select', function (e) {
                     console.log(thisSelect)
                     thisSelect.parent()
                         .append(`<select name="Ingredients"> ${options}  </select>`)
-                        .append('<input name="Quantities" id="element1" placeholder="mililiters..." class="form-control col-md-2 quantities"></input>')
+                        .append('<input name="Quantities"  data-val="true"  data-val-required="A date is required." id="element1" placeholder="mililiters..." class="form-control col-md-2 quantities"></input>')
                         .append('<span asp-validation-for="@Model.Quantities" class="text-danger"></span>')
                         .append('<button type="button" class= "cancel btn"> <i id="element2" class="fa fa-close"></i></button>')
                 }
@@ -278,7 +281,8 @@ $('#Ingredients').on('click', '#addCocktailToBars', function (e) {
                     options[i] = `<label> <input class="checkbox" type="checkbox" data-bar="${responseData[i].name}" value="${responseData[i].name}"> ${responseData[i].name} </input></label>`
                 }
                 console.log(` <select> ${options} </select>`)
-                btn.replaceWith(`<div class="multiselect"> ${options} </div> <button id="save" type="button" class="btn" style="background-color:#ff0000; color:white"> Save </button>`)
+                btn.replaceWith(`<div class="multiselect"> ${options.join('')} </div>
+                                <button id="save" type="button" class="btn" style="background-color:#ff0000; color:white"> Save </button>`)
             }
         }
     })

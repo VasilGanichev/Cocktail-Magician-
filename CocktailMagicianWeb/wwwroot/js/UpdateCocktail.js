@@ -7,7 +7,7 @@
     $(this).parent('div').empty()
 
     $.ajax({
-        url: '/Cocktails/RemoveIngredient',
+        url: '/Ingredients/RemoveIngredient',
         data: { cocktail: cocktail, ingredient: ingredient },
         method: 'GET',
         success: function () {

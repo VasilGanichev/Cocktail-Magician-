@@ -12,9 +12,12 @@ namespace CocktailMagicianWeb.Controllers
     public class IngredientsController : Controller
     {
         private readonly IIngredientServices _ingredientServices;
-        public IngredientsController(IIngredientServices ingredientServices)
+        private readonly ICocktailIngredientServices _cocktailIngredientServices;
+
+        public IngredientsController(IIngredientServices ingredientServices, ICocktailIngredientServices cocktailIngredientServices)
         {
-            this._ingredientServices = ingredientServices;
+            _ingredientServices = ingredientServices;
+            _cocktailIngredientServices = cocktailIngredientServices;
         }
 
         [HttpGet]
@@ -61,12 +64,14 @@ namespace CocktailMagicianWeb.Controllers
             var vm = ingredient.MapToUpdateViewModel();
             return View(vm);
         }
+
         [Authorize(Roles = "CocktailMagician")]
         public async Task<IActionResult> UpdateIngredient(UpdateIngredientViemModel vm)
         {
             await _ingredientServices.UpdateAsync(vm.ID, vm.NewName);
             return View("ManageIngredients");
         }
+
         [Authorize(Roles = "CocktailMagician")]
         public async Task<IActionResult> DeleteIngredient(int id)
         {
@@ -77,6 +82,18 @@ namespace CocktailMagicianWeb.Controllers
             }
             await _ingredientServices.DeleteAsync(id);
             return View("ManageIngredients");
+        }
+
+        public async Task RemoveIngredient(string cocktail, string ingredient)
+        {
+            await _cocktailIngredientServices.DeleteAsync(cocktail, ingredient);
+        }
+
+        public async Task<IActionResult> GetIngedientsByType(string type)
+        {
+            var ingredients = await _ingredientServices.GetIngedientsByTypeAsync(type);
+
+            return Json(ingredients);
         }
     }
 }
