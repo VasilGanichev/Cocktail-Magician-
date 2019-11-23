@@ -1,17 +1,20 @@
 ﻿using CocktailMagician.Data;
 using CocktailMagician.Services;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
+using System.Collections.Generic;
+using System.Text;
 
 namespace CocktailMagician.Tests.ServiceTests.IngredientServiceTests
 {
     [TestClass]
-    public class SearchIngredients_Should
+    public class GetIngedientsByType_Should
     {
         [TestMethod]
-        public void ReturnCollectionOfCorrectIngredientsContainingTheSpecifiedChar()
+        public void ShouldReturnCollectionOfCorrectIngredients()
         {
             // Arrange
-            var options = TestUtilities.GetOptions(nameof(ReturnCollectionOfCorrectIngredientsContainingTheSpecifiedChar));
+            var options = TestUtilities.GetOptions(nameof(ShouldReturnCollectionOfCorrectIngredients));
 
 
             // Act, Assert
@@ -23,7 +26,7 @@ namespace CocktailMagician.Tests.ServiceTests.IngredientServiceTests
                 var ingredient = sut.AddAsync(name, type).GetAwaiter().GetResult();
                 name = "Rum2";
                 var ingredient2 = sut.AddAsync(name, type).GetAwaiter().GetResult();
-                var result = sut.SearchIngredientsAsync("u").GetAwaiter().GetResult();
+                var result = sut.GetIngedientsByTypeAsync("alcohol").GetAwaiter().GetResult();
 
                 Assert.IsTrue(result.Count == 2 && result.Contains(ingredient) && result.Contains(ingredient));
             }
@@ -40,7 +43,7 @@ namespace CocktailMagician.Tests.ServiceTests.IngredientServiceTests
             using (var assertContext = new CocktailDB(options))
             {
                 var sut = new IngredientServices(assertContext);
-                var result = sut.SearchIngredientsAsync("e").GetAwaiter().GetResult();
+                var result = sut.GetIngedientsByTypeAsync("alcohol").GetAwaiter().GetResult();
 
                 Assert.IsTrue(result.Count == 0);
             }

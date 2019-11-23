@@ -8,10 +8,10 @@ namespace CocktailMagician.Tests.ServiceTests.IngredientServiceTests
     public class Get_Should
     {
         [TestMethod]
-        public void ReturnCorrectIngredient()
+        public void ReturnCorrectIngredientByID()
         {
             // Arrange
-            var options = TestUtilities.GetOptions(nameof(ReturnCorrectIngredient));
+            var options = TestUtilities.GetOptions(nameof(ReturnCorrectIngredientByID));
 
             // Act, Assert
             using (var assertContext = new CocktailDB(options))
@@ -22,6 +22,25 @@ namespace CocktailMagician.Tests.ServiceTests.IngredientServiceTests
                 var type = "alcohol";
                 var ingredient = sut.AddAsync(name, type).GetAwaiter().GetResult();
                 var result = sut.GetAsync(ingredient.Id).GetAwaiter().GetResult();
+
+                Assert.AreEqual(ingredient, result);
+            }
+        }
+
+        public void ReturnCorrectIngredientByName()
+        {
+            // Arrange
+            var options = TestUtilities.GetOptions(nameof(ReturnCorrectIngredientByName));
+
+            // Act, Assert
+            using (var assertContext = new CocktailDB(options))
+            {
+                var sut = new IngredientServices(assertContext);
+
+                var name = "Rum";
+                var type = "alcohol";
+                var ingredient = sut.AddAsync(name, type).GetAwaiter().GetResult();
+                var result = sut.GetAsync(ingredient.Name).GetAwaiter().GetResult();
 
                 Assert.AreEqual(ingredient, result);
             }

@@ -1,17 +1,21 @@
 ﻿using CocktailMagician.Data;
 using CocktailMagician.Services;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 
 namespace CocktailMagician.Tests.ServiceTests.IngredientServiceTests
 {
     [TestClass]
-    public class SearchIngredients_Should
+    public class GetMultipleIngredientsByName_Should
     {
         [TestMethod]
-        public void ReturnCollectionOfCorrectIngredientsContainingTheSpecifiedChar()
+        public void ShouldReturnCollectionOfCorrectIngredientsByName()
         {
             // Arrange
-            var options = TestUtilities.GetOptions(nameof(ReturnCollectionOfCorrectIngredientsContainingTheSpecifiedChar));
+            var options = TestUtilities.GetOptions(nameof(ShouldReturnCollectionOfCorrectIngredientsByName));
 
 
             // Act, Assert
@@ -23,26 +27,29 @@ namespace CocktailMagician.Tests.ServiceTests.IngredientServiceTests
                 var ingredient = sut.AddAsync(name, type).GetAwaiter().GetResult();
                 name = "Rum2";
                 var ingredient2 = sut.AddAsync(name, type).GetAwaiter().GetResult();
-                var result = sut.SearchIngredientsAsync("u").GetAwaiter().GetResult();
+
+                var names = new List<string> {"Rum", "Rum2" };
+                var result = sut.GetMultipleIngredientsByNameAsync(names).GetAwaiter().GetResult();
 
                 Assert.IsTrue(result.Count == 2 && result.Contains(ingredient) && result.Contains(ingredient));
             }
         }
 
         [TestMethod]
-        public void ShouldReturnEmptyCollectionIfNoIngredientsAreFound()
+        public void ReturnCollectionOfNullElementsIfThereAreNoMatches()
         {
             // Arrange
-            var options = TestUtilities.GetOptions(nameof(ShouldReturnEmptyCollectionIfNoIngredientsAreFound));
+            var options = TestUtilities.GetOptions(nameof(ReturnCollectionOfNullElementsIfThereAreNoMatches));
 
 
             // Act, Assert
             using (var assertContext = new CocktailDB(options))
             {
                 var sut = new IngredientServices(assertContext);
-                var result = sut.SearchIngredientsAsync("e").GetAwaiter().GetResult();
+                var names = new List<string> { "Rum", "Rum2" };
+                var result = sut.GetMultipleIngredientsByNameAsync(names).GetAwaiter().GetResult();
 
-                Assert.IsTrue(result.Count == 0);
+                Assert.IsTrue(result.All(e => e == null));
             }
         }
     }
