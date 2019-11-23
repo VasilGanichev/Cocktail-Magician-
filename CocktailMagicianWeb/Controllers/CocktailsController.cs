@@ -1,4 +1,5 @@
 ﻿using CocktailMagician.Data.Entities;
+using CocktailMagician.Services;
 using CocktailMagician.Services.Contracts;
 using CocktailMagicianWeb.Models.Cocktails;
 using CocktailMagicianWeb.Utilities.Mappers;
@@ -25,7 +26,7 @@ namespace CocktailMagicianWeb.Controllers
             _cocktailServices = cocktailServices;
             _cocktailIngredientsServices = cocktailIngredientsServices;
             _barCocktailServices = barCocktailServices;
-            this._barServices = barServices;
+            _barServices = barServices;
         }
 
         public async Task<IActionResult> ManageCocktails(CocktailsViewModel vm)

@@ -5,7 +5,7 @@
     if (ingredients === 10) {
         button.replaceWith(` <div class="holder">
         Ingredient ${ingredients}:
-        <select id="drop${ingredients}" class="drop" data-position="${ingredients}">
+        <select id="drop${ingredients}" class="drop btn btn-danger dropdown-toggle" data-position="${ingredients}">
         <option value="alcohol">Alcohol</option>
         <option value="sweetener">Sweetener</option>
         <option value="juice">Juice</option>
@@ -18,7 +18,7 @@
     button.replaceWith(
         `<div class="holder">
         Ingredient ${ingredients}:
-        <select id="drop$${ingredients}" class ="drop" data-position="${ingredients}">
+        <select id="drop$${ingredients}" class ="drop btn btn-danger dropdown-toggle" data-position="${ingredients}">
         <option value="alcohol">Alcohol</option>
         <option value="sweetener">Sweetener</option>
         <option value="juice">Juice</option>
@@ -50,7 +50,7 @@
                 console.log(` <select> ${options}  </select>`)
                 console.log(thisSelect)
                 thisSelect.parent()
-                    .append(` <select name="Ingredients"> ${options}  </select>`)
+                    .append(` <select class ="btn btn-danger dropdown-toggle" name="Ingredients"> ${options}  </select>`)
                     .append('<input name="Quantities" id="element1" data-val="true"  data-val-required="A date is required." value="0" placeholder="mililiters..." class="form-control col-md-2 required"></input>')
                     .append('<span asp-validation-for="@Model.Quantities" class="text-danger"></span>')
                     .append('<button type="button" class= "cancel btn"> <i id="element2" class="fa fa-close"></i></button>')
@@ -100,7 +100,7 @@ $('#Ingredients').on('change', 'select', function (e) {
                     }
                     console.log(` <select> ${options}  </select>`)
                     console.log(thisSelect)
-                    thisSelect.parent().append(`<select name="Ingredients"> ${options}  </select>`)
+                    thisSelect.parent().append(`<select class =" btn btn-danger dropdown-toggle" name="Ingredients"> ${options}  </select>`)
                         .append('<input name="Quantities"  data-val="true"  data-val-required="A date is required." id="element1" placeholder="mililiters/spoon..." class="form-control col-md-2 quantities"></input>')
                         .append('<span asp-validation-for="@Model.Quantities" class="text-danger"></span>')
                         .append('<button type="button" class= "cancel btn"> <i id="element2" class="fa fa-close"></i></button>')
@@ -147,7 +147,7 @@ $('#Ingredients').on('change', 'select', function (e) {
                     console.log(` <select> ${options}  </select>`)
                     console.log(thisSelect)
                     thisSelect.parent()
-                        .append(`<select name="Ingredients"> ${options}  </select>`)
+                        .append(`<select class =" btn btn-danger dropdown-toggle" name="Ingredients"> ${options}  </select>`)
                         .append('<input name="Quantities"  data-val="true"  data-val-required="A date is required." id="element1" placeholder="mililiters..." class="form-control col-md-2 quantities"></input>')
                         .append('<span asp-validation-for="@Model.Quantities" class="text-danger"></span>')
                         .append('<button type="button" class= "cancel btn"> <i id="element2" class="fa fa-close"></i></button>')
@@ -194,7 +194,7 @@ $('#Ingredients').on('change', 'select', function (e) {
                     console.log(` <select> ${options}  </select>`)
                     console.log(thisSelect)
                     thisSelect.parent()
-                        .append(` <select name="Ingredients"> ${options}  </select>`)
+                        .append(` <select class =" btn btn-danger dropdown-toggle" name="Ingredients"> ${options}  </select>`)
                         .append('<input name="Quantities"  data-val="true"  data-val-required="A date is required." id="element1" placeholder="stalk..." class="form-control col-md-2 quantities"></input>')
                         .append('<span asp-validation-for="@Model.Quantities" class="text-danger"></span>')
                         .append('<button type="button" class= "cancel btn"> <i id="element2" class="fa fa-close"></i></button>')
@@ -242,7 +242,7 @@ $('#Ingredients').on('change', 'select', function (e) {
                     console.log(` <select> ${options}  </select>`)
                     console.log(thisSelect)
                     thisSelect.parent()
-                        .append(`<select name="Ingredients"> ${options}  </select>`)
+                        .append(`<select class =" btn btn-danger dropdown-toggle" name="Ingredients"> ${options}  </select>`)
                         .append('<input name="Quantities"  data-val="true"  data-val-required="A date is required." id="element1" placeholder="mililiters..." class="form-control col-md-2 quantities"></input>')
                         .append('<span asp-validation-for="@Model.Quantities" class="text-danger"></span>')
                         .append('<button type="button" class= "cancel btn"> <i id="element2" class="fa fa-close"></i></button>')

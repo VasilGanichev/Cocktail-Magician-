@@ -59,3 +59,13 @@ $('#save').click(function (e) {
         method: 'GET'
     })
 })
+
+$('#save').mouseenter(function () {
+    toastr.options.timeOut = 0;
+    toastr.options.extendedTimeOut = 0;
+    toastr.options.positionClass = "toast-top-center";
+    toastr.warning('By clicking "Save", you will add the cocktail to the selected bars.');
+});
+$('#save').mouseleave(function () {
+    toastr.remove();
+});
