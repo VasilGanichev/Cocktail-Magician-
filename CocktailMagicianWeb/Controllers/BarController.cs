@@ -51,12 +51,7 @@ namespace CocktailMagicianWeb.Controllers
             }
             return RedirectToAction("Index", "Home");
         }
-        public async Task<IActionResult> ListBars()
-        {
-            var barsResult = new BarResultsViewModel();
-            barsResult.Bars = (await _barServices.GetVisibleCollectionAsync()).Select(b => b.MapToViewModel()).ToList();
-            return View(barsResult);
-        }
+       
         public IActionResult TestView()
         {
             return View();
@@ -114,6 +109,11 @@ namespace CocktailMagicianWeb.Controllers
         {
             var bars = await _barServices.GetCollectionAsync();
             return Json(bars);
+        }
+        public async Task<IActionResult> LoadMoreCocktails([FromQuery]int Loaded,[FromQuery]int id)
+        {
+            var cocktails = await _barServices.LoadMoreCocktails(Loaded, id);
+            return Json(cocktails);
         }
     }
 }

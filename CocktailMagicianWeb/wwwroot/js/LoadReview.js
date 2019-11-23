@@ -3,6 +3,7 @@
     e.preventDefault();
     const thisBtn = $(this);
     const bar = $(this).data('bar')
+    const commentBox = $('commentBox')
     console.log(thisBtn);
     console.log(bar);
     $.ajax({
@@ -17,8 +18,9 @@
 
             }
             else {
-                console.log(responseData)
-                thisBtn.replaceWith(responseData)
+                console.log(responseData);
+                $('#commentBox').html(responseData);
+                thisBtn.remove();
             }
         }
 
@@ -30,7 +32,7 @@ $('#Load-Cocktails-Reviews').ready().click(function (e) {
     const cocktail = $(this).data('cocktail')
     console.log(thisCocktailBtn);
     console.log(cocktail);
-    const commentBox = $('#CommentBox')
+    const commentBox = $('#commentBox')
     $.ajax({
         url: '/Reviews/LoadCoctailReviews',
         data: { id: cocktail },
@@ -44,8 +46,7 @@ $('#Load-Cocktails-Reviews').ready().click(function (e) {
             }
             else {
                 console.log(response)
-                thisCocktailBtn.remove
-                commentBox.append(response)
+                thisCocktailBtn.replaceWith(response)
             }
         }
 

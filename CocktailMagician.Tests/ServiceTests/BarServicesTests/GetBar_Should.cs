@@ -41,7 +41,7 @@ namespace CocktailMagician.Tests.ServiceTests.BarServicesTests
 
             var testBar = new Bar
             {
-                Id =1,
+                Id = 1,
                 Name = "Test",
                 Address = "Test",
                 PhoneNumber = "Test",
@@ -49,7 +49,7 @@ namespace CocktailMagician.Tests.ServiceTests.BarServicesTests
             // Act
             using (var actContext = new CocktailDB(options))
             {
-            
+
                 var sut = new BarServices(actContext);
                 actContext.Bars.Add(testBar);
                 actContext.SaveChangesAsync().GetAwaiter();

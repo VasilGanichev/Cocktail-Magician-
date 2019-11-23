@@ -53,10 +53,6 @@ namespace CocktailMagician.Services
             await this.context.SaveChangesAsync();    
         }
 
-        public async Task EditCocktailReview(CocktailReview review, double newRating, string newComment)
-        {
-            throw new NotImplementedException();
-        }
 
         public async Task<List<CocktailReview>> GetCocktailReviewsCollectionAsync(int cocktailId)
         {

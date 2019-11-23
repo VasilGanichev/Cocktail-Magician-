@@ -31,7 +31,7 @@ namespace CocktailMagicianWeb.Utilities.Mappers
             }
             try
             {
-                viewmodel.Cocktails = bar.BarCocktails.Select(b => b.Cocktail.Name).ToList();
+                viewmodel.Cocktails = bar.BarCocktails.Select(b => b.Cocktail.Name).Take(10).ToList();
             }
             catch (Exception)
             {

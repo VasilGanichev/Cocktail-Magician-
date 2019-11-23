@@ -52,10 +52,6 @@ namespace CocktailMagician.Services
             var review = await this.context.BarReviews.FirstOrDefaultAsync(r => r.Id == id);
             return review;
         }
-        public async Task EditBarReview(BarReview review, double newRating, string newComment)
-        {
-            throw new NotImplementedException();
-        }
 
         public async Task<List<BarReview>> GetBarReviewsCollectionAsync(int barId)
         {
