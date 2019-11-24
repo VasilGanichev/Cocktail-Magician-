@@ -58,7 +58,7 @@
 
             <div class="search" data-info="Search!">
                 <br />
-                <button type="submit" class="btn btn-primary" id="searchBtn">&#x1F50D;</button>
+                <button type="submit" class="btn" style="background-color:#ff0000; color:white" id="searchBtn"><i class="fa fa-search"></i></button>
             </div>
         </form>
     </div>
@@ -113,11 +113,11 @@
                         <td>
                             @if (this.User.IsInRole("CocktailMagician"))
                             {
-                                <button class="btn btn-info" onclick="location.href='@Url.Action("EditBar", "Bar", new { Id = @bar.Id })'">Edit</button>
+                                <button  class="btn" style="background-color:#ff0000; color:white" onclick="location.href='@Url.Action("EditBar", "Bar", new { Id = @bar.Id })'">Edit</button>
                             }
                         </td>
                         <td>
-                            <button class="btn btn-info" onclick="location.href='@Url.Action("BarDetails", "Bar", new { Id = @bar.Id })'">Details</button>
+                            <button  class="btn" style="background-color:#ff0000; color:white" onclick="location.href='@Url.Action("BarDetails", "Bar", new { Id = @bar.Id })'">Details</button>
                         </td>
 
                     </tr>
@@ -129,29 +129,5 @@
 </div>
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
-    <script>
-        $(document).ready(function () {
-            jQuery.noConflict();
-            var $searchBar = $('#searchBar');
-            var pageUrl = location.href;
-            console.log(pageUrl);
-
-            toastr.options.timeOut = 0;
-            toastr.options.extendedTimeOut = 0;
-            toastr.options.positionClass = "toast-top-center";
-            $('.search').mouseenter(function () {
-                var text = $(this).data('info');
-
-                toastr.info(text);
-            });
-            $('.search').mouseleave(function () {
-                toastr.remove();
-            });
-
-            $('.search').mouseleave(function () {
-                toastr.remove();
-            });
-        });
-    </script>
 }
 

@@ -27,8 +27,8 @@
         background-color: #000099;
     }
 
-    .inline{
-        display:inline
+    .inline {
+        display: inline
     }
 </style>
 
@@ -38,7 +38,7 @@
 }
 
 <h4>Update Cocktail</h4>
-<div >
+<div>
     <form id="Ingredients" class="updateCocktail inline" asp-controller="Cocktails" asp-action="UpdateCocktail" method="post" enctype="multipart/form-data">
         <input asp-for="@Model.Name" data-cocktail="@Model.Name" id="cocktail" placeholder="Name..." class="form-control col-md-4">
         <span asp-validation-for="@Model.Name" class="text-danger"></span>
@@ -68,34 +68,31 @@
         {
             <div>
                 Ingredient @i:
-                <select id="list" asp-for="@Model.CurrentIngredients[i].Type" class="drop btn btn-danger dropdown-toggle" data-position="1" style="color:white">
+                <select id="list" asp-for="@Model.CurrentIngredients[i].Type" class="drop btn dropdown-toggle" data-position="1" style=" background:white; border-color:black; padding-top:2px; padding-bottom:2px;">
                     <option id="alcohol" value="alcohol">Alcohol</option>
                     <option id="sweetener" value="sweetener">Sweetener</option>
                     <option id="juice" value="juice">Juice</option>
                     <option id="herb" value="herb">Herb</option>
                 </select>
                 <span asp-validation-for="@Model.CurrentIngredients[i].Type" class="text-danger"></span>
-                <select id="list" asp-for="@Model.CurrentIngredients[i].Name" class="btn btn-danger dropdown-toggle" style="background-color:#ff0000; color:white" data-position="1">
+                <select id="list" asp-for="@Model.CurrentIngredients[i].Name" class="btn dropdown-toggle" style="background:white; border-color:black; padding-top:2px; padding-bottom:2px;">
                     <option class="ingredient" data-ingredient="@Model.CurrentIngredients[i].Name" value="@Model.CurrentIngredients[i].Name">@Model.CurrentIngredients[i].Name</option>
                 </select>
                 <span asp-validation-for="@Model.CurrentIngredients[i].Name" class="text-danger"></span>
-                <input name="Quantities" asp-for="Quantities[i]" id="element1" placeholder="mililiters/spoon..." class="form-control col-md-2">
+                <input name="Quantities" asp-for="Quantities[i]" id="element1" placeholder="mililiters/spoon..." class="btn col-md-2" style=" background:white; border-color:gray; padding-top:2px; padding-bottom:2px;">
                 <span asp-validation-for="@Model.Quantities" class="text-danger"></span>
                 <button type="button" class="cancel btn"><i id="element2" class="fa fa-close"></i></button>
             </div>
-            <br>
         }
-        <br>
-        <button type="button" id="addIngredient" class="btn" style="background-color:#ff0000; color:white"><i class="fa fa-plus-circle"></i> </button>Add Ingredient
+        <button type="button" id="addIngredient" class="btn" style="background-color:#ff0000; color:white"><i class="fa fa-plus-circle"></i> </button>
         <br>
         <br>
         <button type="submit" class="btn" style="background-color:#ff0000; color:white">Submit</button>
         <br>
         <br>
     </form>
-    <div>
-        Bars that offer the cocktail:
-    <div class="multiselect inline">
+    Bars that offer the cocktail:
+    <div class="multiselect">
         @foreach (var bar in Model.AllBars)
         {
             if (Model.OfferingBars.Contains(bar))
@@ -108,8 +105,7 @@
             }
         }
     </div>
-        <button id="save" type="button" class="btn" style="background-color:#ff0000; color:white">Save</button>
-        </div>
+    <button id="save" type="button" class="btn" style="background-color:#ff0000; color:white">Save</button>
 </div>
 
 @section Scripts
