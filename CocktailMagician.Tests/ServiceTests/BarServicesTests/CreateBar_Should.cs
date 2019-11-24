@@ -62,8 +62,6 @@ namespace CocktailMagician.Tests.ServiceTests.BarServicesTests
                 sut.CreateBarAsync(bar).GetAwaiter();
                 Assert.IsTrue(assertContext.Bars.Contains(bar));
             }
-
-
         }
     }
 }

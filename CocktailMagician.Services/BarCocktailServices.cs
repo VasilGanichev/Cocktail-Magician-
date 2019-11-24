@@ -38,7 +38,7 @@ namespace CocktailMagician.Services
             await _context.SaveChangesAsync();
         }
 
-        private async Task<BarCocktail> GetAsync(int id)
+        public async Task<BarCocktail> GetAsync(int id)
         {
             var barCocktail = await _context.BarCocktail.FirstOrDefaultAsync(b => b.Id == id);
 

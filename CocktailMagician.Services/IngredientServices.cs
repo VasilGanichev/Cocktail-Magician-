@@ -34,7 +34,7 @@ namespace CocktailMagician.Services
             return ingredient;
         }
 
-        private async Task<Ingredient> GetIngredientByNameAsync(string name)
+        public async Task<Ingredient> GetAsync(string name)
         {
             var ingredient = await _context.Ingredients.FirstOrDefaultAsync(i => i.Name == name);
 
@@ -52,7 +52,7 @@ namespace CocktailMagician.Services
             var ingredients = new List<Ingredient>(10);
             foreach (var name in names)
             {
-                var ingredient = await GetIngredientByNameAsync(name);
+                var ingredient = await GetAsync(name);
                 ingredients.Add(ingredient);
             }
             return ingredients;
@@ -78,12 +78,10 @@ namespace CocktailMagician.Services
             return ingredients;
         }
 
-        // TODO: Test "TRUE" scenario when we have cocktails
         public async Task<bool> IsIngredientUsedAsync(int id)
         {
             bool contained = await _context.Ingredients.Include(i => i.CocktailIngredients).AnyAsync(i => i.CocktailIngredients.Any(c => c.IngredientID == id));
             return contained;
         }
-
     }
 }
