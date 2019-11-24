@@ -12,6 +12,18 @@
     <None Remove="Views\NewFolder\**" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Content Include="Images\164160389-cocktail-wallpapers.jpg" />
+    <Content Include="Images\3538113-cocktail-wallpapers.jpg" />
+    <Content Include="Images\6v6sU3h.jpg" />
+    <Content Include="Images\7276-cocktails-1920x1200-digital-art-wallpaper.jpg" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="wwwroot\images\wp3184114.jpg" />
+    <None Include="wwwroot\js\parallax.min.js" />
+  </ItemGroup>
+
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.App" />

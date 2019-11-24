@@ -1,13 +1,6 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
-    <style>
-        .parallax {
-            background: url('../../wwwroot/images/backgroundimages/wp3184114.jpg') no-repeat center;
-            background-size: cover;
-            background-attachment: fixed;
-            height: 500px;
-        }
-    </style>
+    <link href="~/css/Parallax.css" rel="stylesheet" />
 }
 <div>
     <p>
@@ -19,8 +12,27 @@
     </p>
 </div>
 
-<div class="parallax">
+<div class="parallax" data-parallax="scroll" data-image-src="~/wp3184114.jpg"></div>
 
+<div>
+
+    <p>
+        ASDDDDDDDDDDDDDDDDDDDDDDDDDDDD
+        ASDDDDDDDDDDDDDDDDDDDDDDDDDDDD
+        ASDDDDDDDDDDDDDDDDDDDDDDDDDDDD
+        ASDDDDDDDDDDDDDDDDDDDDDDDDDDDD
+        ASDDDDDDDDDDDDDDDDDDDDDDDDDDDD
+    </p>
+</div>
+
+<div>
+    <p>
+        ASDDDDDDDDDDDDDDDDDDDDDDDDDDDD
+        ASDDDDDDDDDDDDDDDDDDDDDDDDDDDD
+        ASDDDDDDDDDDDDDDDDDDDDDDDDDDDD
+        ASDDDDDDDDDDDDDDDDDDDDDDDDDDDD
+        ASDDDDDDDDDDDDDDDDDDDDDDDDDDDD
+    </p>
 </div>
 <div>
     <p>
@@ -31,3 +43,6 @@
         ASDDDDDDDDDDDDDDDDDDDDDDDDDDDD
     </p>
 </div>
+@section scripts{
+    <script src="~/js/parallax.min.js"></script>
+}
