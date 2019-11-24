@@ -8,6 +8,7 @@
     <environment include="Development">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
         <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
+        <link href="~/css/FontFam.css" rel="stylesheet" />
     </environment>
     <environment exclude="Development">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -17,77 +18,145 @@
               crossorigin="anonymous"
               integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" />
     </environment>
+
     <link href="~/css/Dropdown.css" rel="stylesheet" />
     <link rel="stylesheet" href="~/css/site.css" />
+    <style>
+        body {
+            font-family: "Lato", sans-serif;
+        }
+
+        .sidenav {
+            height: 100%;
+            width: 0;
+            position: fixed;
+            z-index: 1;
+            top: 0;
+            left: 0;
+            background-color: #ff0000;
+            overflow-x: hidden;
+            transition: 0.5s;
+            padding-top: 60px;
+        }
+
+            .sidenav a, .dropdown-btn {
+                padding: 8px 8px 8px 18px;
+                text-decoration: none;
+                font-size: 25px;
+                color: white;
+                display: block;
+                border: none;
+                background: none;
+                width: 100%;
+                text-align: left;
+                cursor: pointer;
+                outline: none;
+                transition: 0.3s;
+            }
+
+        /*.sidenav a {
+                padding: 8px 8px 8px 32px;
+                text-decoration: none;
+                font-size: 25px;
+                color: #818181;
+                display: block;
+                transition: 0.3s;
+            }*/
+        /* Main content */
+        .main {
+            margin-left: 200px; /* Same as the width of the sidenav */
+            font-size: 20px; /* Increased text to enable scrolling */
+            padding: 0px 10px;
+        }
+
+        /* Add an active class to the active dropdown button */
+        .active {
+            background-color: white;
+            color: #ff0000;
+        }
+
+        .sidenav a:hover {
+            color: #f1f1f1;
+        }
+
+        .sidenav .closebtn {
+            position: absolute;
+            top: 0;
+            left: 90px;
+            font-size: 36px;
+            margin-left: 50px;
+        }
+
+        .dropdown-container {
+            display: none;
+            background-color: #ff3333;
+            padding-left: 8px;
+        }
+
+        /* Optional: Style the caret down icon */
+        .fa-caret-down {
+            float: right;
+            padding-right: 8px;
+        }
+    </style>
 </head>
 <body>
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">CocktailMagicianWeb</a>
+                <span class="cola" style="font-size:35px;cursor:pointer" onclick="openNav()">&#9776; Cocktail Magician Web</span>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
                     <partial name="_LoginPartial" />
-
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                        </li>
-                        <li>
-                            <div class="dropdown">
-                                <button class="dropbtn">Ingredients</button>
-                                <div class="dropdown-content">
-                                    @if (this.User.IsInRole("CocktailMagician"))
-                                    {
-                                        <a class="nav-link text-dark" asp-controller="Ingredients" asp-action="AddIngredient">Add Ingredient</a>
-                                        <a class="nav-link text-dark" asp-controller="Ingredients" asp-action="ManageIngredients" method="get">Manage Ingredients</a>
-                                    }
-                                </div>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="dropdown">
-                                <button class="dropbtn">Cocktails</button>
-                                <div class="dropdown-content">
-                                    <a class="nav-link text-dark" asp-controller="Cocktails" asp-action="SearchCocktails">Browse Cocktails</a>
-                                    @if (this.User.IsInRole("CocktailMagician"))
-                                    {
-                                        <a class="nav-link text-dark" asp-controller="Cocktails" asp-action="AddCocktail">Add Cocktail</a>
-                                        <a class="nav-link text-dark" asp-controller="Cocktails" asp-action="ManageCocktails">Manage Cocktails</a>
-                                    }
-
-                                </div>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="dropdown">
-                                <button class="dropbtn">Bars</button>
-                                <div class="dropdown-content">
-                                    <a class="nav-link text-dark" asp-controller="Bar" asp-action="SearchBars">Browse Our Bars</a>
-                                    @if (this.User.IsInRole("CocktailMagician"))
-                                    {
-                                        <a class="nav-link text-dark" asp-controller="Bar" asp-action="CreateBar">Create Bar</a>
-                                    }
-                                </div>
-                            </div>
-                        </li>
-                        @if (this.User.IsInRole("CocktailMagician"))
-                        {
-                            <li class="nav-item">
-                                <a class="nav-link" asp-controller="CocktailMagician" asp-action="ManageUsers">Manage Users</a>
-                            </li>
-                        }
-                    </ul>
                 </div>
             </div>
         </nav>
     </header>
+
+    <div id="mySidenav" class="sidenav">
+        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+        <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+
+        <button class="dropdown-btn">Bars <i class="fa fa-caret-down"></i></button>
+        <div class="dropdown-container">
+            <a class="nav-link" style="font-size:20px" ; asp-controller="Bar" asp-action="SearchBars">Browse Our Bars</a>
+            @if (this.User.IsInRole("CocktailMagician"))
+            {
+                <a class="nav-link " style="font-size:20px" ; asp-controller="Bar" asp-action="CreateBar">Create Bar</a>
+            }
+        </div>
+        <button class="dropdown-btn">
+            Cocktails<i class="fa fa-caret-down"></i>
+        </button>
+        <div class="dropdown-container">
+            <a class="nav-link" style="font-size:20px" ; asp-controller="Cocktails" asp-action="SearchCocktails">Browse Cocktails</a>
+            @if (this.User.IsInRole("CocktailMagician"))
+            {
+                <a class="nav-link" style="font-size:20px" ; asp-controller="Cocktails" asp-action="AddCocktail">Add Cocktail</a>
+                <a class="nav-link" style="font-size:20px" ; asp-controller="Cocktails" asp-action="ManageCocktails">Manage Cocktails</a>
+            }
+        </div>
+        @if (this.User.IsInRole("CocktailMagician"))
+        {
+            <button class="dropdown-btn">
+                Ingredients
+                <i class="fa fa-caret-down"></i>
+            </button>
+            <div class="dropdown-container">
+
+                <a class="nav-link" style="font-size:20px" ; asp-controller="Ingredients" asp-action="AddIngredient">Add Ingredient</a>
+                <a class="nav-link" style="font-size:20px" ; asp-controller="Ingredients" asp-action="ManageIngredients" method="get">Manage Ingredients</a>
+            </div>
+
+        }
+        @if (this.User.IsInRole("CocktailMagician"))
+        {
+            <a class="nav-link" asp-controller="CocktailMagician" asp-action="ManageUsers">Manage Users</a>
+        }
+    </div>
     <div class="container">
         <partial name="_CookieConsentPartial" />
         <main role="main" class="pb-3">
@@ -128,6 +197,8 @@
     <script src="~/js/UpdateCocktail.js"></script>
     <script src="~/js/addCocktail.js"></script>
     <script src="~/js/AddCocktailToBar.js"></script>
+    <script src="~/js/SideBarNav.js"></script>
+    <script src="~/js/LoadCocktails.js"></script>
     @RenderSection("Scripts", required: false)
 </body>
 </html>

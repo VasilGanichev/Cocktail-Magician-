@@ -47,5 +47,6 @@ namespace CocktailMagician.Tests.ServiceTests.BarServicesTests
                 Assert.IsTrue(resultBar.IsHidden);
             }
         }
+
     }
 }

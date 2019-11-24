@@ -2,11 +2,7 @@
 @{
     ViewData["Title"] = "BarDetails";
     <style>
-        .topleft {
-            position: relative;
-            top: 150px;
-            left: 50px;
-        }
+
 
         img {
             max-width: 100%;
@@ -23,29 +19,27 @@
         }
 
         th {
-            background-color: #4CAF50;
+            background-color: #ff0000;
             color: white;
         }
 
+        .buttonReview {
+            margin: auto;
+        }
+
         .barDesc {
-            display: inline-block;
-            padding: 4px;
+            background-color: #ff0000;
+            color: white;
         }
     </style>
-
+    <link href="~/css/BarDetailsGrid.css" rel="stylesheet" />
 }
-
-
-
-
-
-<h1>Bar Details:</h1>
-<div class="row">
-    <br />
-    <div class="barDesc">
+<h1 class="cola">Bar Details</h1>
+<div class="grid-container">
+    <div class="picture">
         @try
         {
-            <img src="data:image/jpg;base64,@(Html.Raw(Convert.ToBase64String(Model.CurrentPicture)))" width="460" height="350" />
+            <img src="data:image/jpg;base64,@(Html.Raw(Convert.ToBase64String(Model.CurrentPicture)))" width="500" height="390" />
 
         }
         catch (Exception)
@@ -54,44 +48,70 @@
         }
 
     </div>
-    <div class=" barDesc">
-        <table class="table table-hover">
-            @if (Model != null)
-            {
-                <th>Name:</th>
-                <th>Address:</th>
-                <th>Phone:</th>
-                <th>Rated: </th>
-                <th>Cocktails</th>
+    <div class="info">
+        <div class="initialDescription">
+            <table class="table table-hover">
+                @if (Model != null)
+                {
+                    <tr>
+                        <td class="barDesc">Name:</td>
+                        <td>
+                            @Model.Name
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="barDesc">Adress:</td>
+                        <td>
+                            @Model.Address
+                        </td>
 
-            }
-            <tr>
-                <td>
-                    @Model.Name
-                </td>
-                <td>
-                    @Model.Address
-                </td>
-                <td>
-                    @Model.PhoneNumber
-                </td>
-                <td>
-                    @Model.Rating
-                </td>
-                <td>
-                    @foreach (var cocktails in Model.Cocktails)
-                    {
-                        <p>
-                            @cocktails
-                        </p>
-                    }
-                </td>
-            </tr>
-        </table>
-        <button class="btn btn-info" onclick="location.href='@Url.Action("LeaveBarReview", "Reviews", new { Id = Model.Id })'">Leave Review</button>
+                    </tr>
+                    <tr>
+                        <td class="barDesc">Phone Number:</td>
+                        <td>
+                            @Model.PhoneNumber
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="barDesc">Rated:</td>
+                        <td>@Model.Rating</td>
+                    </tr>
+                }
+            </table>
+        </div>
+        <div class="cocktails">
+            <table class="table table-hover">
+                <th>Cocktails</th>
+                <tr id="cocktailsTable">
+                    <td id="InputCocktails">
+                        @foreach (var cocktails in Model.Cocktails)
+                        {
+                            <p class="hakunaMatata">
+                                @cocktails
+                            </p>
+                        }
+                    </td>
+
+                </tr>
+            </table>
+            <button id="load-more" data-id="@Model.Id">Load More</button>
+        </div>
+    </div>
+
+
+    <div class="googlemaps">
+
+    </div>
+    <div class="buttons">
+        <button class="btn btn-info buttonReview" id="Load-Bars-Reviews" data-bar="@Model.Id">Load Reviews</button>
+        <button class="btn btn-info buttonReview" onclick="location.href='@Url.Action("LeaveBarReview", "Reviews", new { Id = Model.Id })'">Leave Review</button>
+    </div>
+    <div id="commentBox" class="comments">
 
     </div>
 </div>
-<button class="btn btn-info" id="Load-Bars-Reviews" data-bar="@Model.Id">Load Reviews</button>
+
+
+
 
 

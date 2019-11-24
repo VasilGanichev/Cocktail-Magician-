@@ -33,14 +33,6 @@ namespace CocktailMagician.Services
         {
             return await this.context.Bars.ToListAsync();
         }
-        public async Task<IReadOnlyCollection<Bar>> GetVisibleCollectionAsync()
-        {
-            return await this.context.Bars.Where(b => b.IsHidden == false).ToListAsync();
-        }
-        public async Task<IReadOnlyCollection<Bar>> GetHiddenCollectionAsync()
-        {
-            return await this.context.Bars.Where(b => b.IsHidden == true).ToListAsync();
-        }
         public async Task CreateBarAsync(Bar bar)
         {
             bar.EnsureNotNull();
@@ -85,9 +77,15 @@ namespace CocktailMagician.Services
 
         public async Task<Bar> GetAsync(string barName)
         {
+            barName.EnsureNotNull();
             var bar = await context.Bars.FirstOrDefaultAsync(b => b.Name == barName);
-
             return bar;
+        }
+        public async Task<List<string>> LoadMoreCocktails(int alreadyLoaded, int barId)
+        {
+            var bar = await GetBarAsync(barId);
+            var cocktails = bar.BarCocktails.Select(bc => bc.Cocktail.Name).Skip(alreadyLoaded).Take(10).ToList();
+            return cocktails;
         }
     }
 }

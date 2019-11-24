@@ -8,7 +8,7 @@
 //    var serialized = $('#createBarForm').serialize();
 //    var url = '/Bar/CreateBar';
 //    var fdata = new FormData();
-
+//    console.log(serialized)
 //  //  var fileInput1 = $('#barImage')[0].files[0];
 //    var file_data = $('#barImage').prop('files')[0];
 //    fdata.append("picture", file_data);
