@@ -13,11 +13,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Include="wwwroot\images\164160389-cocktail-wallpapers.jpg" />
-    <None Include="wwwroot\images\3538113-cocktail-wallpapers.jpg" />
-    <None Include="wwwroot\images\6v6sU3h.jpg" />
-    <None Include="wwwroot\images\7276-cocktails-1920x1200-digital-art-wallpaper.jpg" />
-    <None Include="wwwroot\images\wp3184114.jpg" />
     <None Include="wwwroot\js\parallax.min.js" />
   </ItemGroup>
 
