@@ -92,7 +92,7 @@ namespace CocktailMagician.Services
                     .Include(b => b.Ingredients)
                     .ThenInclude(b => b.Ingredient)
                     .Where(b => ((name == null) || (b.Name.Contains(name))) &&
-                    ((ingredientName == null) || (b.Ingredients.FirstOrDefault(i => i.Ingredient.Name == name) != null)) &&
+                    ((ingredientName == null) || (b.Ingredients.FirstOrDefault(i => i.Ingredient.Name.Contains(name)) != null)) &&
                    (((b.Ingredients.Select(i => i.Ingredient.Type)).Contains("alcohol"))))
                     .ToListAsync();
             }
@@ -103,7 +103,7 @@ namespace CocktailMagician.Services
                   .Include(b => b.Ingredients)
                   .ThenInclude(b => b.Ingredient)
                   .Where(b => ((name == null) || (b.Name.Contains(name))) &&
-                  ((ingredientName == null) || (b.Ingredients.FirstOrDefault(i => i.Ingredient.Name == name) != null))).ToListAsync();
+                  ((ingredientName == null) || (b.Ingredients.FirstOrDefault(i => i.Ingredient.Name.Contains(name)) != null))).ToListAsync();
             }
 
             return cocktailsResult;

@@ -52,7 +52,7 @@ namespace CocktailMagician.Tests.ServiceTests.CocktailServicesTests
         public void ReturnEmptyCollectionByCocktailNameWhenThereAreNoAlcoholic()
         {
             // Arrange
-            var options = TestUtilities.GetOptions(nameof(ReturnOnlyAlcoholicCocktailsByCocktailNameWhenThereAreAny));
+            var options = TestUtilities.GetOptions(nameof(ReturnEmptyCollectionByCocktailNameWhenThereAreNoAlcoholic));
 
 
             // Act, Assert
