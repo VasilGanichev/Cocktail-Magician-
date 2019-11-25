@@ -62,9 +62,9 @@ namespace CocktailMagician.Services
             return cocktail;
         }
 
-        public async Task UpdateCocktail(Cocktail cocktail)
+        public async Task UpdateCocktailAsync(Cocktail cocktail)
         {
-            //_context.Cocktails.Update(cocktail);
+            _context.Cocktails.Update(cocktail);
             await _context.SaveChangesAsync();
         }
 
@@ -91,7 +91,7 @@ namespace CocktailMagician.Services
                     .Include(b => b.Ingredients)
                     .ThenInclude(b => b.Ingredient)
                     .Where(b => ((name == null) || (b.Name.Contains(name))) &&
-                    ((ingredientName == null) || (b.Ingredients.FirstOrDefault(i => i.Ingredient.Name == name) != null)) &&
+                    ((ingredientName == null) || (b.Ingredients.FirstOrDefault(i => i.Ingredient.Name == ingredientName) != null)) &&
                    (((b.Ingredients.Select(i => i.Ingredient.Type)).Contains("alcohol"))))
                     .ToListAsync();
             }
@@ -102,7 +102,7 @@ namespace CocktailMagician.Services
                   .Include(b => b.Ingredients)
                   .ThenInclude(b => b.Ingredient)
                   .Where(b => ((name == null) || (b.Name.Contains(name))) &&
-                  ((ingredientName == null) || (b.Ingredients.Select(i => i.Ingredient.Name).Contains(name)))).ToListAsync();
+                  ((ingredientName == null) || (b.Ingredients.Select(i => i.Ingredient.Name).Contains(ingredientName)))).ToListAsync();
             }
 
             return cocktailsResult;
