@@ -10,18 +10,27 @@ namespace CocktailMagician.Data.Configurations
         {
             builder.HasKey(b => b.Id);
 
-            builder.Property(b => b.Name)
+            builder
+                .Property(b => b.Name)
                 .IsRequired();
 
-            builder.Property(b => b.Address)
+            builder
+                .Property(b => b.Address)
                 .IsRequired();
 
-            builder.Property(b => b.PhoneNumber)
+            builder
+                .Property(b => b.PhoneNumber)
                 .IsRequired();
 
-            builder.Property(b => b.Picture);
+            builder
+                .Property(b => b.Picture);
 
-            builder.Property(b => b.IsHidden)
+            builder.
+                Property(b => b.IsHidden)
+                .IsRequired();
+
+            builder
+                .Property(b => b.CreatedOn)
                 .IsRequired();
 
             builder.HasMany(b => b.BarReviews)

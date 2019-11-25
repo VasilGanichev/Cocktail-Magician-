@@ -9,16 +9,12 @@
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1.2fr 0.8fr 1fr 1fr 1fr;
     grid-template-rows: 1fr 1fr 1.4fr 0.6fr;
-    grid-template-areas: "picture picture info info cocktails cocktails googlemaps googlemaps" "picture picture info info cocktails cocktails googlemaps googlemaps" "picture picture info info cocktails cocktails googlemaps googlemaps" "picture picture . buttons buttons . googlemaps googlemaps";
+    grid-template-areas: "picture picture info info bars bars googlemaps googlemaps" "picture picture info info bars bars googlemaps googlemaps" "picture picture info info bars bars googlemaps googlemaps" "picture picture . buttons buttons . googlemaps googlemaps";
     grid-area: desctipion;
 }
 
 .picture {
     grid-area: picture;
-}
-
-.cocktails {
-    grid-area: cocktails;
 }
 
 .googlemaps {
@@ -31,6 +27,10 @@
 
 .buttons {
     grid-area: buttons;
+}
+
+.bars {
+    grid-area: bars;
 }
 
 .comments {

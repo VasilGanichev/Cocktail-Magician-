@@ -16,6 +16,11 @@ namespace CocktailMagician.Data.Configurations
                 .IsRequired();
 
             builder
+                .Property(b => b.CreatedOn)
+                .IsRequired();
+
+
+            builder
                 .HasMany(c => c.Bars)
                 .WithOne(b => b.Cocktail)
                 .HasForeignKey(b => b.CocktailID)

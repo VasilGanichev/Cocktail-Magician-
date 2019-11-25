@@ -1,48 +1,91 @@
-﻿@{
+﻿@model CocktailMagicianWeb.Models.Home.HomeViewModel
+@{
     ViewData["Title"] = "Home Page";
     <link href="~/css/Parallax.css" rel="stylesheet" />
+    <style>
+        .newItems {
+            padding: 35px;
+            height: 80%;
+        }
+
+        table {
+            font-family: arial, sans-serif;
+            border-collapse: collapse;
+            width: 50%;
+            background-color: snow;
+            opacity: 0.8
+        }
+        th{
+            font-family: arial, sans-serif;
+            background-color: #ff0000;
+        }
+        td, th {
+            width: 20%;
+        }
+    </style>
+
 }
-<div>
-    <p>
-        ASDDDDDDDDDDDDDDDDDDDDDDDDDDDD
-        ASDDDDDDDDDDDDDDDDDDDDDDDDDDDD
-        ASDDDDDDDDDDDDDDDDDDDDDDDDDDDD
-        ASDDDDDDDDDDDDDDDDDDDDDDDDDDDD
-        ASDDDDDDDDDDDDDDDDDDDDDDDDDDDD
-    </p>
-</div>
+<body>
 
-<div class="parallax" data-parallax="scroll" data-image-src="~/images/wp3184114.jpg"></div>
+    <div style="z-index:-1" class="Container">
 
-<div>
+        <div id="parallax1" class="Basic-Div Parralax-items firstDiv">
+            <h2 class="cola">Welcome.</h2>
+        </div>
 
-    <p>
-        ASDDDDDDDDDDDDDDDDDDDDDDDDDDDD
-        ASDDDDDDDDDDDDDDDDDDDDDDDDDDDD
-        ASDDDDDDDDDDDDDDDDDDDDDDDDDDDD
-        ASDDDDDDDDDDDDDDDDDDDDDDDDDDDD
-        ASDDDDDDDDDDDDDDDDDDDDDDDDDDDD
-    </p>
-</div>
+        <div class="Basic-Div Parralax-items SecondDiv">
+            <h2 class="cola">We_have the biggest collection of bars</h2>
+        </div>
 
-<div>
-    <p>
-        ASDDDDDDDDDDDDDDDDDDDDDDDDDDDD
-        ASDDDDDDDDDDDDDDDDDDDDDDDDDDDD
-        ASDDDDDDDDDDDDDDDDDDDDDDDDDDDD
-        ASDDDDDDDDDDDDDDDDDDDDDDDDDDDD
-        ASDDDDDDDDDDDDDDDDDDDDDDDDDDDD
-    </p>
-</div>
-<div>
-    <p>
-        ASDDDDDDDDDDDDDDDDDDDDDDDDDDDD
-        ASDDDDDDDDDDDDDDDDDDDDDDDDDDDD
-        ASDDDDDDDDDDDDDDDDDDDDDDDDDDDD
-        ASDDDDDDDDDDDDDDDDDDDDDDDDDDDD
-        ASDDDDDDDDDDDDDDDDDDDDDDDDDDDD
-    </p>
-</div>
-@section scripts{
-    <script src="~/js/parallax.min.js"></script>
+        <div class="Basic-Div Parralax-items ThirdDiv">
+            <h2 class="cola">And cocktails too.</h2>
+        </div>
+
+        <div class="Basic-Div Parralax-items FifthDiv">
+            <h2 class="cola">Our newest additions.</h2>
+        </div>
+        <div id="parallax2" class="Basic-Div Parralax-items FourthDiv">
+            <div class="newItems">
+                <h3 class="h3h3 cola">Bars.</h3>
+                <table class="table table-hover">
+                    <tr style="background-color:lightblue">
+                        <th>Name:</th>
+                        <th>Address:</th>
+                        <th>Rated:</th>
+                    </tr>
+
+                    @foreach (var bar in Model.Bars)
+                    {
+                        <tr onclick="location.href='@Url.Action("BarDetails", "Bar", new { Id = @bar.Id })'">
+                            <td>@bar.Name</td>
+                            <td>@bar.Address</td>
+                            <td>@bar.Rating</td>
+                        </tr>
+
+                    }
+                </table>
+            </div>
+            <div class="newItems">
+                <h3 class="h3h3 cola">Cocktails.</h3>
+                <table class="table table-hover">
+                    <tr style="background-color:lightblue">
+                        <th>Name:</th>
+                        <th>Rated:</th>
+                    </tr>
+
+                    @foreach (var cocktail in Model.Cocktails)
+                    {
+                        <tr onclick="location.href='@Url.Action("CocktailDetails", "Cocktails", new { Id = cocktail.Id })'">
+                            <td>@cocktail.Name</td>
+                            <td>@cocktail.Rating</td>
+                        </tr>
+
+                    }
+                </table>
+            </div>
+        </div>
+
+</body>
+@section Scripts{
+    <script src="~/js/Parallax.js"></script>
 }

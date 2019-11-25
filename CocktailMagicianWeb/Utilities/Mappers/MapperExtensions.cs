@@ -23,7 +23,7 @@ namespace CocktailMagicianWeb.Utilities.Mappers
             viewmodel.BarReviews = bar.BarReviews;
             try
             {
-                viewmodel.Rating = bar.BarReviews.Select(b => b.Rating).Average();
+                viewmodel.Rating = Math.Round(bar.BarReviews.Select(b => b.Rating).Average(),2);
             }
             catch (Exception)
             {
@@ -95,7 +95,7 @@ namespace CocktailMagicianWeb.Utilities.Mappers
             vm.CocktailReviews = cocktail.CocktailReviews;
             try
             {
-                vm.Rating = cocktail.CocktailReviews.Select(b => b.Rating).Average();
+                vm.Rating = Math.Round(cocktail.CocktailReviews.Select(b => b.Rating).Average(),2);
             }
             catch (Exception)
             {

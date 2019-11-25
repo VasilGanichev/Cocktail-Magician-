@@ -1,4 +1,59 @@
-﻿.parallax {
-    min-height: 500px;
-    background: transparent;
+﻿.Parralax-items {
+    border: 0;
+    margin: 0;
+    padding: 0;
+}
+
+.Basic-Div {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    width: 100%;
+    height: 100vh;
+}
+
+h2 {
+    font-size: 70px;
+    color: black;
+    background: #eee;
+    padding: 8px 24px;
+    border-radius: 16px;
+}
+.h3h3 {
+    font-size: 30px;
+    text-align: center;
+    background: #eee;
+    border-radius: 11px;
+}
+
+.firstDiv {
+    background-image: url('../images/barbackground.jpg');
+    background-size: cover;
+}
+
+.SecondDiv {
+    height:500px;
+    background-color: maroon;
+}
+.ThirdDiv {
+    height: 650px;
+    background-image: url('../images/164160389-cocktail-wallpapers.jpg');
+    background-size: cover;
+    background-attachment:fixed;
+}
+.FourthDiv {
+    background-image: url('../images/6v6su3h.jpg');
+    background-size: cover;
+}
+.FifthDiv {
+    height: 500px;
+    background-color: maroon;
+}
+.Container {
+    position: absolute;
+        top: 0;
+        left: 0;
+    width:100%;
+    height: 100%;
 }

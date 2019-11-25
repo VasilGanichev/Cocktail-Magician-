@@ -36,7 +36,7 @@ namespace CocktailMagicianWeb.Controllers
 
         [HttpPost]
         [Authorize(Roles = "CocktailMagician")]
-        public async Task<IActionResult> CreateBar([FromQuery]BarViewModel barViewModel)
+        public async Task<IActionResult> CreateBar(BarViewModel barViewModel)
         {
             if (!ModelState.IsValid)
             {
