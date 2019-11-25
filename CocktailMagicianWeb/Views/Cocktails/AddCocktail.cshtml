@@ -35,25 +35,31 @@
 }
 
 <h4>Add Cocktail</h4>
-<div>
-    <form id="Ingredients" class="addCocktail" asp-controller="Cocktails" asp-action="AddCocktail" enctype="multipart/form-data">
-        <input placeholder="Name..." asp-for="@Model.Name" class="form-control col-md-4">
-        <span asp-validation-for="@Model.Name" class="text-danger"></span>
-        Image:
-        <input type="file" asp-for="Picture" />
-        <br>
-        <br>
-        A cocktail must have at least two ingredients.
-        <div id="list">
-            <button type="button" id="addIngredient" class="btn" style="background-color:#ff0000; color:white"><i class="fa fa-plus-circle"></i></button>
-            <br>
-            <br>
-            <button type="button" id="addCocktailToBars" class="btn" style="background-color:#ff0000; color:white">Add Cocktail to Bars  </button>
-
+<div class="container">
+    <div class="row">
+        <div class="col-sm-7">
+            <form id="Ingredients" class="addCocktail" asp-controller="Cocktails" asp-action="AddCocktail" enctype="multipart/form-data">
+                <input placeholder="Name..." asp-for="@Model.Name" class="form-control col-md-8" id="cocktail">
+                <span asp-validation-for="@Model.Name" class="text-danger"></span>
+                <br>
+                Image:
+                <input type="file" asp-for="Picture" />
+                <br>
+                <br>
+                A cocktail must have at least two ingredients.
+                <div id="list">
+                    <button type="button" id="addIngredient" class="btn" style="background-color:#ff0000; color:white"><i class="fa fa-plus-circle"></i></button>
+                    <br>
+                    <br>
+                </div>
+                <br>
+                <button type="submit" class="btn" style="background-color:#ff0000; color:white" />Submit
+            </form>
         </div>
-        <br>
-        <button type="submit" class="btn" style="background-color:#ff0000; color:white" />Submit
-    </form>
+        <div class="col-xs-6" id="BarCocktails">
+            <button type="button" id="addCocktailToBars" class="btn" style="background-color:#ff0000; color:white">Add Cocktail to Bars  </button>
+        </div>
+    </div>
 </div>
 
 @section Scripts

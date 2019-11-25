@@ -36,13 +36,6 @@ namespace CocktailMagician.Services
             return cocktails;
         }
 
-        public async Task<byte[]> GetCocktailCurrentPicture(int id)
-        {
-            var cocktail = await GetAsync(id);
-            var picture = cocktail.Picture;
-            return picture;
-        }
-
         public async Task<Cocktail> GetAsync(int id)
         {
             var cocktail = await _context.Cocktails
@@ -62,9 +55,9 @@ namespace CocktailMagician.Services
             return cocktail;
         }
 
-        public async Task UpdateCocktail(Cocktail cocktail)
+        public async Task UpdateCocktailAsync(Cocktail cocktail)
         {
-            //_context.Cocktails.Update(cocktail);
+            _context.Cocktails.Update(cocktail);
             await _context.SaveChangesAsync();
         }
 
@@ -91,7 +84,7 @@ namespace CocktailMagician.Services
                     .Include(b => b.Ingredients)
                     .ThenInclude(b => b.Ingredient)
                     .Where(b => ((name == null) || (b.Name.Contains(name))) &&
-                    ((ingredientName == null) || (b.Ingredients.FirstOrDefault(i => i.Ingredient.Name == name) != null)) &&
+                    ((ingredientName == null) || (b.Ingredients.FirstOrDefault(i => i.Ingredient.Name == ingredientName) != null)) &&
                    (((b.Ingredients.Select(i => i.Ingredient.Type)).Contains("alcohol"))))
                     .ToListAsync();
             }
@@ -102,7 +95,7 @@ namespace CocktailMagician.Services
                   .Include(b => b.Ingredients)
                   .ThenInclude(b => b.Ingredient)
                   .Where(b => ((name == null) || (b.Name.Contains(name))) &&
-                  ((ingredientName == null) || (b.Ingredients.FirstOrDefault(i => i.Ingredient.Name == name) != null))).ToListAsync();
+                  ((ingredientName == null) || (b.Ingredients.Any(i => i.Ingredient.Name == ingredientName)))).ToListAsync();
             }
 
             return cocktailsResult;

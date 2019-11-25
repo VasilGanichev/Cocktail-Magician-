@@ -35,11 +35,10 @@ jQuery.fn.multiselect = function () {
         });
     });
 };
-
-
-$('#save').click(function (e) {
+$('#save').on('click', function (e) {
     e.preventDefault()
     const cocktail = $('#cocktail').data('cocktail')
+    console.log(cocktail)
     const bars = $("input:checkbox")
     let filteredBars = []
     console.log(bars)
@@ -49,14 +48,19 @@ $('#save').click(function (e) {
         if (bar.prop("checked")) {
             filteredBars.push(bar.data('bar'))
         }
-        console.log(bar.text())
     })
     console.log(filteredBars)
     jQuery.ajaxSettings.traditional = true
     $.ajax({
         url: '/Cocktails/UpdateBarCocktailPairs',
         data: { cocktailName: cocktail, currentlyCheckedBars: filteredBars },
-        method: 'GET'
+        method: 'GET',
+        success: function () {
+            toastr.remove();
+            toastr.options.timeOut = 2000;
+            toastr.options.positionClass = "toast-top-center";
+            toastr.success('Changes saved.');
+        }
     })
 })
 
@@ -64,7 +68,7 @@ $('#save').mouseenter(function () {
     toastr.options.timeOut = 0;
     toastr.options.extendedTimeOut = 0;
     toastr.options.positionClass = "toast-top-center";
-    toastr.warning('By clicking "Save", you will add the cocktail to the selected bars.');
+    toastr.info('By clicking "Save", you will save the selected changes.');
 });
 $('#save').mouseleave(function () {
     toastr.remove();

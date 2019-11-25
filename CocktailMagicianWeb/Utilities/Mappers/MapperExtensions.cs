@@ -52,6 +52,7 @@ namespace CocktailMagicianWeb.Utilities.Mappers
             }   
             var bar = new Bar()
             {
+                Id = viewModel.Id,
                 Name = viewModel.Name,
                 Address = viewModel.Address,
                 PhoneNumber = viewModel.PhoneNumber,
@@ -138,8 +139,16 @@ namespace CocktailMagicianWeb.Utilities.Mappers
             return vm;
         }
 
-        public static Cocktail MapToEntity(this UpdateCocktailViewModel vm)
+        public static async Task<Cocktail> MapToEntity(this UpdateCocktailViewModel vm)
         {
+            if (vm.NewPicture != null)
+            {
+                using (var stream = new MemoryStream())
+                {
+                    await vm.NewPicture.CopyToAsync(stream);
+                    vm.Picture = stream.ToArray();
+                }
+            }
             var cocktail = new Cocktail
             {
                 Id = vm.Id,

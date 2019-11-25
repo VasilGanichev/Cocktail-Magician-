@@ -80,7 +80,6 @@ namespace CocktailMagicianWeb.Controllers
                 var barEntity = await _barServices.GetAsync(bar);
                 await _barCocktailServices.CreateAsync(barEntity, cocktail);
             }
-            
 
             return View();
         }
@@ -95,32 +94,10 @@ namespace CocktailMagicianWeb.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> UpdateCocktail(UpdateCocktailViewModel vm, List<IFormFile> Picture)
+        public async Task<IActionResult> UpdateCocktail(UpdateCocktailViewModel vm)
         {
-            byte[] picture;
-
-            if (Picture.Count == 0)
-            {
-                picture = await _cocktailServices.GetCocktailCurrentPicture(vm.Id);
-                vm.Picture = picture;
-            }
-            else
-            {
-                foreach (var item in Picture)
-                {
-                    if (item.Length > 0)
-                    {
-                        using (var stream = new MemoryStream())
-                        {
-                            await item.CopyToAsync(stream);
-                            vm.Picture = stream.ToArray();
-                        }
-                    }
-                }
-            }
-
-            var cocktail = vm.MapToEntity();
-            await _cocktailServices.UpdateCocktail(cocktail);
+            var cocktail = await vm.MapToEntity();
+            await _cocktailServices.UpdateCocktailAsync(cocktail);
             var currentIngredients = vm.CurrentIngredients.Select(c => c.MapToEntity()).ToList();
             for (int i = 0; i < currentIngredients.Count; i++)
             {
@@ -168,9 +145,9 @@ namespace CocktailMagicianWeb.Controllers
             var cocktail = await _cocktailServices.GetAsync(cocktailName);
             var originalOfferingBars = cocktail.Bars.Select(b => b.Bar).ToList();
             var userCheckBars = new List<Bar>(100);
-            foreach (var name in currentlyCheckedBars)
+            foreach (var barName in currentlyCheckedBars)
             {
-                var bar = await _barServices.GetAsync(name);
+                var bar = await _barServices.GetAsync(barName);
                 userCheckBars.Add(bar);
             }
 

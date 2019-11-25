@@ -37,80 +37,86 @@
     ViewData["Title"] = "UpdateCocktail";
 }
 
-<h4>Update Cocktail</h4>
-<div>
-    <form id="Ingredients" class="updateCocktail inline" asp-controller="Cocktails" asp-action="UpdateCocktail" method="post" enctype="multipart/form-data">
-        <input asp-for="@Model.Name" data-cocktail="@Model.Name" id="cocktail" placeholder="Name..." class="form-control col-md-4">
-        <span asp-validation-for="@Model.Name" class="text-danger"></span>
-        Current Image:
-        @if (Model.Picture is null)
-        {
-            <img src="~/images/no-image-icon-6.png" width="230" height="172" />
-            <br>
-            <text> New Image: </text>
-            <input type="file" asp-for="Picture" />
-        }
-        else
-        {
-            <img src="data:image/jpg;base64,@(Html.Raw(Convert.ToBase64String(Model.Picture)))" width="230" height="172" />
-            <br>
-            <text> New Image: </text>
-            <input type="file" asp-for="Picture" value="@(Html.Raw(Convert.ToBase64String(Model.Picture)))" />
+<div class="container">
+    <div class="row">
+        <div class="col-sm-7">
+            <form id="Ingredients" class="updateCocktail inline" asp-controller="Cocktails" asp-action="UpdateCocktail" method="post" enctype="multipart/form-data">
+                <h4>Update Cocktail</h4>
+                <input asp-for="@Model.Name" data-cocktail="@Model.Name" id="cocktail" placeholder="Name..." class="form-control col-md-8">
+                <span asp-validation-for="@Model.Name" class="text-danger"></span>
+                <br>
+                Current Image:
+                @if (Model.Picture is null)
+                {
+                    <img src="~/images/no-image-icon-6.png" width="230" height="172" />
+                    <br>
+                    <br>
+                    <text> New Image: </text>
+                    <input type="file" id="files" asp-for="NewPicture" />
+                }
+                else
+                {
+                    <img src="data:image/jpg;base64,@(Html.Raw(Convert.ToBase64String(Model.Picture)))" width="230" height="172" />
+                    <br>
+                    <br>
+                    <text> New Image: </text>
+                    <label asp-for="NewPicture" class="control-label"></label>
+                    <input type="file" id="files" asp-for="NewPicture" value="@(Html.Raw(Convert.ToBase64String(Model.Picture)))" />
 
-        }
-        @*<br>*@
-        @*New Image:
-            <input type="file" asp-for="Picture" value="" />*@
-        <br>
-        <br>
-        <h5>Ingredients:</h5>
-        @for (int i = 0; i < Model.CurrentIngredients.Count; i++)
-        {
-            <div>
-                Ingredient @i:
-                <select id="list" asp-for="@Model.CurrentIngredients[i].Type" class="drop btn dropdown-toggle" data-position="1" style=" background:white; border-color:black; padding-top:2px; padding-bottom:2px;">
-                    <option id="alcohol" value="alcohol">Alcohol</option>
-                    <option id="sweetener" value="sweetener">Sweetener</option>
-                    <option id="juice" value="juice">Juice</option>
-                    <option id="herb" value="herb">Herb</option>
-                </select>
-                <span asp-validation-for="@Model.CurrentIngredients[i].Type" class="text-danger"></span>
-                <select id="list" asp-for="@Model.CurrentIngredients[i].Name" class="btn dropdown-toggle" style="background:white; border-color:black; padding-top:2px; padding-bottom:2px;">
-                    <option class="ingredient" data-ingredient="@Model.CurrentIngredients[i].Name" value="@Model.CurrentIngredients[i].Name">@Model.CurrentIngredients[i].Name</option>
-                </select>
-                <span asp-validation-for="@Model.CurrentIngredients[i].Name" class="text-danger"></span>
-                <input name="Quantities" asp-for="Quantities[i]" id="element1" placeholder="mililiters/spoon..." class="btn col-md-2" style=" background:white; border-color:gray; padding-top:2px; padding-bottom:2px;">
-                <span asp-validation-for="@Model.Quantities" class="text-danger"></span>
-                <button type="button" class="cancel btn"><i id="element2" class="fa fa-close"></i></button>
+                }
+                <br>
+                <br>
+                <h5>Ingredients:</h5>
+                @for (int i = 0; i < Model.CurrentIngredients.Count; i++)
+                {
+                    var count = i + 1; 
+                    <div>
+                       <text class="count"> Ingredient @count:<text>
+                        <select id="list" asp-for="@Model.CurrentIngredients[i].Type" class="drop btn dropdown-toggle" data-position="1" style=" background:white; border-color:black; padding-top:2px; padding-bottom:2px;">
+                            <option id="alcohol" value="alcohol">Alcohol</option>
+                            <option id="sweetener" value="sweetener">Sweetener</option>
+                            <option id="juice" value="juice">Juice</option>
+                            <option id="herb" value="herb">Herb</option>
+                        </select>
+                        <span asp-validation-for="@Model.CurrentIngredients[i].Type" class="text-danger"></span>
+                        <select id="list" asp-for="@Model.CurrentIngredients[i].Name" class="btn dropdown-toggle" style="background:white; border-color:black; padding-top:2px; padding-bottom:2px;">
+                            <option class="ingredient" data-ingredient="@Model.CurrentIngredients[i].Name" value="@Model.CurrentIngredients[i].Name">@Model.CurrentIngredients[i].Name</option>
+                        </select>
+                        <span asp-validation-for="@Model.CurrentIngredients[i].Name" class="text-danger"></span>
+                        <input name="Quantities" asp-for="Quantities[i]" id="element1" placeholder="mililiters/spoon..." class="btn col-md-2" style=" background:white; border-color:gray; padding-top:2px; padding-bottom:2px;">
+                        <span asp-validation-for="@Model.Quantities" class="text-danger"></span>
+                        <button type="button" class="cancel btn"><i id="element2" class="fa fa-close"></i></button>
+                    </div>
+                }
+                <button type="button" id="addIngredient" class="btn" style="background-color:#ff0000; color:white"><i class="fa fa-plus-circle"></i> </button>
+                <br>
+                <br>
+                <button type="submit" class="btn" style="background-color:#ff0000; color:white">Submit</button>
+                <br>
+                <br>
+            </form>
+        </div>
+        <div class="col-xs-6" id="BarCocktails">
+            <h4>Bars that offer the cocktail</h4>
+            <div class="multiselect">
+                @foreach (var bar in Model.AllBars)
+                {
+                    if (Model.OfferingBars.Contains(bar))
+                    {
+                        <label><input class="checkbox" type="checkbox" data-bar="@bar" value="@bar" checked />@bar</label>
+                    }
+                    else
+                    {
+                        <label><input class="checkbox" type="checkbox" data-bar="@bar" value="@bar" />@bar</label>
+                    }
+                }
             </div>
-        }
-        <button type="button" id="addIngredient" class="btn" style="background-color:#ff0000; color:white"><i class="fa fa-plus-circle"></i> </button>
-        <br>
-        <br>
-        <button type="submit" class="btn" style="background-color:#ff0000; color:white">Submit</button>
-        <br>
-        <br>
-    </form>
-    Bars that offer the cocktail:
-    <div class="multiselect">
-        @foreach (var bar in Model.AllBars)
-        {
-            if (Model.OfferingBars.Contains(bar))
-            {
-                <label><input class="checkbox" type="checkbox" data-bar="@bar" value="@bar" checked />@bar</label>
-            }
-            else
-            {
-                <label><input class="checkbox" type="checkbox" data-bar="@bar" value="@bar" />@bar</label>
-            }
-        }
+            <button id="save" type="button" class="btn" style="background-color:#ff0000; color:white">Save</button>
+        </div>
     </div>
-    <button id="save" type="button" class="btn" style="background-color:#ff0000; color:white">Save</button>
 </div>
 
 @section Scripts
     {
     <partial name="_ValidationScriptsPartial">
 }
-
-

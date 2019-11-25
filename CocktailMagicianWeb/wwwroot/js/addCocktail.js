@@ -4,7 +4,8 @@
     const button = $(this)
     if (ingredients === 10) {
         button.replaceWith(` <div class="holder">
-        Ingredient ${ingredients}:
+        <text class="count">Ingredient ${ingredients}: </text>
+<div>
         <select id="drop${ingredients}" class="drop btn dropdown-toggle" data-position="${ingredients}" style="background:white; border-color:black; padding-top:2px; padding-bottom:2px;">
         <option value="alcohol">Alcohol</option>
         <option value="sweetener">Sweetener</option>
@@ -12,18 +13,21 @@
         <option value="herb">Herb</option>
         </select> 
         </div>
+</div>
         A cocktail can contain maximum 10 ingredients`)
     }
     console.log(ingredients);
     button.replaceWith(
         `<div class="holder">
-        Ingredient ${ingredients}:
+        <text class="count">Ingredient ${ingredients}: </text>
+<div>
         <select id="drop$${ingredients}" class ="drop btn dropdown-toggle" data-position="${ingredients}" style="background:white; border-color:black; padding-top:2px; padding-bottom:2px;">
         <option value="alcohol">Alcohol</option>
         <option value="sweetener">Sweetener</option>
         <option value="juice">Juice</option>
         <option value="herb">Herb</option>
         </select> 
+</div>
         </div>
         <button id="addIngredient" class="btn" style ="background-color:#ff0000; color:white"> <i class="fa fa-plus-circle"></i></button>`)
     const thisSelect = $('.drop').last();
@@ -51,23 +55,8 @@
                 console.log(thisSelect)
                 thisSelect.parent()
                     .append(` <select class ="btn dropdown-toggle" name="Ingredients" style="background:white; border-color:black; padding-top:2px; padding-bottom:2px;"> ${options}  </select>`)
-                    .append('<input name="Quantities" id="element1" data-val="true" value="0"  data-val-required="A date is required." value="0" placeholder="mililiters..." class="btn col-md-2" style=" background:white; border-color:gray; padding-top:2px; padding-bottom:2px;"></input>')
-                    .append('<span asp-validation-for="@Model.Quantities" class="text-danger"></span>')
+                    .append('<input name="Quantities" id="element1" value="0" placeholder="mililiters..." class="btn col-md-2" style=" background:white; border-color:gray; padding-top:2px; padding-bottom:2px;"></input>')
                     .append('<button type="button" class= "cancel btn"> <i id="element2" class="fa fa-close"></i></button>')
-
-                //Remove current form validation information
-                $("form")
-                    .removeData("validator")
-                    .removeData("unobtrusiveValidation");
-
-                //Parse the form again
-                $.validator
-                    .unobtrusive
-                    .parse("form");
-
-                $(function () {
-                    $("form").validate();
-                });
             }
         }
     })
@@ -101,21 +90,10 @@ $('#Ingredients').on('change', 'select', function (e) {
                     }
                     console.log(` <select> ${options}  </select>`)
                     console.log(thisSelect)
-                    thisSelect.parent().append(`<select class =" btn dropdown-toggle" name="Ingredients" style="background:white; border-color:black; padding-top:2px; padding-bottom:2px;"> ${options}  </select>`)
-                        .append('<input name="Quantities"  data-val="true" value="0"  data-val-required="A date is required." id="element1" placeholder="mililiters/spoon..." class="btn col-md-2" style=" background:white; border-color:gray; padding-top:2px; padding-bottom:2px;"></input>')
-                        .append('<span asp-validation-for="@Model.Quantities" class="text-danger"></span>')
+                    thisSelect.parent()
+                        .append(`<select class =" btn dropdown-toggle" name="Ingredients" style="background:white; border-color:black; padding-top:2px; padding-bottom:2px;"> ${options}  </select>`)
+                        .append('<input name="Quantities" value="0"  id="element1" placeholder="mililiters/spoon..." class="btn col-md-2" style=" background:white; border-color:gray; padding-top:2px; padding-bottom:2px;"></input>')
                         .append('<button type="button" class= "cancel btn"> <i id="element2" class="fa fa-close"></i></button>')
-                }
-                $('.quantities').each(function () {
-                    $(this).rules("add",
-                        {
-                            required: true
-                        })
-                });
-                if ($('#Ingredients').validate().form()) {
-                    console.log("validates");
-                } else {
-                    console.log("does not validate");
                 }
             }
         })
@@ -149,8 +127,7 @@ $('#Ingredients').on('change', 'select', function (e) {
                     console.log(thisSelect)
                     thisSelect.parent()
                         .append(`<select class =" btn dropdown-toggle" name="Ingredients" style="background:white; border-color:black; padding-top:2px; padding-bottom:2px;"> ${options}  </select>`)
-                        .append('<input name="Quantities"  data-val="true" value="0"  data-val-required="A date is required." id="element1" placeholder="mililiters..." class="btn col-md-2" style=" background:white; border-color:gray; padding-top:2px; padding-bottom:2px;"></input>')
-                        .append('<span asp-validation-for="@Model.Quantities" class="text-danger"></span>')
+                        .append('<input name="Quantities" value="0" id="element1" placeholder="mililiters..." class="btn col-md-2" style=" background:white; border-color:gray; padding-top:2px; padding-bottom:2px;"></input>')
                         .append('<button type="button" class= "cancel btn"> <i id="element2" class="fa fa-close"></i></button>')
                 }
             }
@@ -185,8 +162,7 @@ $('#Ingredients').on('change', 'select', function (e) {
                     console.log(thisSelect)
                     thisSelect.parent()
                         .append(` <select class =" btn dropdown-toggle" name="Ingredients" style="background:white; border-color:black; padding-top:2px; padding-bottom:2px;"> ${options}  </select>`)
-                        .append('<input name="Quantities"  data-val="true" value="0"  data-val-required="A date is required." id="element1" placeholder="stalk..." class="btn col-md-2" style=" background:white; border-color:gray; padding-top:2px; padding-bottom:2px;"></input>')
-                        .append('<span asp-validation-for="@Model.Quantities" class="text-danger"></span>')
+                        .append('<input name="Quantities" value="0" id="element1" placeholder="stalk..." class="btn col-md-2" style=" background:white; border-color:gray; padding-top:2px; padding-bottom:2px;"></input>')
                         .append('<button type="button" class= "cancel btn"> <i id="element2" class="fa fa-close"></i></button>')
                 }
             }
@@ -222,8 +198,7 @@ $('#Ingredients').on('change', 'select', function (e) {
                     console.log(thisSelect)
                     thisSelect.parent()
                         .append(`<select class =" btn dropdown-toggle" name="Ingredients" style="background:white; border-color:black; padding-top:2px; padding-bottom:2px;"> ${options}  </select>`)
-                        .append('<input name="Quantities"  data-val="true" value="0"  data-val-required="A date is required." id="element1" placeholder="mililiters..." class="btn col-md-2" style=" background:white; border-color:gray; padding-top:2px; padding-bottom:2px;"></input>')
-                        .append('<span asp-validation-for="@Model.Quantities" class="text-danger"></span>')
+                        .append('<input name="Quantities" value="0" id="element1" placeholder="mililiters..." class="btn col-md-2" style=" background:white; border-color:gray; padding-top:2px; padding-bottom:2px;"></input>')
                         .append('<button type="button" class= "cancel btn"> <i id="element2" class="fa fa-close"></i></button>')
                 }
             }
@@ -231,7 +206,8 @@ $('#Ingredients').on('change', 'select', function (e) {
     }
 });
 
-$('#Ingredients').on('click', '#addCocktailToBars', function (e) {
+
+$('#addCocktailToBars').on('click', function (e) {
     e.preventDefault()
     const btn = $('#addCocktailToBars')
     $.ajax({
@@ -246,11 +222,10 @@ $('#Ingredients').on('click', '#addCocktailToBars', function (e) {
             else {
                 let options = []
                 for (let i = 0; i < responseData.length; i++) {
-                    options[i] = `<label> <input class="checkbox" type="checkbox" data-bar="${responseData[i].name}" value="${responseData[i].name}"> ${responseData[i].name} </input></label>`
+                    options[i] = `<label name="Bars"> <input class="checkbox" type="checkbox" data-bar="${responseData[i].name}" value="${responseData[i].name}"> ${responseData[i].name} </input></label>`
                 }
-                console.log(` <select> ${options} </select>`)
                 btn.replaceWith(`<div class="multiselect"> ${options.join('')} </div>
-                                <button id="save" type="button" class="btn" style="background:white; border-color:black; padding-top:2px; padding-bottom:2px;"> Save </button>`)
+                                <button id="save" type="button" class="btn" style="background-color:#ff0000; color:white"> Save </button>`)
             }
         }
     })
