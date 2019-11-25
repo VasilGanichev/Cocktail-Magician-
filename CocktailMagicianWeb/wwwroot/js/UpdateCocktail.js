@@ -4,14 +4,45 @@
     const ingredient = $(this).siblings('#list').children('.ingredient').data('ingredient')
     console.log(cocktail)
     console.log(ingredient)
-    $(this).parent('div').empty()
+    $(this).parent().parent('div').empty()
+    var ingredientCount = 1
+    $('.count').each(function () {
+        $(this).text(`Ingredient ${ingredientCount}:`)
+        ingredientCount++
+       console.log($(this).text())
+    })
 
     $.ajax({
         url: '/Ingredients/RemoveIngredient',
         data: { cocktail: cocktail, ingredient: ingredient },
         method: 'GET',
         success: function () {
-            $(this).parent('div').empty()
+            $(this).closest('.count').empty()
+        }
+    })
+})
+
+
+$('#addCocktailToBars').on('click', function (e) {
+    e.preventDefault()
+    const btn = $('#addCocktailToBars')
+    $.ajax({
+        url: '/Bar/GetBars',
+        cache: false,
+        type: 'GET',
+        success: function (responseData) {
+            console.log(responseData)
+            if (responseData.length === 0) {
+                btn.replaceWith(`<text> There are no existing Bars yet.</text>`)
+            }
+            else {
+                let options = []
+                for (let i = 0; i < responseData.length; i++) {
+                    options[i] = `<label name="Bars"> <input class="checkbox" type="checkbox" data-bar="${responseData[i].name}" value="${responseData[i].name}"> ${responseData[i].name} </input></label>`
+                }
+                btn.replaceWith(`<div class="multiselect"> ${options.join('')} </div>
+                                <button id="save" type="button" class="btn" style="background-color:#ff0000; color:white"> Save </button>`)
+            }
         }
     })
 })

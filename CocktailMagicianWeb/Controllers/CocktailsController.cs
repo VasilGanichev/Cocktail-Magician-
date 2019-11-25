@@ -80,8 +80,7 @@ namespace CocktailMagicianWeb.Controllers
                 var barEntity = await _barServices.GetAsync(bar);
                 await _barCocktailServices.CreateAsync(barEntity, cocktail);
             }
-
-            return View();
+            return RedirectToAction("UpdateCocktail", new { id = cocktail.Id });
         }
 
         [HttpGet]

@@ -5,7 +5,7 @@
     if (ingredients === 10) {
         button.replaceWith(` <div class="holder">
         <text class="count">Ingredient ${ingredients}: </text>
-<div>
+        <div>
         <select id="drop${ingredients}" class="drop btn dropdown-toggle" data-position="${ingredients}" style="background:white; border-color:black; padding-top:2px; padding-bottom:2px;">
         <option value="alcohol">Alcohol</option>
         <option value="sweetener">Sweetener</option>
@@ -13,21 +13,21 @@
         <option value="herb">Herb</option>
         </select> 
         </div>
-</div>
+        </div>
         A cocktail can contain maximum 10 ingredients`)
     }
     console.log(ingredients);
     button.replaceWith(
         `<div class="holder">
         <text class="count">Ingredient ${ingredients}: </text>
-<div>
+        <div>
         <select id="drop$${ingredients}" class ="drop btn dropdown-toggle" data-position="${ingredients}" style="background:white; border-color:black; padding-top:2px; padding-bottom:2px;">
         <option value="alcohol">Alcohol</option>
         <option value="sweetener">Sweetener</option>
         <option value="juice">Juice</option>
         <option value="herb">Herb</option>
         </select> 
-</div>
+        </div>
         </div>
         <button id="addIngredient" class="btn" style ="background-color:#ff0000; color:white"> <i class="fa fa-plus-circle"></i></button>`)
     const thisSelect = $('.drop').last();
@@ -206,33 +206,14 @@ $('#Ingredients').on('change', 'select', function (e) {
     }
 });
 
-
-$('#addCocktailToBars').on('click', function (e) {
-    e.preventDefault()
-    const btn = $('#addCocktailToBars')
-    $.ajax({
-        url: '/Bar/GetBars',
-        cache: false,
-        type: 'GET',
-        success: function (responseData) {
-            console.log(responseData)
-            if (responseData.length === 0) {
-                btn.replaceWith(`<text> There are no existing Bars yet.</text>`)
-            }
-            else {
-                let options = []
-                for (let i = 0; i < responseData.length; i++) {
-                    options[i] = `<label name="Bars"> <input class="checkbox" type="checkbox" data-bar="${responseData[i].name}" value="${responseData[i].name}"> ${responseData[i].name} </input></label>`
-                }
-                btn.replaceWith(`<div class="multiselect"> ${options.join('')} </div>
-                                <button id="save" type="button" class="btn" style="background-color:#ff0000; color:white"> Save </button>`)
-            }
-        }
-    })
-})
-
 $('.addCocktail').on('click', '.cancel', function () {
-    $(this).parent('div').empty()
+    $(this).parent().parent('div').empty()
+    var ingredientCount = 1
+    $('.count').each(function () {
+        $(this).text(`Ingredient ${ingredientCount}:`)
+        ingredientCount++
+        console.log($(this).text())
+    })
 })
 
 //$('#Ingredients').on('mouseenter', '#addIngredient', function () {

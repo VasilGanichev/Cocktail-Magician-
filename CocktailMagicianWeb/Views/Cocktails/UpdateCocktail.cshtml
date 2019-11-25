@@ -66,26 +66,29 @@
                 }
                 <br>
                 <br>
-                <h5>Ingredients:</h5>
+                <h5>Ingredients</h5>
                 @for (int i = 0; i < Model.CurrentIngredients.Count; i++)
                 {
-                    var count = i + 1; 
+                    var count = i + 1;
                     <div>
-                       <text class="count"> Ingredient @count:<text>
-                        <select id="list" asp-for="@Model.CurrentIngredients[i].Type" class="drop btn dropdown-toggle" data-position="1" style=" background:white; border-color:black; padding-top:2px; padding-bottom:2px;">
-                            <option id="alcohol" value="alcohol">Alcohol</option>
-                            <option id="sweetener" value="sweetener">Sweetener</option>
-                            <option id="juice" value="juice">Juice</option>
-                            <option id="herb" value="herb">Herb</option>
-                        </select>
-                        <span asp-validation-for="@Model.CurrentIngredients[i].Type" class="text-danger"></span>
-                        <select id="list" asp-for="@Model.CurrentIngredients[i].Name" class="btn dropdown-toggle" style="background:white; border-color:black; padding-top:2px; padding-bottom:2px;">
-                            <option class="ingredient" data-ingredient="@Model.CurrentIngredients[i].Name" value="@Model.CurrentIngredients[i].Name">@Model.CurrentIngredients[i].Name</option>
-                        </select>
-                        <span asp-validation-for="@Model.CurrentIngredients[i].Name" class="text-danger"></span>
-                        <input name="Quantities" asp-for="Quantities[i]" id="element1" placeholder="mililiters/spoon..." class="btn col-md-2" style=" background:white; border-color:gray; padding-top:2px; padding-bottom:2px;">
-                        <span asp-validation-for="@Model.Quantities" class="text-danger"></span>
-                        <button type="button" class="cancel btn"><i id="element2" class="fa fa-close"></i></button>
+                        <text class="count">
+                            Ingredient @count:</text>
+                                <div>
+                                    <select id="list" asp-for="@Model.CurrentIngredients[i].Type" class="drop btn dropdown-toggle" data-position="1" style=" background:white; border-color:black; padding-top:2px; padding-bottom:2px;">
+                                        <option id="alcohol" value="alcohol">Alcohol</option>
+                                        <option id="sweetener" value="sweetener">Sweetener</option>
+                                        <option id="juice" value="juice">Juice</option>
+                                        <option id="herb" value="herb">Herb</option>
+                                    </select>
+                                    <span asp-validation-for="@Model.CurrentIngredients[i].Type" class="text-danger"></span>
+                                    <select id="list" asp-for="@Model.CurrentIngredients[i].Name" class="btn dropdown-toggle" style="background:white; border-color:black; padding-top:2px; padding-bottom:2px;">
+                                        <option class="ingredient" data-ingredient="@Model.CurrentIngredients[i].Name" value="@Model.CurrentIngredients[i].Name">@Model.CurrentIngredients[i].Name</option>
+                                    </select>
+                                    <span asp-validation-for="@Model.CurrentIngredients[i].Name" class="text-danger"></span>
+                                    <input name="Quantities" asp-for="Quantities[i]" id="element1" placeholder="mililiters/spoon..." class="btn col-md-2" style=" background:white; border-color:gray; padding-top:2px; padding-bottom:2px;">
+                                    <span asp-validation-for="@Model.Quantities" class="text-danger"></span>
+                                    <button type="button" class="cancel btn"><i id="element2" class="fa fa-close"></i></button>
+                                </div>
                     </div>
                 }
                 <button type="button" id="addIngredient" class="btn" style="background-color:#ff0000; color:white"><i class="fa fa-plus-circle"></i> </button>
