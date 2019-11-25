@@ -20,7 +20,7 @@
     <form asp-controller="CocktailMagician" asp-action="ManageUsers" method="get">
         <div class="row">
             <input class="form-control col-md-4" placeholder="User name..." type="text" asp-for="Input" />
-            <button id="Search" class="btn btn-info" />Search
+            <button type="submit" class="btn" style="background-color:#ff0000; color:white" id="searchBtn"><i class="fa fa-search"></i></button>
         </div>
     </form>
 </div>
@@ -35,7 +35,7 @@
     {
 
         <table id="the-clicking-table" class="table table-hover col-md-10">
-            <tr style="background-color:lightblue">
+            <tr style="background-color:indianred">
                 <th>Name</th>
                 <th>Role</th>
                 <th>Status</th>
@@ -51,7 +51,7 @@
                         <td id="@user.Name">Banned</td>
                         <td>
                             <form>
-                                <button id="remove-ban" type="submit" class="btn btn-info" data-url="/CocktailMagician/RemoveBan" data-userid="@user.UserId" data-status="@user.Name">Remove Ban</button>
+                                <button id="remove-ban" type="submit" class="btn" data-url="/CocktailMagician/RemoveBan" data-userid="@user.UserId" data-status="@user.Name" style="background-color:#ff0000; color:white">Remove Ban</button>
                             </form>
                         </td>
                     }
@@ -60,7 +60,7 @@
                         <td id="@user.Name">Active</td>
                         <td>
                             <form>
-                                <button id="ban" type="submit" class="btn btn-info" data-url="/CocktailMagician/Ban" data-userid="@user.UserId" data-status="@user.Name">Ban User</button>
+                                <button id="ban" type="submit" class="btn" data-url="/CocktailMagician/Ban" data-userid="@user.UserId" data-status="@user.Name" style="background-color:#ff0000; color:white">Ban User</button>
                             </form>
                         </td>
                     }
@@ -68,7 +68,7 @@
                     {
                         <td>
                             <form>
-                                <button type="submit" class="btn btn-info promote" data-url="/CocktailMagician/promote" data-userid="@user.UserId">Promote</button>
+                                <button type="submit" class="btn promote" data-url="/CocktailMagician/promote" data-userid="@user.UserId" style="background-color:#ff0000; color:white">Promote</button>
                             </form>
                         </td>
                     }
@@ -76,7 +76,7 @@
                     {
                         <td>
                             <form>
-                                <button type="submit" class="btn btn-info demote" data-url="/CocktailMagician/demote" data-userid="@user.UserId">Demote</button>
+                                <button type="submit" class="btn demote" data-url="/CocktailMagician/demote" data-userid="@user.UserId" style="background-color:#ff0000; color:white">Demote</button>
                             </form>
                         </td>
                     }

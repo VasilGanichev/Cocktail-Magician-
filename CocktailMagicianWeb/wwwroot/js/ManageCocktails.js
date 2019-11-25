@@ -38,3 +38,4 @@ $('#cocktailTable').on('click', '#hide', function (event) {
         }
     })
 });
+
