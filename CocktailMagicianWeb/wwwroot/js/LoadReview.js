@@ -11,8 +11,8 @@
         data: { id: bar },
         type: "get",
         success: function (responseData) {
-            console.log(responseData)
-            if (responseData.length === 0) {
+            console.log(responseData.length)
+            if (responseData.length === 108) {
                 thisBtn.replaceWith('<text> No reviews found on this bar!</text>')
                 console.log(thisBtn)
 

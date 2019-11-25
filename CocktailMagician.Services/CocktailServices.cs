@@ -102,7 +102,7 @@ namespace CocktailMagician.Services
                   .Include(b => b.Ingredients)
                   .ThenInclude(b => b.Ingredient)
                   .Where(b => ((name == null) || (b.Name.Contains(name))) &&
-                  ((ingredientName == null) || (b.Ingredients.FirstOrDefault(i => i.Ingredient.Name == name) != null))).ToListAsync();
+                  ((ingredientName == null) || (b.Ingredients.Select(i => i.Ingredient.Name).Contains(name)))).ToListAsync();
             }
 
             return cocktailsResult;
@@ -111,6 +111,11 @@ namespace CocktailMagician.Services
         public async Task<IReadOnlyCollection<Cocktail>> GetCollectionAsync()
         {
             return await _context.Cocktails.ToListAsync();
+        }
+        public async Task<List<Cocktail>> LoadNewestCocktails()
+        {
+            var cocktails = await _context.Cocktails.Include(c => c.CocktailReviews).Where(c => c.IsHidden == false).OrderBy(c => c.CreatedOn).Take(10).ToListAsync();
+            return cocktails;
         }
     }
 }

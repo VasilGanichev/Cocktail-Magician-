@@ -36,20 +36,39 @@
 }
 <h1 class="cola">Bar Details</h1>
 <div class="grid-container">
-    <div class="picture">
-        @try
-        {
-            <img src="data:image/jpg;base64,@(Html.Raw(Convert.ToBase64String(Model.CurrentPicture)))" width="500" height="390" />
+    <div class="desctipion">
+        <div class="picture">
+            @if (Model.CurrentPicture != null)
+            {
+                <img src="data:image/jpg;base64,@(Html.Raw(Convert.ToBase64String(Model.CurrentPicture)))" width="500" height="390" />
 
-        }
-        catch (Exception)
-        {
-            <img src="~/no-image-icon-6.png" width="230" height="172" />
-        }
+            }
+            else
+            {
+                <img src="~/images/no-image-icon-6.png" width="230" height="172" />
+            }
+        </div>
+        <div class="cocktails">
+            <table class="table table-hover">
+                <th>Cocktails</th>
+                <tr id="cocktailsTable">
+                    <td id="InputCocktails">
+                        @foreach (var cocktails in Model.Cocktails)
+                        {
+                            <p class="hakunaMatata">
+                                @cocktails
+                            </p>
+                        }
+                    </td>
 
-    </div>
-    <div class="info">
-        <div class="initialDescription">
+                </tr>
+            </table>
+            <button id="load-more" data-id="@Model.Id">Load More</button>
+        </div>
+        <div class="googlemaps">
+
+        </div>
+        <div class="info">
             <table class="table table-hover">
                 @if (Model != null)
                 {
@@ -79,39 +98,16 @@
                 }
             </table>
         </div>
-        <div class="cocktails">
-            <table class="table table-hover">
-                <th>Cocktails</th>
-                <tr id="cocktailsTable">
-                    <td id="InputCocktails">
-                        @foreach (var cocktails in Model.Cocktails)
-                        {
-                            <p class="hakunaMatata">
-                                @cocktails
-                            </p>
-                        }
-                    </td>
-
-                </tr>
-            </table>
-            <button id="load-more" data-id="@Model.Id">Load More</button>
+        <div class="buttons">
+            <button class="btn btn-info buttonReview" id="Load-Bars-Reviews" data-bar="@Model.Id">Load Reviews</button>
+            @if (this.User.IsInRole("CocktailMagician") || this.User.IsInRole("BarCralwer"))
+            {
+                <button class="btn btn-info buttonReview" onclick="location.href='@Url.Action("LeaveBarReview", "Reviews", new { Id = Model.Id })'">Leave Review</button>
+            }
         </div>
-    </div>
-
-
-    <div class="googlemaps">
-
-    </div>
-    <div class="buttons">
-        <button class="btn btn-info buttonReview" id="Load-Bars-Reviews" data-bar="@Model.Id">Load Reviews</button>
-        <button class="btn btn-info buttonReview" onclick="location.href='@Url.Action("LeaveBarReview", "Reviews", new { Id = Model.Id })'">Leave Review</button>
     </div>
     <div id="commentBox" class="comments">
 
     </div>
 </div>
-
-
-
-
 

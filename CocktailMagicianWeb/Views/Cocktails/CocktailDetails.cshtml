@@ -3,29 +3,34 @@
     ViewData["Title"] = "CocktailDetails";
 }
 <style>
-    img {
-        max-width: 100%;
-        height: auto;
-    }
 
-    table {
-        border-collapse: collapse;
-        width: 100%;
-    }
+        img {
+            max-width: 100%;
+            height: auto;
+        }
 
-    tr:nth-child(even) {
-        background-color: #f2f2f2
-    }
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
 
-    th {
-        background-color: #4CAF50;
-        color: white;
-    }
+        tr:nth-child(even) {
+            background-color: #f2f2f2
+        }
 
-    .cocktailDesc {
-        display: inline-block;
-        padding: 4px;
-    }
+        th {
+            background-color: #ff0000;
+            color: white;
+        }
+
+        .buttonReview {
+            margin: auto;
+        }
+
+        .barDesc {
+            background-color: #ff0000;
+            color: white;
+        }
 </style>
 
 
@@ -88,3 +93,13 @@
 </div>
 <button class="btn btn-info" id="Load-Cocktails-Reviews" data-cocktail="@Model.Id">Load Reviews</button>
 
+<div class="grid-container">
+    <div class="desctipion">
+        <div class="picture"></div>
+        <div class="googlemaps"></div>
+        <div class="info"></div>
+        <div class="buttons"></div>
+        <div class="bars"></div>
+    </div>
+    <div class="comments"></div>
+</div>

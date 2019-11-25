@@ -17,5 +17,6 @@ namespace CocktailMagician.Services.Contracts
         Task<byte[]> GetCocktailCurrentPicture(int id);
         Task<Cocktail> GetAsync(string name);
         Task<IReadOnlyCollection<Cocktail>> GetCollectionAsync();
+        Task<List<Cocktail>> LoadNewestCocktails();
     }
 }

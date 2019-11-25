@@ -18,7 +18,8 @@ namespace CocktailMagician.Data.Entities
         public List<BarCocktail> BarCocktails {get; set;}
         public int BarReviewID { get; set; }
         public List<BarReview> BarReviews { get; set; }
+        public DateTime CreatedOn { get; set; }
 
-        
+
     }
 }
