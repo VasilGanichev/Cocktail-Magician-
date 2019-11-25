@@ -117,5 +117,12 @@ namespace CocktailMagician.Services
             var cocktails = await _context.Cocktails.Include(c => c.CocktailReviews).Where(c => c.IsHidden == false).OrderBy(c => c.CreatedOn).Take(10).ToListAsync();
             return cocktails;
         }
+
+        public async Task<List<string>> LoadMoreBars(int alreadyLoaded, int cocktailId)
+        {
+            var cocktail = await GetAsync(cocktailId);
+            var bars = cocktail.Bars.Select(bc => bc.Bar.Name).Skip(alreadyLoaded).Take(10).ToList();
+            return bars;
+        }
     }
 }

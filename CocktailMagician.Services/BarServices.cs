@@ -92,6 +92,10 @@ namespace CocktailMagician.Services
             var bars = await context.Bars.Include(b => b.BarReviews).Where(c => c.IsHidden == false).OrderBy(b => b.CreatedOn).Take(10).ToListAsync();
             return bars;
         }
-
+        public async Task<List<Bar>> GetMultipleBarsByNameAsync(string input)
+        {
+            var bars = await context.Bars.Where(c => c.Name.Contains(input)).ToListAsync();
+            return bars;
+        }
     }
 }

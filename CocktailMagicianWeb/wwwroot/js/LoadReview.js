@@ -32,21 +32,21 @@ $('#Load-Cocktails-Reviews').ready().click(function (e) {
     const cocktail = $(this).data('cocktail')
     console.log(thisCocktailBtn);
     console.log(cocktail);
-    const commentBox = $('#commentBox')
+    const commentBox = $('#cocktailCommentBox')
     $.ajax({
         url: '/Reviews/LoadCoctailReviews',
         data: { id: cocktail },
         type: "get",
         success: function (response) {
-            console.log(response)
-            if (response.length === 0) {
-                thisCocktailBtn.replaceWith('<text> No reviews found on this bar!</text>')
+            console.log(response.length)
+            if (response.length === 108) {
+                thisCocktailBtn.replaceWith('<text> No reviews found on this cocktail!</text>')
                 console.log(thisCocktailBtn)
 
             }
             else {
-                console.log(response)
-                thisCocktailBtn.replaceWith(response)
+                $('#cocktailCommentBox').html(response);
+                thisCocktailBtn.remove();
             }
         }
 

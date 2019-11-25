@@ -7,6 +7,31 @@
             max-width: 100%;
             height: auto;
         }
+
+        body {
+            background-image: url('../images/44-446927_bar-wallpapers-hd-raftaar-punjabi-bagh.jpg');
+            background-size: cover;
+        }
+
+        .BackgroundOpacity {
+            margin: 35px;
+            border-radius: 16px;
+            background-color: rgba(255,250,250,0.7);
+            padding: 10px 35px;
+        }
+
+        h2 {
+            font-size: 50px;
+        }
+
+        .row {
+            margin: 35px;
+        }
+
+        h4 {
+            padding: 40px 5px 1px 10px;
+            font-size: 35px;
+        }
     </style>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
@@ -20,56 +45,57 @@
 }
 
 
-<h1>SearchBars</h1>
+<div class=" BackgroundOpacity">
 
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="SearchBars" method="post" enctype="multipart/form-data">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="@Model.Name" class="control-label"></label>
-                <input asp-for="@Model.Name" class="form-control" />
-                <span asp-validation-for="@Model.Name" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="@Model.Address" class="control-label"></label>
-                <input asp-for="@Model.Address" class="form-control" />
-                <span asp-validation-for="@Model.Address" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="@Model.PhoneNumber" class="control-label"></label>
-                <input asp-for="@Model.PhoneNumber" class="form-control" />
-                <span asp-validation-for="@Model.PhoneNumber" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label class="control-label">Rating</label>
-                <input asp-for="@Model.AvgRating" class="form-control" />
-                <span asp-validation-for="@Model.AvgRating" class="text-danger"></span>
-            </div>
-            @if (this.User.IsInRole("CocktailMagician"))
-            {
-                <div class="form-group form-check">
-                    <label class="form-check-label">
-                        <input class="form-check-input" asp-for="@Model.ShowOnlyHiddenFiles" /> Display only hidden files
-                    </label>
+    <h2 class="cola">Search Bars</h2>
+    <div class="row">
+        <div class="col-md-4">
+            <form asp-action="SearchBars" method="post" enctype="multipart/form-data">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group">
+                    <label asp-for="@Model.Name" class="control-label"></label>
+                    <input asp-for="@Model.Name" class="form-control" />
+                    <span asp-validation-for="@Model.Name" class="text-danger"></span>
                 </div>
-            }
+                <div class="form-group">
+                    <label asp-for="@Model.Address" class="control-label"></label>
+                    <input asp-for="@Model.Address" class="form-control" />
+                    <span asp-validation-for="@Model.Address" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label class="control-label">Phone Number</label>
+                    <input asp-for="@Model.PhoneNumber" class="form-control" />
+                    <span asp-validation-for="@Model.PhoneNumber" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label class="control-label">Rating</label>
+                    <input asp-for="@Model.AvgRating" class="form-control" />
+                    <span asp-validation-for="@Model.AvgRating" class="text-danger"></span>
+                </div>
+                @if (this.User.IsInRole("CocktailMagician"))
+                {
+                    <div class="form-group form-check">
+                        <label class="form-check-label">
+                            <input class="form-check-input" asp-for="@Model.ShowOnlyHiddenFiles" /> Display only hidden files
+                        </label>
+                    </div>
+                }
 
-            <div class="search" data-info="Search!">
-                <br />
-                <button type="submit" class="btn" style="background-color:#ff0000; color:white" id="searchBtn"><i class="fa fa-search"></i></button>
-            </div>
-        </form>
+                <div class="search" data-info="Search!">
+                    <br />
+                    <button type="submit" class="btn" style="background-color:#ff0000; color:white" id="searchBtn"><i class="fa fa-search"></i></button>
+                </div>
+            </form>
+        </div>
     </div>
 </div>
-<br />
 
-<div>
-    <table class="table table-hover">
-        @if (Model != null)
-        {
-            if (!Model.SearchResults.Any())
+@if (Model != null)
+{
+    <div class="row BackgroundOpacity">
+        <table class="table table-hover">
+
+            @if (!Model.SearchResults.Any())
             {
                 <br />
                 <br />
@@ -78,14 +104,14 @@
             }
             else
             {
-                <h2>Results:</h2>
+                <h3 class="cola">Results.</h3>
                 <tr>
                     <th>Image</th>
                     <th>Name</th>
                     <th>Address</th>
                     <th>Phone</th>
                 </tr>
-                foreach (var bar in Model.SearchResults)
+                @foreach (var bar in Model.SearchResults)
                 {
                     <tr>
 
@@ -110,23 +136,18 @@
                         <td>
                             @bar.PhoneNumber
                         </td>
+
                         <td>
-                            @if (this.User.IsInRole("CocktailMagician"))
-                            {
-                                <button  class="btn" style="background-color:#ff0000; color:white" onclick="location.href='@Url.Action("EditBar", "Bar", new { Id = @bar.Id })'">Edit</button>
-                            }
-                        </td>
-                        <td>
-                            <button  class="btn" style="background-color:#ff0000; color:white" onclick="location.href='@Url.Action("BarDetails", "Bar", new { Id = @bar.Id })'">Details</button>
+                            <button class="btn" style="background-color:#ff0000; color:white" onclick="location.href='@Url.Action("BarDetails", "Bar", new { Id = @bar.Id })'">Details</button>
                         </td>
 
                     </tr>
                 }
 
             }
-        }
-    </table>
-</div>
+        </table>
+    </div>
+}
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
 }

@@ -1,12 +1,30 @@
 ﻿@model UpdateIngredientViemModel
 @{
     ViewData["Title"] = "UpdateIngredient";
+    <style>
+        body {
+            background-image: url('../../images/ebece441f102d8f8814625cfa24f7fa0.jpg');
+            background-size: cover;
+        }
+
+        .backgroundOpacity {
+            border-radius: 16px;
+            background-color: rgba(255,250,250,0.7);
+            padding: 10px 35px;
+        }
+
+        h2 {
+            font-size: 50px;
+        }
+    </style>
 }
 
-<h4>Update Ingredient</h4>
-<form asp-controller="Ingredients" asp-action="UpdateIngredient" method="post">
-    <input class="form-control col-md-4" value="@Model.CurrentName"  type="text" asp-for="@Model.NewName" />
-    <button class="btn" style="background-color:#ff0000; color:white" />Update
-</form>
+<div class="backgroundOpacity">
+    <h2 class="cola"> Update Ingredient</h2>
+    <form asp-controller="Ingredients" asp-action="UpdateIngredient" method="post">
+        <input class="form-control col-md-4" value="@Model.CurrentName" type="text" asp-for="@Model.NewName" />
+        <button class="btn" style="background-color:#ff0000; color:white" />Update
+    </form>
+</div>
 
 

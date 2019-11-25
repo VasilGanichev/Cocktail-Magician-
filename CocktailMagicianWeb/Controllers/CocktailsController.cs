@@ -191,5 +191,10 @@ namespace CocktailMagicianWeb.Controllers
             return View(cocktailModel);
 
         }
+        public async Task<IActionResult> LoadMoreBars([FromQuery]int Loaded, [FromQuery]int id)
+        {
+            var bars = await _cocktailServices.LoadMoreBars(Loaded, id);
+            return Json(bars);
+        }
     }
 }
