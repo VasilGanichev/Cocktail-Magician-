@@ -1,4 +1,63 @@
 ﻿<style type="text/css">
+    body {
+        background-image: url('../../images/smash-ingredients-1000x667.jpg');
+        background-size: cover;
+    }
+
+    #element1 {
+        display: inline-block;
+        width: 45%;
+        padding: 10px;
+    }
+
+    .row {
+        border-radius: 16px;
+        background-color: rgba(255,250,250,0.7);
+        padding: 24px 24px;
+    }
+
+    #element2 {
+        display: inline-block;
+        width: 45%;
+        padding: 10px;
+    }
+
+    .multiselect {
+        width: 20em;
+        height: 10em;
+        border: solid 1px #c0c0c0;
+        overflow: auto;
+    }
+
+        .multiselect label {
+            display: block;
+        }
+
+    .multiselect-on {
+        color: #ffffff;
+        background-color: #000099;
+    }
+
+    form {
+        padding: 5px;
+    }
+
+    h4 {
+        color: black;
+        font-size: 50px;
+        padding: 8px 24px;
+        border-radius: 16px;
+    }
+        h5 {
+        color: black;
+        font-size: 40px;
+        padding: 8px 24px;
+        border-radius: 8px;
+    }
+
+    button {
+        padding: 15px;
+    }
     #element1 {
         display: inline-block;
         width: 45%;
@@ -14,7 +73,8 @@
     .multiselect {
         width: 20em;
         height: 10em;
-        border: solid 1px #c0c0c0;
+        padding-left: 10px;
+        border: solid 1px black;
         overflow: auto;
     }
 
@@ -41,7 +101,7 @@
     <div class="row">
         <div class="col-sm-7">
             <form id="Ingredients" class="updateCocktail inline" asp-controller="Cocktails" asp-action="UpdateCocktail" method="post" enctype="multipart/form-data">
-                <h4>Update Cocktail</h4>
+                <h4 class="cola">Update Cocktail</h4>
                 <input asp-for="@Model.Name" data-cocktail="@Model.Name" id="cocktail" placeholder="Name..." class="form-control col-md-8">
                 <span asp-validation-for="@Model.Name" class="text-danger"></span>
                 <br>
@@ -100,7 +160,7 @@
             </form>
         </div>
         <div class="col-xs-6" id="BarCocktails">
-            <h4>Bars that offer the cocktail</h4>
+            <h5 class="cola">Bars offering the cocktail</h5>
             <div class="multiselect">
                 @foreach (var bar in Model.AllBars)
                 {
