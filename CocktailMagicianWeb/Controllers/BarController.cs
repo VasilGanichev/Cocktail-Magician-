@@ -83,7 +83,7 @@ namespace CocktailMagicianWeb.Controllers
         [HttpPost]
         public async Task<IActionResult> SearchBars(BarSearchViewModel viewModel)
         {
-            if(viewModel.AvgRating != null)
+            if (viewModel.AvgRating != null)
             {
                 viewModel.SearchResults = (await this._barServices.SearchBarsByMultipleCriteriaAsync(viewModel.Name, viewModel.Address, viewModel.PhoneNumber, viewModel.ShowOnlyHiddenFiles)).Select(b => b.MapToViewModel()).Where(b => b.Rating == viewModel.AvgRating).ToList();
             }
@@ -127,7 +127,7 @@ namespace CocktailMagicianWeb.Controllers
             var bars = await _barServices.GetCollectionAsync();
             return Json(bars);
         }
-        public async Task<IActionResult> LoadMoreCocktails([FromQuery]int Loaded,[FromQuery]int id)
+        public async Task<IActionResult> LoadMoreCocktails([FromQuery]int Loaded, [FromQuery]int id)
         {
             var cocktails = await _barServices.LoadMoreCocktails(Loaded, id);
             return Json(cocktails);

@@ -130,5 +130,11 @@ namespace CocktailMagician.Services
 
             return boolCheck;
         }
+        public async Task<List<string>> LoadMoreBars(int alreadyLoaded, int cocktailId)
+        {
+            var cocktail = await GetAsync(cocktailId);
+            var bars = cocktail.Bars.Select(bc => bc.Bar.Name).Skip(alreadyLoaded).Take(10).ToList();
+            return bars;
+        }
     }
 }

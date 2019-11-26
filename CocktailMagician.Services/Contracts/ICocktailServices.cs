@@ -19,5 +19,6 @@ namespace CocktailMagician.Services.Contracts
         Task<IReadOnlyCollection<Cocktail>> GetCollectionAsync();
         Task<List<Cocktail>> LoadNewestCocktails();
         Task<bool> CocktailWithThatNameExists(string name);
+        Task<List<string>> LoadMoreBars(int alreadyLoaded, int cocktailId);
     }
 }

@@ -199,5 +199,11 @@ namespace CocktailMagicianWeb.Controllers
             var boolCheck = await _cocktailServices.CocktailWithThatNameExists(name);
             return Json(boolCheck);
         }
+
+        public async Task<IActionResult> LoadMoreBars([FromQuery]int Loaded, [FromQuery]int id)
+        {
+            var bars = await _cocktailServices.LoadMoreBars(Loaded, id);
+            return Json(bars);
+        }
     }
 }
