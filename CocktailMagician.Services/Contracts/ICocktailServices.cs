@@ -14,8 +14,10 @@ namespace CocktailMagician.Services.Contracts
         Task HideAsync(int id);
         Task UnhideAsync(int id);
         Task<List<Cocktail>> SearchByMultipleCriteriaAsync(string name, string ingredientName, bool IncludeOnlyAlcohol);
+        Task<byte[]> GetCocktailCurrentPicture(int id);
         Task<Cocktail> GetAsync(string name);
         Task<IReadOnlyCollection<Cocktail>> GetCollectionAsync();
         Task<List<Cocktail>> LoadNewestCocktails();
+        Task<bool> CocktailWithThatNameExists(string name);
     }
 }

@@ -55,8 +55,16 @@ namespace CocktailMagician.Services
         }
         public async Task EditBarAsync(Bar bar)
         {
-            bar.EnsureNotNull();
-            this.context.Bars.Update(bar);
+            var dbBar = await GetBarAsync(bar.Id);
+            dbBar.Name = bar.Name;
+            dbBar.IsHidden = bar.IsHidden;
+            dbBar.PhoneNumber = bar.PhoneNumber;
+            dbBar.Address = bar.Address;
+            if (bar.Picture != null)
+            {
+                dbBar.Picture = bar.Picture;
+            }
+
             await this.context.SaveChangesAsync();
 
         }
@@ -92,6 +100,5 @@ namespace CocktailMagician.Services
             var bars = await context.Bars.Include(b => b.BarReviews).Where(c => c.IsHidden == false).OrderBy(b => b.CreatedOn).Take(10).ToListAsync();
             return bars;
         }
-
     }
 }

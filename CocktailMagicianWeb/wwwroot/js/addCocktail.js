@@ -1,4 +1,6 @@
-﻿$('#Ingredients').on('click', '#addIngredient', function () {
+﻿
+
+$('#Ingredients').on('click', '#addIngredient', function () {
     let ingredients = $('.drop').length + 1;
     console.log(ingredients)
     const button = $(this)
@@ -216,13 +218,54 @@ $('.addCocktail').on('click', '.cancel', function () {
     })
 })
 
-//$('#Ingredients').on('mouseenter', '#addIngredient', function () {
-//    toastr.options.timeOut = 0;
-//    toastr.options.extendedTimeOut = 0;
-//    toastr.options.positionClass = "toast-top-center";
-//    toastr.info('Add Ingredient.');
-//});
+$('#Submit').mouseenter(function () {
+    const cocktail = $('#cocktail').val()
+    console.log(cocktail)
+    $.ajax({
+        url: '/Cocktails/NameExists',
+        data: { name: cocktail },
+        success: function (responseData) {
+            if (responseData === true) {
+                $('#Submit').prop('disabled', true);
+                toastr.options.timeOut = 2000;
+                toastr.options.extendedTimeOut = 0;
+                //toastr.options ={
+                //    "preventDuplicates": true
+                //}
+                toastr.options.positionClass = "toast-top-center";
+                toastr.warning('You cannot create the cocktail as this name is alraedy taken.');
+                //function restore() {
+                //    toastr.remove();
+                //    $('#Submit').prop('disabled', false);
+                //}
+                //setTimeout(restore, 2000)
+            }
+            else {
+                toastr.options.timeOut = 0;
+                toastr.options.extendedTimeOut = 0;
+                toastr.options.positionClass = "toast-top-center";
+                toastr.options.prevenOpenDuplicates = true;
+                //function restore() {
+                //    toastr.remove();
+                //    $('#Submit').prop('disabled', false);
+                //}
+                //setTimeout(restore, 2000)
+                toastr.success('You can create the cocktail.');
+            }
+        }
+    })
+})
 
-//$('#Ingredients').on('mouseleave', '#addIngredient', function () {
-//    toastr.remove();
-//});
+$('#Submit').on('keyup keypress', function (e) {
+    var keyCode = e.keyCode || e.which;
+    if (keyCode === 13) {
+        e.preventDefault();
+        return false;
+    }
+});
+
+$('#cocktail').change(function () {
+    console.log(1)
+    toastr.remove();
+    $('#Submit').prop('disabled', false);
+})

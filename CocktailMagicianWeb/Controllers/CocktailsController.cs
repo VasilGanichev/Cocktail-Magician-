@@ -55,17 +55,19 @@ namespace CocktailMagicianWeb.Controllers
             return View();
         }
 
-        public async Task<IActionResult> AddCocktail(CocktailViewModel vm, List<IFormFile> Picture)
+        public async Task<IActionResult> AddCocktail(CocktailViewModel vm)
         {
-            foreach (var item in Picture)
+            if (await _cocktailServices.CocktailWithThatNameExists(vm.Name))
             {
-                if (item.Length > 0)
+                ModelState.AddModelError(string.Empty, "A cocktail with that name already exists.");
+                return View();
+            }
+            if (vm.NewPicture != null)
+            {
+                using (var stream = new MemoryStream())
                 {
-                    using (var stream = new MemoryStream())
-                    {
-                        await item.CopyToAsync(stream);
-                        vm.Picture = stream.ToArray();
-                    }
+                    await vm.NewPicture.CopyToAsync(stream);
+                    vm.Picture = stream.ToArray();
                 }
             }
             var cocktail = await _cocktailServices.AddAsync(vm.Name, vm.Picture);
@@ -190,6 +192,12 @@ namespace CocktailMagicianWeb.Controllers
             var cocktailModel = (await _cocktailServices.GetAsync(id)).MapToViewModel();
             return View(cocktailModel);
 
+        }
+
+        public async Task<IActionResult> NameExists(string name)
+        {
+            var boolCheck = await _cocktailServices.CocktailWithThatNameExists(name);
+            return Json(boolCheck);
         }
     }
 }

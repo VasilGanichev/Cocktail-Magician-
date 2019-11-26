@@ -64,7 +64,13 @@ namespace CocktailMagician.Services
 
         public async Task UpdateCocktailAsync(Cocktail cocktail)
         {
-            _context.Cocktails.Update(cocktail);
+            var dbCocktail = await GetAsync(cocktail.Id);
+            dbCocktail.Name = cocktail.Name;
+            if (cocktail.Picture != null)
+            {
+                dbCocktail.Picture = cocktail.Picture;
+            }
+
             await _context.SaveChangesAsync();
         }
 
@@ -116,6 +122,13 @@ namespace CocktailMagician.Services
         {
             var cocktails = await _context.Cocktails.Include(c => c.CocktailReviews).Where(c => c.IsHidden == false).OrderBy(c => c.CreatedOn).Take(10).ToListAsync();
             return cocktails;
+        }
+
+        public async Task<bool> CocktailWithThatNameExists(string name)
+        {
+            var boolCheck = await _context.Cocktails.AnyAsync(c => c.Name == name);
+
+            return boolCheck;
         }
     }
 }

@@ -41,9 +41,10 @@
             <form id="Ingredients" class="addCocktail" asp-controller="Cocktails" asp-action="AddCocktail" enctype="multipart/form-data">
                 <input placeholder="Name..." asp-for="@Model.Name" class="form-control col-md-8" id="cocktail">
                 <span asp-validation-for="@Model.Name" class="text-danger"></span>
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                 <br>
                 Image:
-                <input type="file" asp-for="Picture" />
+                <input type="file" asp-for="NewPicture" />
                 <br>
                 <br>
                 A cocktail must have at least two ingredients.
@@ -53,7 +54,7 @@
                     <br>
                 </div>
                 <br>
-                <button type="submit" class="btn" style="background-color:#ff0000; color:white" />Submit
+                <button id="Submit" type="submit" class="btn" style="background-color:#ff0000; color:white" />Submit
             </form>
         </div>
         <div class="col-xs-6" id="BarCocktails">

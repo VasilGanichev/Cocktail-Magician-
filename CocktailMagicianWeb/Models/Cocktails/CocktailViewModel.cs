@@ -9,6 +9,7 @@ namespace CocktailMagicianWeb.Models.Cocktails
     {
         public int Id { get; set; }
         public byte[] Picture { get; set; }
+        public IFormFile NewPicture { get; set; }
 
         [Required, MinLength(3), MaxLength(15)]
         public string Name { get; set; }
