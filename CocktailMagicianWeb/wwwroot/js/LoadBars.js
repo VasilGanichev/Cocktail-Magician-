@@ -1,6 +1,6 @@
-﻿$('#load-more-cocktails').ready().click( function (e) {
-    let loadedCocktails = $('.hakunaMatata').length;
-    var url = '/Bar/LoadMoreCocktails';
+﻿$('#load-more-Bars').ready().click(function (e) {
+    let loadedCocktails = $('.matataHakuna').length;
+    var url = '/Cocktails/LoadMoreBars';
 
     const barId = $(this).data('id')
     url = url + `?id=${barId}&Loaded=${loadedCocktails}`
@@ -15,12 +15,12 @@
             console.log(responseData.length)
             for (let i = 0; i < responseData.length; i++) {
                 const cocktail = responseData[i];
-                $('#InputCocktails').append($(`
-                              <p class="hakunaMatata">${cocktail}</p>
+                $('#InputBars').append($(`
+                              <p class="matataHakuna">${cocktail}</p>
                              `));
             }
             if (data.length == 0) {
-                $('#load-more-cocktails').remove();
+                $('#load-more-Bars').remove();
             }
         }
     })

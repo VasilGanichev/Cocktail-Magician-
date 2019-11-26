@@ -1,9 +1,36 @@
 ﻿@model CocktailMagicianWeb.Models.Cocktails.SearchCocktailViewModel
 @{
     ViewData["Title"] = "SearchCoctails";
+    <style>
+        body {
+            background-image: url('../images/royal-cocktails-with-sharing-18100237.jpg');
+            background-size: cover;
+        }
+
+        .row {
+            border-radius: 16px;
+            background-color: rgba(255,250,250,0.7);
+            padding: 35px 35px;
+        }
+
+        .BackgroundOpacity {
+            border-radius: 16px;
+            background-color: rgba(255,250,250,0.7);
+            padding: 10px 35px;
+        }
+
+        h2 {
+            font-size: 50px;
+        }
+
+        h4 {
+            padding: 40px 5px 1px 10px;
+            font-size: 35px;
+        }
+    </style>
 }
 
-<h1>SearchCoctails</h1>
+<h2 class="cola">Search Coctails</h2>
 
 <hr />
 <div class="row">
@@ -39,11 +66,11 @@
 </div>
 <br />
 
-<div>
-    <table class="table table-hover">
-        @if (Model != null)
-        {
-            if (!Model.SearchResults.Any())
+@if (Model != null)
+{
+    <div class="row">
+        <table class="table table-hover">
+            @if (!Model.SearchResults.Any())
             {
                 <br />
                 <br />
@@ -52,13 +79,13 @@
             }
             else
             {
-                <h2>Results:</h2>
+                <h2 class="cola">Results.</h2>
                 <tr>
                     <th>Image</th>
                     <th>Name</th>
                     <th>Ingredients</th>
                 </tr>
-                foreach (var cocktail in Model.SearchResults)
+                @foreach (var cocktail in Model.SearchResults)
                 {
                     <tr>
 
@@ -86,22 +113,16 @@
                             }
                         </td>
                         <td>
-                            @if (this.User.IsInRole("CocktailMagician"))
-                            {
-                                <button  class="btn" style="background-color:#ff0000; color:white" onclick="location.href='@Url.Action("ManageCocktails", "Cocktails", new { Id = @cocktail.Id })'">Edit</button>
-                            }
-                        </td>
-                        <td>
-                            <button  class="btn" style="background-color:#ff0000; color:white" onclick="location.href='@Url.Action("CocktailDetails", "Cocktails", new { Id = @cocktail.Id })'">Details</button>
+                            <button class="btn" style="background-color:#ff0000; color:white" onclick="location.href='@Url.Action("CocktailDetails", "Cocktails", new { Id = @cocktail.Id })'">Details</button>
                         </td>
 
                     </tr>
                 }
 
             }
-        }
-    </table>
-</div>
+        </table>
+    </div>
+}
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
 }

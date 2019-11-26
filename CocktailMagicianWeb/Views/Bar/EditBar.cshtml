@@ -2,16 +2,37 @@
 
 @{
     ViewData["Title"] = "EditBar";
+    <style>
+        body {
+            background-image: url('../../images/bar-hd-backgrounds.jpg');
+            background-size: cover;
+        }
+
+        .BackgroundOpacity {
+            border-radius: 16px;
+            background-color: rgba(255,250,250,0.7);
+            padding: 35px 35px;
+        }
+
+        h2 {
+            margin: 35px;
+            font-size: 50px;
+        }
+
+        .row {
+            margin: 35px;
+        }
+
+    </style>
 }
 
 
 
-<h3>Edit Bar:</h3>
-<hr />
-<div class="row">
+<h2 class="cola">Edit Bar</h2>
+<div class="row BackgroundOpacity">
     <div class="col-md-4">
         <form asp-action="EditBar" method="post" enctype="multipart/form-data">
-         
+
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="@Model.Name" class="control-label"></label>
@@ -24,25 +45,25 @@
                 <span asp-validation-for="@Model.Address" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="@Model.PhoneNumber" class="control-label"></label>
+                <label class="control-label">Phone Number</label>
                 <input asp-for="@Model.PhoneNumber" class="form-control" />
                 <span asp-validation-for="@Model.PhoneNumber" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="NewPicture" class="control-label"></label>
+                <label name="Picture" class="control-label"></label>
                 <input type="file" id="files" asp-for="NewPicture" />
                 <span asp-validation-for="NewPicture" class="text-danger"></span>
             </div>
             <div class="form-group form-check">
                 <label class="form-check-label">
-                    <input class="form-check-input" asp-for="@Model.IsHidden" /> @Html.DisplayNameFor(model => model.IsHidden)
+                    <input class="form-check-input" asp-for="@Model.IsHidden" /> Hide bar for users
                 </label>
             </div>
             <div>
                 <input asp-for="@Model.Id" class="form-control" hidden />
             </div>
             <div class="form-group">
-                <input type="submit" value="Edit"  class="btn" style="background-color:#ff0000; color:white" />
+                <input type="submit" value="Edit" class="btn" style="background-color:#ff0000; color:white" />
             </div>
 
         </form>

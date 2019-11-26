@@ -51,7 +51,24 @@ namespace CocktailMagicianWeb.Controllers
             }
             return RedirectToAction("Index", "Home");
         }
-       
+        [Authorize(Roles = "CocktailMagician")]
+
+        public async Task<IActionResult> ManageBars(BarSearchViewModel vm)
+        {
+            if (string.IsNullOrEmpty(vm.Name))
+            {
+                return View();
+            }
+
+            vm.SearchResults = (await _barServices.GetMultipleBarsByNameAsync(vm.Name)).Select(b => b.MapToViewModel()).ToList();
+            if (vm.SearchResults.Count == 0)
+            {
+                ModelState.AddModelError(string.Empty, "No bars found with this name.");
+                return View();
+            }
+
+            return View(vm);
+        }
         public IActionResult TestView()
         {
             return View();

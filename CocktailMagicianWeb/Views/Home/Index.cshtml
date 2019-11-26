@@ -2,26 +2,29 @@
 @{
     ViewData["Title"] = "Home Page";
     <link href="~/css/Parallax.css" rel="stylesheet" />
+    <link href="~/css/HomePageTable.css" rel="stylesheet" />
     <style>
         .newItems {
             padding: 35px;
             height: 80%;
         }
 
-        table {
+        /*table {
             font-family: arial, sans-serif;
             border-collapse: collapse;
             width: 50%;
             background-color: snow;
             opacity: 0.8
         }
-        th{
+
+        th {
             font-family: arial, sans-serif;
             background-color: #ff0000;
         }
+
         td, th {
             width: 20%;
-        }
+        }*/
     </style>
 
 }
@@ -46,42 +49,64 @@
         </div>
         <div id="parallax2" class="Basic-Div Parralax-items FourthDiv">
             <div class="newItems">
-                <h3 class="h3h3 cola">Bars.</h3>
-                <table class="table table-hover">
-                    <tr style="background-color:lightblue">
-                        <th>Name:</th>
-                        <th>Address:</th>
-                        <th>Rated:</th>
-                    </tr>
+                <div class="table-users">
+                    <div class="header">Bars</div>
 
-                    @foreach (var bar in Model.Bars)
-                    {
-                        <tr onclick="location.href='@Url.Action("BarDetails", "Bar", new { Id = @bar.Id })'">
-                            <td>@bar.Name</td>
-                            <td>@bar.Address</td>
-                            <td>@bar.Rating</td>
+                    <table cellspacing="0">
+                        <tr>
+                            <th>Picture</th>
+                            <th>Name</th>
+                            <th>Rated</th>
                         </tr>
-
-                    }
-                </table>
+                        @foreach (var bar in Model.Bars)
+                        {
+                            <tr>
+                                <td>
+                                    @if (bar.CurrentPicture != null)
+                                    {
+                                        <img src="data:image/jpg;base64,@(Html.Raw(Convert.ToBase64String(bar.CurrentPicture)))" alt="" />
+                                    }
+                                </td>
+                                <td>
+                                    @bar.Name
+                                </td>
+                                <td style="text-align:center" ;>
+                                    @bar.Rating
+                                </td>
+                            </tr>
+                        }
+                    </table>
+                </div>
             </div>
             <div class="newItems">
-                <h3 class="h3h3 cola">Cocktails.</h3>
-                <table class="table table-hover">
-                    <tr style="background-color:lightblue">
-                        <th>Name:</th>
-                        <th>Rated:</th>
-                    </tr>
+                <div class="table-users">
+                    <div class="header">Cocktails</div>
 
-                    @foreach (var cocktail in Model.Cocktails)
-                    {
-                        <tr onclick="location.href='@Url.Action("CocktailDetails", "Cocktails", new { Id = cocktail.Id })'">
-                            <td>@cocktail.Name</td>
-                            <td>@cocktail.Rating</td>
+                    <table cellspacing="0">
+                        <tr>
+                            <th>Picture</th>
+                            <th>Name</th>
+                            <th>Rated</th>
                         </tr>
-
-                    }
-                </table>
+                        @foreach (var cocktail in Model.Cocktails)
+                        {
+                            <tr>
+                                <td>
+                                    @if (cocktail.Picture != null)
+                                    {
+                                        <img src="data:image/jpg;base64,@(Html.Raw(Convert.ToBase64String(cocktail.Picture)))" alt="" />
+                                    }
+                                </td>
+                                <td>
+                                    @cocktail.Name
+                                </td>
+                                <td style="text-align:center" ;>
+                                    @cocktail.Rating
+                                </td>
+                            </tr>
+                        }
+                    </table>
+                </div>
             </div>
         </div>
 

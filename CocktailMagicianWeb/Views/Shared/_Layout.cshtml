@@ -125,7 +125,8 @@
             <a class="nav-link" style="font-size:20px" ; asp-controller="Bar" asp-action="SearchBars">Browse Our Bars</a>
             @if (this.User.IsInRole("CocktailMagician"))
             {
-                <a class="nav-link " style="font-size:20px" ; asp-controller="Bar" asp-action="CreateBar">Create Bar</a>
+                <a class="nav-link " style="font-size:20px" ; asp-controller="Bar" asp-action="ManageBars">Manage Bars</a>
+                <a class="nav-link " style="font-size:20px" ; asp-controller="Bar" asp-action="CreateBar">Add Bar</a>
             }
         </div>
         <button class="dropdown-btn">
@@ -165,10 +166,10 @@
     </div>
 
     @*<footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2019 - CocktailMagicianWeb - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-        </div>
-    </footer>*@
+            <div class="container">
+                &copy; 2019 - CocktailMagicianWeb - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            </div>
+        </footer>*@
 
     <environment include="Development">
         <script src="~/lib/jquery/dist/jquery.js"></script>
@@ -201,6 +202,7 @@
     <script src="~/js/AddCocktailToBar.js"></script>
     <script src="~/js/SideBarNav.js"></script>
     <script src="~/js/LoadCocktails.js"></script>
+    <script src="~/js/LoadBars.js"></script>
     @RenderSection("Scripts", required: false)
 </body>
 </html>

@@ -1,14 +1,10 @@
-﻿@model CocktailsViewModel
+﻿@model BarSearchViewModel
 @{
-    ViewData["Title"] = "ManageCocktails";
+    ViewData["Title"] = "ManageBars";
     <style>
         body {
-            background-image: url('../../images/royal-cocktails-with-sharing-18100237.jpg');
+            background-image: url('../images/bar-hd-backgrounds.jpg');
             background-size: cover;
-        }
-
-        .row {
-            margin: 35px;
         }
 
         .BackgroundOpacity {
@@ -22,20 +18,21 @@
             margin: 35px;
             font-size: 50px;
         }
-
+        .row{
+               margin: 35px;
+        }
         h4 {
             padding: 40px 5px 1px 10px;
             font-size: 35px;
         }
     </style>
-
 }
 
-<h2 class="cola">Manage Cocktails</h2>
+<h2 class="cola">Manage Bars</h2>
 <div>
-    <form asp-controller="Cocktails" asp-action="ManageCocktails">
+    <form asp-controller="Bar" asp-action="ManageBars">
         <div class="row">
-            <input class="form-control col-md-4" placeholder="Cocktail name..." type="text" asp-for="Input" />
+            <input class="form-control col-md-4" placeholder="Bar name..." type="text" asp-for="@Model.Name" />
             <button type="submit" class="btn" style="background-color:#ff0000; color:white" id="searchBtn"><i class="fa fa-search"></i></button>
         </div>
     </form>
@@ -43,25 +40,26 @@
 
 @if (Model != null)
 {
+    <div class="BackgroundOpacity">
 
-    <h4 class="cola">Search Results.</h4>
-    <div asp-validation-summary="All" class="text-danger"></div>
+        <h4 class="cola">Search Results.</h4>
+        <div asp-validation-summary="All" class="text-danger"></div>
 
 
-    if (!(Model.Cocktails.Count == 0))
-    {
-        <div class="BackgroundOpacity">
+       @if (!(Model.SearchResults.Count == 0))
+        {
+        <div>
 
             <table id="cocktailTable" class="table table-hover col-md-10">
                 <tr>
                     <th>Name</th>
-                    <th>Type</th>
+                    <th>Status</th>
                 </tr>
 
-                @foreach (var cocktail in Model.Cocktails)
+                @foreach (var bar in Model.SearchResults)
                 {
                     <tr>
-                        @if (cocktail.Picture is null)
+                        @if (bar.CurrentPicture is null)
                         {
                             <td>
                                 <img src="~/images/no-image-icon-6.png" width="230" height="172" />
@@ -70,28 +68,28 @@
                         else
                         {
                             <td>
-                                <img src="data:image/jpg;base64,@(Html.Raw(Convert.ToBase64String(cocktail.Picture)))" width="230" height="172" />
+                                <img src="data:image/jpg;base64,@(Html.Raw(Convert.ToBase64String(bar.CurrentPicture)))" width="230" height="172" />
 
                             </td>
 
                         }
-                        <td>@cocktail.Name</td>
+                        <td>@bar.Name</td>
                         <td>
-                            <a asp-controller="Cocktails" asp-action="UpdateCocktail" asp-route-id="@cocktail.Id">Update</a>
+                            <a asp-controller="Bar" asp-action="EditBar" asp-route-id="@bar.Id">Update</a>
                         </td>
-                        @if (cocktail.IsHidden)
+                        @if (bar.IsHidden)
                         {
-                            <td> <a id="unhide" data-cocktail="@cocktail.Id" asp-controller="" asp-action="">Unhide</a></td>
+                            <td> <a id="unhide" data-cocktail="@bar.Id" asp-controller="" asp-action="">Unhide</a></td>
                         }
                         else
                         {
-                            <td> <a id="hide" data-cocktail="@cocktail.Id" asp-controller="" asp-action="">Hide</a></td>
+                            <td> <a id="hide" data-cocktail="@bar.Id" asp-controller="" asp-action="">Hide</a></td>
                         }
                     </tr>
                 }
 
             </table>
         </div>
-    }
+        }
+    </div>
 }
-
