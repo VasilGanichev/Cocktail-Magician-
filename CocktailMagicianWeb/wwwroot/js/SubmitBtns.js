@@ -48,7 +48,7 @@ $('#Submit').on('keyup keypress', function (e) {
     }
 });
 
-$('#name').change(function () {
+$('#name').keyup(function () {
     console.log(1)
     toastr.remove();
     $('#Submit').prop('disabled', false);

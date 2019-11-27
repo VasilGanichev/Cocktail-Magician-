@@ -15,7 +15,7 @@
                     cocktailOptions[i] = `<option value="${responseData[i].name}">${responseData[i].name}</option>`
                 }
                 console.log(` <select> ${cocktailOptions}  </select>`)
-                btnadd.replaceWith(`<select multiple name="Cocktails"> ${cocktailOptions}  </select>`)
+                btnadd.replaceWith(`<select class="btn" multiple name="Cocktails"> ${cocktailOptions}  </select>`)
             }
         }
     })

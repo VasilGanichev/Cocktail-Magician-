@@ -1,9 +1,7 @@
 ﻿using CocktailMagician.Data.Entities;
-using CocktailMagician.Services;
 using CocktailMagician.Services.Contracts;
 using CocktailMagicianWeb.Models.Cocktails;
 using CocktailMagicianWeb.Utilities.Mappers;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.IO;
@@ -118,7 +116,6 @@ namespace CocktailMagicianWeb.Controllers
             {
                 if (!await _cocktailIngredientsServices.PairExistsAsync(newIngredients[i], cocktail))
                 {
-                    // Update
                     if (vm.Quantities[i] == 0)
                     {
                         continue;

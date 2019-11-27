@@ -26,7 +26,7 @@
 <h2 class="cola">Add Ingredient</h2>
 <form asp-controller="Ingredients" asp-action="AddIngredient" class="type" data-type="ingredient">
     <div>
-        <input placeholder="Ingredient name..." asp-for="@Model.Name" class="form-control  col-md-4">
+        <input id="name" placeholder="Ingredient name..." asp-for="@Model.Name" class="form-control  col-md-4">
         <span asp-validation-for="@Model.Name" class="text-danger"></span>
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
     </div>

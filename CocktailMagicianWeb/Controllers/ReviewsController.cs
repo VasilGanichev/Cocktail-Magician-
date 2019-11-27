@@ -1,15 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using CocktailMagician.Data.Entities;
+﻿using CocktailMagician.Data.Entities;
 using CocktailMagician.Services.Contracts;
 using CocktailMagicianWeb.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using System.Threading.Tasks;
 
 namespace CocktailMagicianWeb.Controllers
 {
+    [Authorize(Roles = "BarCrawler, CocktailMagician")]
     public class ReviewsController : Controller
     {
         private readonly IBarServices _barServices;
@@ -70,7 +69,7 @@ namespace CocktailMagicianWeb.Controllers
         [HttpPost]
         public async Task<IActionResult> LeaveCocktailReview(ReviewViewModel viewModel)
         {
-            if(!ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
                 return View(viewModel);
             }

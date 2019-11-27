@@ -1,13 +1,11 @@
 ﻿using CocktailMagician.Data;
 using CocktailMagician.Data.Entities;
 using CocktailMagician.Services.Contracts;
-using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Threading.Tasks;
 using CocktailMagician.Services.Utilities;
+using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace CocktailMagician.Services
 {

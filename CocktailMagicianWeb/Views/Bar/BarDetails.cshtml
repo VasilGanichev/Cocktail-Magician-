@@ -128,7 +128,7 @@
         </div>
         <div class="buttons">
             <button class="btn buttonReview" color:white" id="Load-Bars-Reviews" data-bar="@Model.Id">Load Reviews</button>
-            @if (this.User != null)
+            @if (User.IsInRole("BarCrawler") || User.IsInRole("CocktailMagician"))
             {
                 <button class="btn buttonReview" color:white" onclick="location.href='@Url.Action("LeaveBarReview", "Reviews", new { Id = Model.Id })'">Leave Review</button>
             }
