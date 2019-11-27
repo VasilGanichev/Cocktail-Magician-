@@ -343,6 +343,11 @@
                             debugger;
                             return;
                         }
+                        if (status == 'OK' || travelMode == 'DRIVING') {
+
+                            debugger;
+                            return;
+                        }
                         else {
                             debugger;
                             toastr.error(`No suitable ${travelMode} routes were found for this direction\nMap is set to 'driving' travel mode`)
