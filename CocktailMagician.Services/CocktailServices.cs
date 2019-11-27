@@ -113,7 +113,7 @@ namespace CocktailMagician.Services
         }
         public async Task<List<Cocktail>> LoadNewestCocktails()
         {
-            var cocktails = await _context.Cocktails.Include(c => c.CocktailReviews).Where(c => c.IsHidden == false).OrderBy(c => c.CreatedOn).Take(10).ToListAsync();
+            var cocktails = await _context.Cocktails.Include(c => c.CocktailReviews).Where(c => c.IsHidden == false).OrderBy(c => c.CreatedOn).Take(5).ToListAsync();
             return cocktails;
         }
 

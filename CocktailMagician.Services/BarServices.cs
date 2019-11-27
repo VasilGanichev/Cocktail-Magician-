@@ -95,7 +95,7 @@ namespace CocktailMagician.Services
         }
         public async Task<List<Bar>> LoadNewestBars()
         {
-            var bars = await _context.Bars.Include(b => b.BarReviews).Where(c => c.IsHidden == false).OrderBy(b => b.CreatedOn).Take(10).ToListAsync();
+            var bars = await _context.Bars.Include(b => b.BarReviews).Where(c => c.IsHidden == false).OrderBy(b => b.CreatedOn).Take(5).ToListAsync();
             return bars;
         }
         public async Task<List<Bar>> GetMultipleBarsByNameAsync(string input)
