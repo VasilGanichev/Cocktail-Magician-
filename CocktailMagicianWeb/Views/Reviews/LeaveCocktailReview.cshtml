@@ -1,11 +1,42 @@
 ﻿@model ReviewViewModel
 @{
     ViewData["Title"] = "LeaveCocktailReview";
+    <style>
+        body {
+            background-image: url('../../images/grandhotel_2-1024x683.jpg');
+            background-size: cover;
+        }
+
+        .row {
+            margin: 35px;
+        }
+
+        .BackgroundOpacity {
+            margin: 35px;
+            border-radius: 16px;
+            background-color: rgba(255,250,250,0.7);
+            padding: 10px 35px;
+        }
+
+        h2 {
+            font-size: 50px;
+        }
+
+        .buttoncollor {
+            background: #ff0000;
+            color: white;
+        }
+
+        h4 {
+            padding: 40px 5px 1px 10px;
+            font-size: 35px;
+        }
+    </style>
 }
 
-<h1>Leave Cocktail Review</h1>
 
-<div class="row">
+<div class="BackgroundOpacity">
+<h2 class="cola">Leave Cocktail Review</h2>
     <div class="col-md-4">
         <form asp-action="EditBar" method="post" enctype="multipart/form-data">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
@@ -21,7 +52,7 @@
                 <input asp-for="@Model.Id" class="form-control" hidden />
             </div>
             <div class="form-group">
-                <button style="background-color:#ff0000; color:white" type="submit" class="btn">Create!</button>
+                <button type="submit" class="btn buttoncollor">Create!</button>
             </div>
 
         </form>

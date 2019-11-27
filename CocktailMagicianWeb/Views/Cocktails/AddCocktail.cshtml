@@ -13,8 +13,8 @@
     .row {
         border-radius: 16px;
         background-color: rgba(255,250,250,0.7);
-
         padding: 24px 24px;
+        width: 90%;
     }
 
     #element2 {
@@ -26,7 +26,8 @@
     .multiselect {
         width: 20em;
         height: 10em;
-        border: solid 1px #c0c0c0;
+        border: solid 1px black;
+        padding-left: 10px;
         overflow: auto;
     }
 
@@ -39,20 +40,12 @@
         background-color: #000099;
     }
 
-    form {
-        padding: 5px;
-    }
 
     h4 {
         color: black;
-        font-size: 50px;
-        padding: 8px 24px;
-        border-radius: 16px;
+        font-size: 45px;
     }
 
-    button {
-        padding: 15px;
-    }
 </style>
 
 
@@ -62,35 +55,33 @@
 }
 
 <h4 class="cola">Add Cocktail</h4>
-<div class="container">
-    <div class="row">
-        <div class="col-sm-7">
-            <form id="Ingredients" class="addCocktail type" asp-controller="Cocktails" asp-action="AddCocktail" enctype="multipart/form-data" data-type="cocktail">
-                <input placeholder="Name..." asp-for="@Model.Name" class="form-control col-md-8" id="name">
-                <span asp-validation-for="@Model.Name" class="text-danger"></span>
-                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+<div class="row">
+    <div class="col-sm-7">
+        <form id="Ingredients" class="addCocktail" asp-controller="Cocktails" asp-action="AddCocktail" enctype="multipart/form-data">
+            <input placeholder="Name..." asp-for="@Model.Name" class="form-control col-md-8" id="cocktail">
+            <span asp-validation-for="@Model.Name" class="text-danger"></span>
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <br>
+            Image:
+            <input type="file" asp-for="NewPicture" />
+            <br>
+            <br>
+            A cocktail must have at least two ingredients.
+            <div id="list">
+                <button type="button" id="addIngredient" class="btn" style="background-color:#ff0000; color:white"><i class="fa fa-plus-circle"></i></button>
                 <br>
-                Image:
-                <input type="file" asp-for="NewPicture" />
                 <br>
-                <br>
-                A cocktail must have at least two ingredients.
-                <div id="list">
-                    <button type="button" id="addIngredient" class="btn" style="background-color:#ff0000; color:white"><i class="fa fa-plus-circle"></i></button>
-                    <br>
-                    <br>
-                </div>
-                <br>
-                <button id="Submit" type="submit" class="btn" style="background-color:#ff0000; color:white" />Submit
-            </form>
-        </div>
-        <div class="col-xs-6" id="BarCocktails">
-            <button type="button" id="addCocktailToBars" class="btn" style="background-color:#ff0000; color:white">Add Cocktail to Bars  </button>
-        </div>
+            </div>
+            <br>
+            <button id="Submit" type="submit" class="btn" style="background-color:#ff0000; color:white" />Submit
+        </form>
+    </div>
+    <div class="col-xs-6" id="BarCocktails">
+        <button type="button" id="addCocktailToBars" class="btn" style="background-color:#ff0000; color:white">Add Cocktail to Bars  </button>
     </div>
 </div>
 
 @section Scripts
     {
-    <partial name="_ValidationScriptsPartial">
-}
+     <partial name="_ValidationScriptsPartial">
+    }

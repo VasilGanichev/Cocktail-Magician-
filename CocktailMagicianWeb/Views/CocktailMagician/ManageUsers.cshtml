@@ -4,6 +4,41 @@
 }
 @{var counter = 0;}
 <style>
+    body {
+        background-image: url('../../images/open-baladin-rome-6-1024x683.jpg');
+        background-size: cover;
+    }
+
+    .row {
+        margin: 35px;
+    }
+
+    .BackgroundOpacity {
+        margin: 35px;
+        border-radius: 16px;
+        background-color: rgba(255,250,250,0.7);
+        padding: 10px 35px;
+    }
+
+    .BackgroundOpacity-search {
+        margin: 35px;
+        border-radius: 16px;
+        background-color: rgba(255,250,250,0.7);
+        padding: 10px 35px;
+        width:550px;
+    }
+
+    h2 {
+        margin: 25px;
+        font-size: 50px;
+    }
+
+    h4 {
+        font-size: 35px;
+    }
+    .form-width{
+        width:800px;
+    }
     table {
         font-family: arial, sans-serif;
         border-collapse: collapse;
@@ -15,9 +50,11 @@
     }
 </style>
 
-<h3>Manage Users</h3>
-<div>
-    <form asp-controller="CocktailMagician" asp-action="ManageUsers" method="get">
+
+
+<div class="BackgroundOpacity-search">
+    <h2 class="cola">Manage Users</h2>
+    <form asp-controller="CocktailMagician" class="form-width" asp-action="ManageUsers" method="get">
         <div class="row">
             <input class="form-control col-md-4" placeholder="User name..." type="text" asp-for="Input" />
             <button type="submit" class="btn" style="background-color:#ff0000; color:white" id="searchBtn"><i class="fa fa-search"></i></button>
@@ -27,11 +64,11 @@
 
 @if (Model != null)
 {
-    <br>
-    <h5>Search Results:</h5>
+<div class="BackgroundOpacity">
+    <h4 class="cola">Search Results.</h4>
     <div asp-validation-summary="All" class="text-danger"></div>
 
-    if (!(Model.Users.Count == 0))
+    @if (!(Model.Users.Count == 0))
     {
 
         <table id="the-clicking-table" class="table table-hover col-md-10">
@@ -84,4 +121,6 @@
             }
         </table>
     }
+</div>
+
 }

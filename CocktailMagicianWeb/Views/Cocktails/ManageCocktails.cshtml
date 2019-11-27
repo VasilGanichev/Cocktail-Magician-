@@ -44,13 +44,13 @@
 @if (Model != null)
 {
 
-    <h4 class="cola">Search Results.</h4>
     <div asp-validation-summary="All" class="text-danger"></div>
 
 
     if (!(Model.Cocktails.Count == 0))
     {
         <div class="BackgroundOpacity">
+            <h4 class="cola">Search Results.</h4>
 
             <table id="cocktailTable" class="table table-hover col-md-10">
                 <tr>

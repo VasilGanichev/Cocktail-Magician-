@@ -21,6 +21,7 @@ namespace CocktailMagicianWeb.Utilities.Mappers
             viewmodel.PhoneNumber = bar.PhoneNumber;
             viewmodel.CurrentPicture = bar.Picture;
             viewmodel.BarReviews = bar.BarReviews;
+            viewmodel.IsHidden = bar.IsHidden;
             try
             {
                 viewmodel.Rating = Math.Round(bar.BarReviews.Select(b => b.Rating).Average(),2);
