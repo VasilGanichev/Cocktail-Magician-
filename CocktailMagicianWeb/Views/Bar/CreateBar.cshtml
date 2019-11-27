@@ -29,11 +29,11 @@
 <h2 class=" cola">Add Bar</h2>
 <div class="row BackgroundOpacity">
     <div class="col-md-4">
-        <form asp-action="CreateBar" method="post" enctype="multipart/form-data" id="createBarForm">
+        <form asp-action="CreateBar" method="post" enctype="multipart/form-data" id="createBarForm" class="type" data-type="bar">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="@Model.Name" class="control-label"></label>
-                <input asp-for="@Model.Name" class="form-control" />
+                <input asp-for="@Model.Name" class="form-control" id="name" />
                 <span asp-validation-for="@Model.Name" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -61,7 +61,7 @@
                 <button type="button" id="addCocktail" class="btn" style="background-color:#ff0000; color:white">Add Cocktails</button>
             </div>
             <div class="form-group" id="createBarBtn" data-url="CreateBar">
-                <input type="submit" style="background-color:#ff0000; color:white" value="Create" class="btn" />
+                <input id="Submit" type="submit" style="background-color:#ff0000; color:white" value="Create" class="btn" />
             </div>
         </form>
     </div>

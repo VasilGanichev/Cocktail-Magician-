@@ -105,5 +105,12 @@ namespace CocktailMagician.Services
             var bars = await context.Bars.Where(c => c.Name.Contains(input)).ToListAsync();
             return bars;
         }
+
+        public async Task<bool> BarWithThatNameExists(string name)
+        {
+            var boolCheck = await context.Bars.AnyAsync(b => b.Name == name);
+
+            return boolCheck;
+        }
     }
 }

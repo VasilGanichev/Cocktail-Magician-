@@ -11,7 +11,7 @@ namespace CocktailMagicianWeb.Models.Cocktails
         public byte[] Picture { get; set; }
         public IFormFile NewPicture { get; set; }
 
-        [Required, MinLength(3), MaxLength(15)]
+        [Required, MinLength(3), MaxLength(20, ErrorMessage = "Name must be between 3 and 20 characters.")]
         public string Name { get; set; }
         public bool  IsHidden { get; set; }
         public double Rating { get; set; }

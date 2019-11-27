@@ -36,13 +36,6 @@ namespace CocktailMagician.Services
             return cocktails;
         }
 
-        public async Task<byte[]> GetCocktailCurrentPicture(int id)
-        {
-            var cocktail = await GetAsync(id);
-            var picture = cocktail.Picture;
-            return picture;
-        }
-
         public async Task<Cocktail> GetAsync(int id)
         {
             var cocktail = await _context.Cocktails

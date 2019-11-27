@@ -53,6 +53,11 @@ namespace CocktailMagicianWeb.Controllers
         [Authorize(Roles = "CocktailMagician")]
         public async Task<IActionResult> AddIngredient(AddIngredientViewModel vm)
         {
+            if (await _ingredientServices.IngredientWithThatNameExists(vm.Name))
+            {
+                ModelState.AddModelError(string.Empty, "Ingredient with that name already exists.");
+                return View();
+            }
             await _ingredientServices.AddAsync(vm.Name, vm.Type);
             return View();
         }
@@ -95,6 +100,12 @@ namespace CocktailMagicianWeb.Controllers
             var ingredients = await _ingredientServices.GetIngedientsByTypeAsync(type);
 
             return Json(ingredients);
+        }
+
+        public async Task<IActionResult> NameExists(string name)
+        {
+            var boolCheck = await _ingredientServices.IngredientWithThatNameExists(name);
+            return Json(boolCheck);
         }
     }
 }

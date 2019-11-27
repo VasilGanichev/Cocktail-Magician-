@@ -1,10 +1,8 @@
 ﻿using CocktailMagician.Data;
 using CocktailMagician.Services;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace CocktailMagician.Tests.ServiceTests.IngredientServiceTests
 {
@@ -28,7 +26,7 @@ namespace CocktailMagician.Tests.ServiceTests.IngredientServiceTests
                 name = "Rum2";
                 var ingredient2 = sut.AddAsync(name, type).GetAwaiter().GetResult();
 
-                var names = new List<string> {"Rum", "Rum2" };
+                var names = new List<string> { "Rum", "Rum2" };
                 var result = sut.GetMultipleIngredientsByNameAsync(names).GetAwaiter().GetResult();
 
                 Assert.IsTrue(result.Count == 2 && result.Contains(ingredient) && result.Contains(ingredient));

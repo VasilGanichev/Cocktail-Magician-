@@ -65,8 +65,8 @@
 <div class="container">
     <div class="row">
         <div class="col-sm-7">
-            <form id="Ingredients" class="addCocktail" asp-controller="Cocktails" asp-action="AddCocktail" enctype="multipart/form-data">
-                <input placeholder="Name..." asp-for="@Model.Name" class="form-control col-md-8" id="cocktail">
+            <form id="Ingredients" class="addCocktail type" asp-controller="Cocktails" asp-action="AddCocktail" enctype="multipart/form-data" data-type="cocktail">
+                <input placeholder="Name..." asp-for="@Model.Name" class="form-control col-md-8" id="name">
                 <span asp-validation-for="@Model.Name" class="text-danger"></span>
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                 <br>

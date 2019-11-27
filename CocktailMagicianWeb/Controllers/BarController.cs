@@ -1,16 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
+﻿using CocktailMagician.Services.Contracts;
+using CocktailMagicianWeb.Models;
+using CocktailMagicianWeb.Utilities.Mappers;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using System.Linq;
 using System.Threading.Tasks;
-using CocktailMagician.Data.Entities;
-using CocktailMagician.Services.Contracts;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using CocktailMagicianWeb.Utilities.Mappers;
-using CocktailMagicianWeb.Models;
-using Microsoft.AspNetCore.Authorization;
-using CocktailMagicianWeb.Models.Bars;
 
 namespace CocktailMagicianWeb.Controllers
 {
@@ -38,6 +32,11 @@ namespace CocktailMagicianWeb.Controllers
         [Authorize(Roles = "CocktailMagician")]
         public async Task<IActionResult> CreateBar(BarViewModel barViewModel)
         {
+            if (await _barServices.BarWithThatNameExists(barViewModel.Name))
+            {
+                ModelState.AddModelError(string.Empty, "Bar with that name already exists.");
+                return View();
+            }
             if (!ModelState.IsValid)
             {
                 return View();
@@ -131,6 +130,12 @@ namespace CocktailMagicianWeb.Controllers
         {
             var cocktails = await _barServices.LoadMoreCocktails(Loaded, id);
             return Json(cocktails);
+        }
+
+        public async Task<IActionResult> NameExists(string name)
+        {
+            var boolCheck = await _barServices.BarWithThatNameExists(name);
+            return Json(boolCheck);
         }
     }
 }

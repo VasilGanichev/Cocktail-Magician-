@@ -30,10 +30,10 @@ namespace CocktailMagician.Tests.ServiceTests.CocktailServicesTests
         }
 
         [TestMethod]
-        public void ReturnEmptyCollectionIfNoIngredientsAreFound()
+        public void ReturnEmptyCollectionIfNoCocktailsAreFound()
         {
             // Arrange
-            var options = TestUtilities.GetOptions(nameof(ReturnEmptyCollectionIfNoIngredientsAreFound));
+            var options = TestUtilities.GetOptions(nameof(ReturnEmptyCollectionIfNoCocktailsAreFound));
 
 
             // Act, Assert

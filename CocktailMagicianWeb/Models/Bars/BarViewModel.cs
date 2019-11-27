@@ -24,6 +24,5 @@ namespace CocktailMagicianWeb.Models
         public List<BarReview> BarReviews { get; set; } = new List<BarReview>();
         public virtual List<string> Cocktails { get; set; } = new List<string>();
         public double Rating { get; set; }
-
     }
 }

@@ -43,6 +43,9 @@ $('#addCocktailToBars').on('click', function (e) {
                 btn.replaceWith(`<div class="multiselect"> ${options.join('')} </div>
                                 <button id="save" type="button" class="btn" style="background-color:#ff0000; color:white"> Save </button>`)
             }
+
+            // on DOM subtree change. This is the event that will track the checked input boxees, when 1 of the is checked I can append a new class="checked"
+            // Check Create Event partial. to see how to append the checked checkboxes to an Checked array. 260 rows. 240 row below. 
         }
     })
 })

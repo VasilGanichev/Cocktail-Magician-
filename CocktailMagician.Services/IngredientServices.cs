@@ -83,5 +83,12 @@ namespace CocktailMagician.Services
             bool contained = await _context.Ingredients.Include(i => i.CocktailIngredients).AnyAsync(i => i.CocktailIngredients.Any(c => c.IngredientID == id));
             return contained;
         }
+
+        public async Task<bool> IngredientWithThatNameExists(string name)
+        {
+            var boolCheck = await _context.Ingredients.AnyAsync(b => b.Name == name);
+
+            return boolCheck;
+        }
     }
 }

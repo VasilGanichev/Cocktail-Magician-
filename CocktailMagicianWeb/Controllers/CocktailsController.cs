@@ -59,7 +59,7 @@ namespace CocktailMagicianWeb.Controllers
         {
             if (await _cocktailServices.CocktailWithThatNameExists(vm.Name))
             {
-                ModelState.AddModelError(string.Empty, "A cocktail with that name already exists.");
+                ModelState.AddModelError(string.Empty, "Cocktail with that name already exists.");
                 return View();
             }
             if (vm.NewPicture != null)
