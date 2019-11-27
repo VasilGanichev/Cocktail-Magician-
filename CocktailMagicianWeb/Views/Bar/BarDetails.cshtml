@@ -38,7 +38,7 @@
             background: #ff0000;
             margin: 5px;
             width: 80%;
-            color:white;
+            color: white;
         }
 
         .margingaps {
@@ -93,7 +93,7 @@
             }
 
         </div>
-        <div class="googlemaps margingaps">
+        <div id="googlemap" class="googlemaps margingaps">
 
         </div>
         <div class="info margingaps">
@@ -139,3 +139,143 @@
     </div>
 </div>
 
+@section Scripts{
+    <script>
+        var map;
+        var lat;
+        var lng;
+        var image;
+
+        function initMap() {
+
+            var mapElements = document.getElementsByClassName('googlemap');
+            var lat;
+            var lng;
+
+            var elementArray = Array.from(mapElements);
+            const directionService = new google.maps.DirectionsService();
+            const directionDisplay = new google.maps.DirectionsRenderer();
+
+            var i;
+            for (i = 0; i < elementArray.length; i++) {
+                debugger;
+                var element = elementArray[i];
+                lat = element.dataset.lat;
+                lng = element.dataset.lng;
+
+                if (lat == 0 || lng == 0) {
+                    element.className = 'defaultMap';
+                    continue;
+                }
+
+                var coordinates = new google.maps.LatLng(lat, lng);
+
+                map = new google.maps.Map(element, {
+                    zoom: 16,
+                    center: coordinates,
+                });
+
+                var markerSetup =
+                {
+                    coords: coordinates,
+                    iconImage: image,
+                    content: false,
+                };
+                addMarker(markerSetup);
+
+            };
+
+            function addMarker(props) {
+                var marker = new google.maps.Marker({
+                    position: props.coords,
+                    map: map,
+                });
+                if (props.iconImage) {
+
+                    marker.setIcon(props.iconImage);
+                }
+
+                if (props.content) {
+                    var infoWindow = new google.maps.InfoWindow({
+                        content: props.content
+                    });
+                }
+            }
+
+        }
+
+        function initDirections(lat, lng, travelMode) {
+            debugger;
+            var modal = document.getElementById('directionsMapModal');
+            const defaultTravelMode = 'DRIVING';
+
+            if (typeof travelMode === "undefined" || travelMode === null) {
+                travelMode = defaultTravelMode;
+            }
+
+            if (typeof lng === "undefined" || lng === null) {
+                lng = modal.getAttribute('data-lng');
+            }
+
+            if (typeof lat === "undefined" || lat === null) {
+                lng = modal.getAttribute('data-lat');
+            }
+
+            console.log(travelMode);
+            const directionService = new google.maps.DirectionsService();
+            const directionDisplay = new google.maps.DirectionsRenderer();
+            var newCoordinates = [];
+            var currentCoordinates = [];
+
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(function (position) {
+                    newCoordinates = {
+                        lat: position.coords.latitude,
+                        lng: position.coords.longitude
+                    };
+
+                    currentCoordinates = {
+                        lat: parseFloat(lat),
+                        lng: parseFloat(lng)
+                    };
+
+
+                    var request = {
+                        origin: newCoordinates,
+                        destination: currentCoordinates,
+                        travelMode: travelMode
+                    };
+
+
+                    var modalBody = document.getElementById('modal-body');
+                    var newMap = new google.maps.Map(modalBody, {
+                        zoom: 30,
+                        center: currentCoordinates,
+                    });
+
+                    directionDisplay.setMap(newMap)
+                    directionService.route(request, (result, status) => {
+                        if (status == 'OK') {
+
+                            directionDisplay.setDirections(result);
+                        }
+                        if (status != 'OK' && travelMode == 'DRIVING') {
+                            debugger;
+                            return;
+                        }
+                        else {
+                            toastr.error(`No suitable ${travelMode} routes were found for this direction\nMap is set to 'driving' travel mode`)
+                            changeTravelModeByData(defaultTravelMode);
+                            initDirections(lat, lng, defaultTravelMode);
+                        }
+                    });
+                });
+            }
+        };
+    </script>
+    <script src="~/lib/toastr/toastr.js"></script>
+    <script async defer
+            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDkZDZacQFEGmyZpvEOVSyHK86700PRUo8&callback=initMap">
+    </script>
+
+}
