@@ -1,8 +1,10 @@
 ﻿using CocktailMagician.Services.Contracts;
 using CocktailMagicianWeb.Models;
+using CocktailMagicianWeb.Models.Cocktails;
 using CocktailMagicianWeb.Utilities.Mappers;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -13,12 +15,18 @@ namespace CocktailMagicianWeb.Controllers
         private readonly IBarServices _barServices;
         private readonly ICocktailServices _cocktailServices;
         private readonly IBarCocktailServices _barCocktailServices;
+        private readonly IApiServices _apiServices;
+        private readonly IFormattingService _formattingService;
+        private readonly IMailServices _mailServices;
 
-        public BarController(IBarServices barServices, ICocktailServices cocktailServices, IBarCocktailServices barCocktailServices)
+        public BarController(IBarServices barServices, ICocktailServices cocktailServices, IBarCocktailServices barCocktailServices, IApiServices apiServices, IFormattingService formattingService, IMailServices mailServices)
         {
             _barServices = barServices;
             _cocktailServices = cocktailServices;
             _barCocktailServices = barCocktailServices;
+            _apiServices = apiServices;
+            _formattingService = formattingService;
+            _mailServices = mailServices;
         }
 
         [HttpGet]
@@ -41,6 +49,9 @@ namespace CocktailMagicianWeb.Controllers
             {
                 return View();
             }
+            var query = barViewModel.FormatApiTemplate(barViewModel.Address.Split(' '));
+            var apiResult = await this._apiServices.CallApiAsync(query);
+            barViewModel.ParseApiResult(apiResult);
             var barModel = await barViewModel.MapToEntity();
             await _barServices.CreateBarAsync(barModel);
             foreach (var cocktail in barViewModel.Cocktails)
@@ -117,7 +128,7 @@ namespace CocktailMagicianWeb.Controllers
         public async Task<IActionResult> BarDetails(int Id)
         {
             var bar = await this._barServices.GetBarAsync(Id);
-            var viewModel = bar.MapToViewModel();
+            var viewModel = new BarViewModel(bar);
             return View(viewModel);
         }
 
@@ -145,6 +156,49 @@ namespace CocktailMagicianWeb.Controllers
         public async Task UnhideBar([FromBody]BarViewModel vm)
         {
             await _barServices.UnhideAsync(vm.Id);
+        }
+        [HttpGet]
+        public async Task<IActionResult> GetBarEventPartial(int id)
+        {
+            var bar = await _barServices.GetBarAsync(id);
+            return PartialView("_CreateEventPartial", new EventViewModel(bar));
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> CreateBarEvent(EventViewModel model)
+        {
+            string modelAsString = string.Empty;
+
+            var bar = await _barServices.GetBarAsync(model.BarId);
+            var cocktailViewModel = new CocktailsViewModel();
+            cocktailViewModel.Cocktails = bar.BarCocktails.Select(bc => bc.Cocktail.MapToViewModel()).ToList();
+            try
+            {
+                model.BarViewHtmlString = await this._formattingService.RenderViewToStringAsync<CocktailsViewModel>("_BarMenuPartial",cocktailViewModel);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+
+            var emails = model.InvitationEmailAddresses.TrimEnd('x').Split(new char[] { 'x', ',' }, StringSplitOptions.None);
+            var from = "vesselinignatoff88@gmail.com";
+            var body = model.ToString();
+            var subject = "Event invitation";
+            var viewAsPdf = this._formattingService.HtmlStringToPDF(model.BarViewHtmlString);
+
+            bool mailsSent = await this._mailServices.SendEmailToGroup(from, emails, subject, body, viewAsPdf);
+
+            // тука може да си добавите сървис, който да запазва ивента в базата. в момента нямам имплементиран такъв сървис, нито имам ентити за ивент, има само ивентвюмодел
+            // може в джейсъна да сложите и още пропъртита за да има за всяка операция.
+
+
+
+            // bool successfullyCreated = this.eventServices.CreateAsync(model);  => псевдо код как запазвате ивента в базата и ако е успешно може да върнете от сървиса тру, иначе фолс и
+            // така може да пратите инфо в джейсъна за всичките неща - и за статуса на мейлите и за статуса на самия ивент
+
+            return Json(new { mailsSent = mailsSent/*, successfullyCreated = successfullyCreated*/ });
+
         }
     }
 }

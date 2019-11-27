@@ -14,6 +14,8 @@ namespace CocktailMagician.Data.Entities
         public string Address { get; set; }
         [RegularExpression("([0-9]+)")]
         public string PhoneNumber { get; set; }
+        public decimal Lat { get; set; }
+        public decimal Long { get; set; }
         public byte[] Picture { get; set; }
         public bool IsHidden { get; set; }
         public int CocktailID { get; set; }

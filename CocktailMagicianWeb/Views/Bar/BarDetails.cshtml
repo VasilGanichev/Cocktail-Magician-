@@ -55,7 +55,52 @@
             margin-left: 20px;
             font-size: 50px;
         }
+
+        .modal-header {
+            height: 80px;
+            margin: 0;
+        }
+
+        /*.directionsIcons {
+            margin: 0;
+            height: inherit;
+            display: inline-block;
+        }*/
+        #active-travel-mode {
+            font-size: 48px;
+            color: white;
+            background-color: #dc3545;
+            height: auto;
+            padding: 3px;
+            width: 20%;
+            text-align: center;
+            border-radius: 5px;
+        }
+
+        .fas {
+            font-size: 48px;
+            color: black;
+            margin: 0;
+            height: auto;
+            padding: 3px;
+            width: 20%;
+            text-align: center;
+            border-radius: 5px;
+        }
+
+            .fas:hover {
+                font-size: 48px;
+                color: white;
+                background-color: rgba(220, 53, 69, 0.7);
+            }
+
+        .defaultMap {
+            background-image: url("https://cdn1.iconfinder.com/data/icons/location-28/512/Untitled-67-512.png");
+            background-size: cover;
+        }
     </style>
+    <script src='https://kit.fontawesome.com/a076d05399.js'></script>
+
     <link href="~/css/BarDetailsGrid.css" rel="stylesheet" />
 }
 <h2 class="cola">Bar Details</h2>
@@ -93,9 +138,11 @@
             }
 
         </div>
-        <div id="googlemap" class="googlemaps margingaps">
+
+        <div class="googlemaps" id="googlemaps" data-lat="@Model.Lat" data-lng="@Model.Long">
 
         </div>
+
         <div class="info margingaps">
             <table class="table table">
                 @if (Model != null)
@@ -127,19 +174,57 @@
             </table>
         </div>
         <div class="buttons">
+
             <button class="btn buttonReview" color:white" id="Load-Bars-Reviews" data-bar="@Model.Id">Load Reviews</button>
             @if (this.User != null)
             {
                 <button class="btn buttonReview" color:white" onclick="location.href='@Url.Action("LeaveBarReview", "Reviews", new { Id = Model.Id })'">Leave Review</button>
             }
         </div>
+        <button class="btn buttonReview" id="createEvent" data-url="/Bar/GetBarEventPartial/@Model.Id">Create Event</button>
+        <button class="btn getDirectionsBtn buttonReview" type="button" data-lat="@Model.Lat" data-lng="@Model.Long">Get Directions</button>
     </div>
     <div id="commentBox" class="comments">
 
     </div>
 </div>
 
+<div class="modal fade" id="directionsMapModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header" style="width:100%;">
+                <i class='fas fa-car-alt travelModeIcon' id="active-travel-mode" data-mode="DRIVING"></i>
+                <i class='fas fa-bicycle travelModeIcon' data-mode="BICYCLING"></i>
+                <i class='fas fa-bus-alt travelModeIcon' data-mode="TRANSIT"></i>
+                <i class='fas fa-walking travelModeIcon' data-mode="WALKING"></i>
+            </div>
+            <div class="modal-body" id="modal-body" style="max-height:70%; height:500px;">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal" id="closeModalBtn">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<div class="modal fade" id="barEventForm">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+            </div>
+            <div class="modal-body">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal" id="closeInvitationModalBtn">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
 @section Scripts{
+
+
     <script>
         var map;
         var lat;
@@ -148,42 +233,38 @@
 
         function initMap() {
 
-            var mapElements = document.getElementsByClassName('googlemap');
+            var mapElements = document.getElementById('googlemaps');
             var lat;
             var lng;
 
-            var elementArray = Array.from(mapElements);
             const directionService = new google.maps.DirectionsService();
             const directionDisplay = new google.maps.DirectionsRenderer();
 
-            var i;
-            for (i = 0; i < elementArray.length; i++) {
-                debugger;
-                var element = elementArray[i];
-                lat = element.dataset.lat;
-                lng = element.dataset.lng;
 
-                if (lat == 0 || lng == 0) {
-                    element.className = 'defaultMap';
-                    continue;
-                }
 
-                var coordinates = new google.maps.LatLng(lat, lng);
+            lat = mapElements.dataset.lat;
+            lng = mapElements.dataset.lng;
 
-                map = new google.maps.Map(element, {
-                    zoom: 16,
-                    center: coordinates,
-                });
+            if (lat == 0 || lng == 0) {
+                mapElements.className = 'defaultMap';
+                return;
+            }
 
-                var markerSetup =
-                {
-                    coords: coordinates,
-                    iconImage: image,
-                    content: false,
-                };
-                addMarker(markerSetup);
+            var coordinates = new google.maps.LatLng(lat, lng);
 
+            map = new google.maps.Map(mapElements, {
+                zoom: 16,
+                center: coordinates,
+            });
+
+            var markerSetup =
+            {
+                coords: coordinates,
+                iconImage: image,
+                content: false,
             };
+            addMarker(markerSetup);
+
 
             function addMarker(props) {
                 var marker = new google.maps.Marker({
@@ -220,7 +301,7 @@
             if (typeof lat === "undefined" || lat === null) {
                 lng = modal.getAttribute('data-lat');
             }
-
+            debugger;
             console.log(travelMode);
             const directionService = new google.maps.DirectionsService();
             const directionDisplay = new google.maps.DirectionsRenderer();
@@ -252,7 +333,6 @@
                         zoom: 30,
                         center: currentCoordinates,
                     });
-
                     directionDisplay.setMap(newMap)
                     directionService.route(request, (result, status) => {
                         if (status == 'OK') {
@@ -264,6 +344,7 @@
                             return;
                         }
                         else {
+                            debugger;
                             toastr.error(`No suitable ${travelMode} routes were found for this direction\nMap is set to 'driving' travel mode`)
                             changeTravelModeByData(defaultTravelMode);
                             initDirections(lat, lng, defaultTravelMode);
@@ -273,9 +354,9 @@
             }
         };
     </script>
-    <script src="~/lib/toastr/toastr.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
     <script async defer
-            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDkZDZacQFEGmyZpvEOVSyHK86700PRUo8&callback=initMap">
+            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyABQoWn57RiF75Py7FX1DMMejMDiwlS558&callback=initMap">
     </script>
 
 }

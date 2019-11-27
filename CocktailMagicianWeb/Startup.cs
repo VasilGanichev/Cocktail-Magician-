@@ -56,6 +56,9 @@ namespace CocktailMagicianWeb
             services.AddScoped<ICocktailServices, CocktailServices>();
             services.AddScoped<IBarCocktailServices, BarCocktailServices>();
             services.AddScoped<ICocktailReviewServices, CocktailReviewServices>();
+            services.AddScoped<IMailServices, MailServices>();
+            services.AddTransient<IApiServices, ApiServices>();
+            services.AddViewToStringRendererService();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
 
