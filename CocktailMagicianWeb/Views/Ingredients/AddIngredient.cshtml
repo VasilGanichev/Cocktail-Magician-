@@ -24,21 +24,22 @@
 
 <div class="backgroundOpacity">
 <h2 class="cola">Add Ingredient</h2>
-    <form asp-controller="Ingredients" asp-action="AddIngredient">
-        <div>
-            <input placeholder="Ingredient name..." asp-for="@Model.Name" class="form-control  col-md-4">
-            <span asp-validation-for="@Model.Name" class="text-danger"></span>
-        </div>
-        Ingredient type:
-        <select asp-for="@Model.Type">
-            <option value="alcohol  ">Alcoholic</option>
-            <option value="sweetener">Sweetener</option>
-            <option value="juice">Juice</option>
-            <option value="herb">Herb</option>
-        </select>
-        <br>
-        <button class="btn" style="background-color:#ff0000; color:white" />Add
-    </form>
+<form asp-controller="Ingredients" asp-action="AddIngredient" class="type" data-type="ingredient">
+    <div>
+        <input placeholder="Ingredient name..." asp-for="@Model.Name" class="form-control  col-md-4">
+        <span asp-validation-for="@Model.Name" class="text-danger"></span>
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    </div>
+    Ingredient type:
+    <select asp-for="@Model.Type">
+        <option value="alcohol  ">Alcoholic</option>
+        <option value="sweetener">Sweetener</option>
+        <option value="juice">Juice</option>
+        <option value="herb">Herb</option>
+    </select>
+    <br>
+    <button id="Submit" class="btn" style="background-color:#ff0000; color:white" />Add
+</form>
 </div>
 
 

@@ -1,9 +1,6 @@
 ﻿using CocktailMagician.Data.Entities;
-using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
-using System.Linq;
 namespace CocktailMagician.Services.Contracts
 {
     public interface IBarServices
@@ -20,6 +17,6 @@ namespace CocktailMagician.Services.Contracts
         Task<List<Bar>> GetMultipleBarsByNameAsync(string input);
         Task HideAsync(int id);
         Task UnhideAsync(int id);
-
+        Task<bool> BarWithThatNameExists(string name);
     }
 }

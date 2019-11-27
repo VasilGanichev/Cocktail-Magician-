@@ -118,5 +118,12 @@ namespace CocktailMagician.Services
             bar.IsHidden = false;
             await _context.SaveChangesAsync();
         }
+
+        public async Task<bool> BarWithThatNameExists(string name)
+        {
+            var boolCheck = await _context.Bars.AnyAsync(b => b.Name == name);
+
+            return boolCheck;
+        }
     }
 }

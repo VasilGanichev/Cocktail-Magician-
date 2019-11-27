@@ -33,42 +33,42 @@
 <h2 class=" cola">Add Bar</h2>
 <div class="row BackgroundOpacity">
     <div class="col-md-4">
-        <form asp-action="CreateBar" class="form-width" method="post" enctype="multipart/form-data" id="createBarForm">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="@Model.Name" class="control-label"></label>
-                <input asp-for="@Model.Name" class="form-control" />
-                <span asp-validation-for="@Model.Name" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="@Model.Address" class="control-label"></label>
-                <input asp-for="@Model.Address" class="form-control" />
-                <span asp-validation-for="@Model.Address" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label class="control-label">Phone Number</label>
-                <input asp-for="@Model.PhoneNumber" class="form-control" />
-                <span asp-validation-for="@Model.PhoneNumber" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label class="control-label">Picture</label>
-                <input type="file" id="barImage" asp-for="@Model.NewPicture" />
-                <span asp-validation-for="NewPicture" class="text-danger"></span>
-            </div>
-            <div class="form-group form-check">
-                <label class="form-check-label">
-                    <input class="form-check-input" asp-for="@Model.IsHidden" /> Hide bar for users
-                </label>
-            </div>
-            <div class="form-group">
+            <form asp-action="CreateBar" method="post" enctype="multipart/form-data" id="createBarForm" class="type form-width" data-type="bar">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group">
+                    <label asp-for="@Model.Name" class="control-label"></label>
+                    <input asp-for="@Model.Name" class="form-control" id="name" />
+                    <span asp-validation-for="@Model.Name" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="@Model.Address" class="control-label"></label>
+                    <input asp-for="@Model.Address" class="form-control" />
+                    <span asp-validation-for="@Model.Address" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label class="control-label">Phone Number</label>
+                    <input asp-for="@Model.PhoneNumber" class="form-control" />
+                    <span asp-validation-for="@Model.PhoneNumber" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label class="control-label">Picture</label>
+                    <input type="file" id="barImage" asp-for="@Model.NewPicture" />
+                    <span asp-validation-for="NewPicture" class="text-danger"></span>
+                </div>
+                <div class="form-group form-check">
+                    <label class="form-check-label">
+                        <input class="form-check-input" asp-for="@Model.IsHidden" /> Hide bar for users
+                    </label>
+                </div>
+                <div class="form-group">
 
-                <button type="button" id="addCocktail" class="btn" style="background-color:#ff0000; color:white">Add Cocktails</button>
-            </div>
-            <div class="form-group" id="createBarBtn" data-url="CreateBar">
-                <input type="submit" style="background-color:#ff0000; color:white" value="Create" class="btn" />
-            </div>
-        </form>
-    </div>
+                    <button type="button" id="addCocktail" class="btn" style="background-color:#ff0000; color:white">Add Cocktails</button>
+                </div>
+                <div class="form-group" id="createBarBtn" data-url="CreateBar">
+                    <input id="Submit" type="submit" style="background-color:#ff0000; color:white" value="Create" class="btn" />
+                </div>
+            </form>
+</div>
 </div>
 
 @section Scripts {

@@ -137,5 +137,14 @@ namespace CocktailMagicianWeb.Controllers
             var boolCheck = await _barServices.BarWithThatNameExists(name);
             return Json(boolCheck);
         }
+        public async Task HideBar([FromBody]BarViewModel vm)
+        {
+            await _barServices.HideAsync(vm.Id);
+        }
+
+        public async Task UnhideBar([FromBody]BarViewModel vm)
+        {
+            await _barServices.UnhideAsync(vm.Id);
+        }
     }
 }
