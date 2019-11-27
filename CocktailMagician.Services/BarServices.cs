@@ -13,15 +13,15 @@ namespace CocktailMagician.Services
 {
     public class BarServices : IBarServices
     {
-        private readonly CocktailDB context;
+        private readonly CocktailDB _context;
 
         public BarServices(CocktailDB context)
         {
-            this.context = context;
+            _context = context;
         }
         public async Task<Bar> GetBarAsync(int id)
         {
-            var bar = await this.context.Bars
+            var bar = await _context.Bars
                 .Include(b => b.BarReviews)
                 .Include(b => b.BarCocktails)
                 .ThenInclude(b => b.Cocktail)
@@ -31,13 +31,13 @@ namespace CocktailMagician.Services
         }
         public async Task<IReadOnlyCollection<Bar>> GetCollectionAsync()
         {
-            return await this.context.Bars.ToListAsync();
+            return await _context.Bars.ToListAsync();
         }
         public async Task CreateBarAsync(Bar bar)
         {
             bar.EnsureNotNull();
-            await this.context.Bars.AddAsync(bar);
-            await this.context.SaveChangesAsync();
+            await _context.Bars.AddAsync(bar);
+            await _context.SaveChangesAsync();
         }
         public async Task CreateBarAsync(string name, string adress, string phoneNumber, byte[] picture)
         {
@@ -50,8 +50,8 @@ namespace CocktailMagician.Services
                 IsHidden = false,
             };
             bar.EnsureNotNull();
-            await this.context.Bars.AddAsync(bar);
-            await this.context.SaveChangesAsync();
+            await _context.Bars.AddAsync(bar);
+            await _context.SaveChangesAsync();
         }
         public async Task EditBarAsync(Bar bar)
         {
@@ -65,12 +65,12 @@ namespace CocktailMagician.Services
                 dbBar.Picture = bar.Picture;
             }
 
-            await this.context.SaveChangesAsync();
+            await _context.SaveChangesAsync();
 
         }
         public async Task<IReadOnlyCollection<Bar>> SearchBarsByMultipleCriteriaAsync(string name, string adress, string phonenumber, bool displayOnlyHiddenFiles)
         {
-            var barsResult = await this.context.Bars
+            var barsResult = await _context.Bars
               .Include(r => r.BarReviews)
               .Include(b => b.BarCocktails)
               .ThenInclude(b => b.Cocktail)
@@ -86,7 +86,7 @@ namespace CocktailMagician.Services
         public async Task<Bar> GetAsync(string barName)
         {
             barName.EnsureNotNull();
-            var bar = await context.Bars.FirstOrDefaultAsync(b => b.Name == barName);
+            var bar = await _context.Bars.FirstOrDefaultAsync(b => b.Name == barName);
             return bar;
         }
         public async Task<List<string>> LoadMoreCocktails(int alreadyLoaded, int barId)
@@ -97,13 +97,26 @@ namespace CocktailMagician.Services
         }
         public async Task<List<Bar>> LoadNewestBars()
         {
-            var bars = await context.Bars.Include(b => b.BarReviews).Where(c => c.IsHidden == false).OrderBy(b => b.CreatedOn).Take(10).ToListAsync();
+            var bars = await _context.Bars.Include(b => b.BarReviews).Where(c => c.IsHidden == false).OrderBy(b => b.CreatedOn).Take(10).ToListAsync();
             return bars;
         }
         public async Task<List<Bar>> GetMultipleBarsByNameAsync(string input)
         {
-            var bars = await context.Bars.Where(c => c.Name.Contains(input)).ToListAsync();
+            var bars = await _context.Bars.Where(c => c.Name.Contains(input)).ToListAsync();
             return bars;
+        }
+        public async Task HideAsync(int id)
+        {
+            var bar = await GetBarAsync(id);
+            bar.IsHidden = true;
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task UnhideAsync(int id)
+        {
+            var bar = await GetBarAsync(id);
+            bar.IsHidden = false;
+            await _context.SaveChangesAsync();
         }
     }
 }

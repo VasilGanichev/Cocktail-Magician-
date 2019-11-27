@@ -35,8 +35,10 @@
         }
 
         .buttonReview {
+            background: #ff0000;
             margin: 5px;
             width: 80%;
+            color:white;
         }
 
         .margingaps {
@@ -49,7 +51,7 @@
         }
 
         h2 {
-            margin-top:50px;
+            margin-top: 50px;
             margin-left: 20px;
             font-size: 50px;
         }
@@ -125,10 +127,10 @@
             </table>
         </div>
         <div class="buttons">
-            <button class="btn btn-info buttonReview" id="Load-Bars-Reviews" data-bar="@Model.Id">Load Reviews</button>
-            @if (this.User.IsInRole("CocktailMagician") || this.User.IsInRole("BarCralwer"))
+            <button class="btn buttonReview" color:white" id="Load-Bars-Reviews" data-bar="@Model.Id">Load Reviews</button>
+            @if (this.User != null)
             {
-                <button class="btn btn-info buttonReview" onclick="location.href='@Url.Action("LeaveBarReview", "Reviews", new { Id = Model.Id })'">Leave Review</button>
+                <button class="btn buttonReview" color:white" onclick="location.href='@Url.Action("LeaveBarReview", "Reviews", new { Id = Model.Id })'">Leave Review</button>
             }
         </div>
     </div>

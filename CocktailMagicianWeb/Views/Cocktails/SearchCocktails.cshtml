@@ -11,6 +11,7 @@
             border-radius: 16px;
             background-color: rgba(255,250,250,0.7);
             padding: 35px 35px;
+            width: 450px;
         }
 
         .BackgroundOpacity {
@@ -18,7 +19,9 @@
             background-color: rgba(255,250,250,0.7);
             padding: 10px 35px;
         }
-
+         .form-width {
+            width: 250px;
+        }
         h2 {
             font-size: 50px;
         }
@@ -32,10 +35,9 @@
 
 <h2 class="cola">Search Coctails</h2>
 
-<hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="SearchCocktails" method="post" enctype="multipart/form-data">
+        <form asp-action="SearchCocktails" class="form-width" method="post" enctype="multipart/form-data">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="@Model.Name" class="control-label"></label>
@@ -54,7 +56,7 @@
             </div>
             <div class="form-group form-check">
                 <label class="form-check-label">
-                    <input class="form-check-input" asp-for="@Model.IncludeOnlyAlcoholicDrinks" /> @Html.DisplayNameFor(model => model.IncludeOnlyAlcoholicDrinks)
+                    <input class="form-check-input" asp-for="@Model.IncludeOnlyAlcoholicDrinks" /> Include only alcoholic drinks
                 </label>
             </div>
             <div class="search" data-info="Search!">
@@ -68,7 +70,7 @@
 
 @if (Model != null)
 {
-    <div class="row">
+    <div class="BackgroundOpacity">
         <table class="table table-hover">
             @if (!Model.SearchResults.Any())
             {

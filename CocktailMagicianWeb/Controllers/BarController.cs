@@ -132,5 +132,14 @@ namespace CocktailMagicianWeb.Controllers
             var cocktails = await _barServices.LoadMoreCocktails(Loaded, id);
             return Json(cocktails);
         }
+        public async Task HideBar([FromBody]BarViewModel vm)
+        {
+            await _barServices.HideAsync(vm.Id);
+        }
+
+        public async Task UnhideBar([FromBody]BarViewModel vm)
+        {
+            await _barServices.UnhideAsync(vm.Id);
+        }
     }
 }

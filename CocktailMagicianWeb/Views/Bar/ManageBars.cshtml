@@ -18,9 +18,11 @@
             margin: 35px;
             font-size: 50px;
         }
-        .row{
-               margin: 35px;
+
+        .row {
+            margin: 35px;
         }
+
         h4 {
             padding: 40px 5px 1px 10px;
             font-size: 35px;
@@ -46,50 +48,52 @@
         <div asp-validation-summary="All" class="text-danger"></div>
 
 
-       @if (!(Model.SearchResults.Count == 0))
+        @if (!(Model.SearchResults.Count == 0))
         {
-        <div>
+            <div>
 
-            <table id="cocktailTable" class="table table-hover col-md-10">
-                <tr>
-                    <th>Name</th>
-                    <th>Status</th>
-                </tr>
-
-                @foreach (var bar in Model.SearchResults)
-                {
+                <table id="barTable" class="table table-hover col-md-10">
                     <tr>
-                        @if (bar.CurrentPicture is null)
-                        {
-                            <td>
-                                <img src="~/images/no-image-icon-6.png" width="230" height="172" />
-                            </td>
-                        }
-                        else
-                        {
-                            <td>
-                                <img src="data:image/jpg;base64,@(Html.Raw(Convert.ToBase64String(bar.CurrentPicture)))" width="230" height="172" />
-
-                            </td>
-
-                        }
-                        <td>@bar.Name</td>
-                        <td>
-                            <a asp-controller="Bar" asp-action="EditBar" asp-route-id="@bar.Id">Update</a>
-                        </td>
-                        @if (bar.IsHidden)
-                        {
-                            <td> <a id="unhide" data-cocktail="@bar.Id" asp-controller="" asp-action="">Unhide</a></td>
-                        }
-                        else
-                        {
-                            <td> <a id="hide" data-cocktail="@bar.Id" asp-controller="" asp-action="">Hide</a></td>
-                        }
+                        <th>Name</th>
+                        <th>Status</th>
                     </tr>
-                }
 
-            </table>
-        </div>
+                    @foreach (var bar in Model.SearchResults)
+                    {
+                        <tr>
+                            @if (bar.CurrentPicture is null)
+                            {
+                                <td>
+                                    <img src="~/images/no-image-icon-6.png" width="230" height="172" />
+                                </td>
+                            }
+                            else
+                            {
+                                <td>
+                                    <img src="data:image/jpg;base64,@(Html.Raw(Convert.ToBase64String(bar.CurrentPicture)))" width="230" height="172" />
+
+                                </td>
+
+                            }
+                            <td>@bar.Name</td>
+                            <td>
+                                <a asp-controller="Bar" asp-action="EditBar" asp-route-id="@bar.Id">Update</a>
+                            </td>
+                            <td>
+                                @if (bar.IsHidden)
+                                {
+                                    <a id="unhide" data-bar="@bar.Id" asp-controller="" asp-action="">Unhide</a>
+                                }
+                                else
+                                {
+                                    <a id="hide" data-bar="@bar.Id" asp-controller="" asp-action="">Hide</a>
+                                }
+                            </td>
+                        </tr>
+                    }
+
+                </table>
+            </div>
         }
     </div>
 }
