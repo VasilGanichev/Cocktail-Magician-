@@ -1,0 +1,286 @@
+﻿@model EventViewModel
+@{
+    ViewData["Title"] = "_CreateEventPartial";
+}
+<style>
+    #innerCreateEventForm {
+        display: inline-block;
+        width: 50%;
+        max-height: 100%;
+    }
+
+    #deletion-highlight {
+        border: 1px solid red;
+    }
+
+    .eventFormSetupDetails {
+        height: 50%;
+        max-height: 500px;
+        background-color: rgba(255,0,0,0.5);
+        border-radius: 5px;
+        overflow-y: auto;
+        position: relative;
+    }
+
+    .guestEmailSelected:hover {
+        cursor: pointer;
+    }
+
+    #selectedTagsList {
+        height: inherit;
+        max-height: inherit
+    }
+
+    #invitedGuestList {
+        height: inherit;
+    }
+
+    .eventTagSuggestion {
+        display: inline-block;
+        border: 1px solid rgba(0, 0, 0, 0.2);
+        border-radius: 8px;
+        padding-bottom: 3px;
+        margin: 1px;
+    }
+
+        .eventTagSuggestion:hover {
+            background-color: rgba(0, 0, 0, 0.2);
+            cursor: pointer;
+        }
+
+    .detailsWrapper {
+        position: absolute;
+        width: 100%;
+    }
+
+    h3 {
+        justify-content: center;
+    }
+</style>
+
+<h2 style="text-align:center">Event Details</h2>
+
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="CreateBar" method="post" enctype="multipart/form-data" id="createBarForm">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="@Model.Description" class="control-label"></label>
+                <textarea asp-for="@Model.Description" class="form-control description-box" style="resize:none" />
+                <span asp-validation-for="@Model.Description" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="@Model.EventStart" class="control-label"></label>
+                <input type="datetime-local" asp-for="@Model.EventStart" class="form-control" id="eventStartDateField" value="@DateTime.Now.ToString("dd-MMM-yyy HH:mm").Replace(" ", "T")" />
+                <span class="input-group-addon">
+                    <span class="glyphicon glyphicon-calendar"></span>
+                </span>
+                <span asp-validation-for="@Model.EventStart" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label>Enter Guest Emails:</label>
+                <input class="form-control" id="guestsEmailsInputField" />
+                <span asp-validation-for="@Model.InvitationEmailAddresses" class="text-danger"></span>
+            </div>
+            <div class="form-group form-check" style="display:inline-block; margin-left:0">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="@Model.IsPrivate" /> Mark as private
+                </label>
+            </div>
+            <div class="form-group form-check" style="display:inline-block; margin-right:0">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="@Model.SendMenu" /> Send menu to guests
+                </label>
+            </div>
+            <div class="form-group" id="createBarBtnPost">
+                <input type="submit" value="Create" class="btn btn-primary" id="submitEventFormBtn" data-url="/Bar/CreateBarEvent" data-viewurl="/Bar/GetBarViewModelPartial/@Model.BarId" />
+            </div>
+            <input asp-for="@Model.BarEmail" type="hidden" />
+            <input asp-for="@Model.BarId" type="hidden" />
+            <input asp-for="@Model.BarName" type="hidden" />
+            <input asp-for="@Model.BarPhone" type="hidden" />
+            <input asp-for="@Model.SelectedTags" type="hidden" id="selectedTagsFormField" />
+            <input asp-for="@Model.InvitationEmailAddresses" type="hidden" id="guestsEmailsInputFieldValues" />
+            <input asp-for="@Model.BarViewHtmlString" type="hidden" id="barViewHtmlStringField" />
+        </form>
+    </div>
+    <div class="col-md-4" id="innerCreateEventForm">
+        <p>@Model.</p>
+    </div>
+    <div class="col-md-4" id="innerCreateEventForm">
+        <div class="eventFormSetupDetails">
+            <div class="detailsWrapper">
+                <h3 style="text-align:center">Guest List: </h3>
+                <div id="invitedGuestList"></div>
+            </div>
+        </div>
+        <br />
+        <div class="eventFormSetupDetails">
+            <div class="detailsWrapper">
+                <h3 style="text-align:center">Event Tags: </h3>
+                <div id="selectedTagsList" data-tags="@string.Join(",", Model.EventTags)"></div>
+            </div>
+        </div>
+    </div>
+</div>
+<link href="~/css/jquery.datetimepicker.min.css" />
+<script src="~/lib/jquery/dist/jquery.datetimepicker.min.js"></script>
+<script>
+    $('#submitEventFormBtn').attr('disabled', true);
+    $('#eventStartDateField').val(Date.now);
+    console.log($('#eventStartDateField').val());
+
+    var $tags = $('#selectedTagsList').data('tags').split(",");
+    $.each($tags, function (index, value) {
+        $('#selectedTagsList').append(`<div class="eventTagSuggestion"><span>${value}</span></div>`);
+    });
+    var $addedTags = $('.eventTagSuggestion');
+
+
+    $('#guestsEmailsInputField').on('keydown', function (e) {
+
+        if (e.keyCode == 13) {
+            e.preventDefault();
+
+            console.log('prevented');
+        }
+    });
+
+    $('#guestsEmailsInputField').on('keyup', function (e) {
+
+        var $value = $(this).val();
+        var isValid = emailValidation($value);
+
+        if (isValid) {
+            if (e.keyCode == 13) {
+                $('#invitedGuestList').append(`<div class="guestEmailSelected"><span>${$value}</span><span class="removeGuestFromList">x</span></div>`);
+                $('#guestsEmailsInputField').val('');
+            }
+        }
+
+        else {
+            setTimeout(function () {
+                console.log('Please eneter a valid email address!');
+            }, 2000);
+        }
+    });
+
+    $("body").on('DOMSubtreeModified', '#invitedGuestList', function () {
+        if ($(this).children()) {
+            var $children = $('.guestEmailSelected');
+            $children.css('display', 'inline-block');
+            $children.css('background-color', 'rgba(0, 0, 0, 0.2)');
+            $children.css('border-radius', '8px');
+            $children.css('padding-bottom', '3px');
+            $children.find('span').css('padding', '3px');
+        }
+
+        validateFormFields();
+    });
+
+    $("body").on('DOMSubtreeModified', '#selectedTagsList', validateFormFields);
+
+
+    $("body").on('click', '.removeGuestFromList', function (e) {
+        $(this).parent().remove();
+    });
+
+    $("body").on('hover', '.guestEmailSelected', function (e) {
+        $(this).css('curson', 'pointer');
+    });
+
+    $("body").on('click', '.eventTagSuggestion', function (e) {
+
+        debugger;
+        var $this = $(this);
+        var attrToAdd = $this.text();
+
+        if ($this.attr('id')) {
+            $this.removeAttr('id');
+            $this.css('background-color', '');
+        }
+        else {
+            $this.css('background-color', 'rgba(0, 0, 0, 0.2)');
+            $this.attr('id', `${attrToAdd}`);
+        }
+    });
+
+    $("body").on('change', validateFormFields);
+
+    function validateFormFields() {
+        var $description = $('.description-box').val() != '';
+        var $startDate = $('#eventStartDateField').val() != '01-Jan-01 00:00';
+        var $hasGuests = $('#invitedGuestList').children().length > 0;
+        var $allTags = $('.eventTagSuggestion');
+        let $hasTags = false;
+
+        $.each($allTags, function (index, value) {
+            if (value.hasAttribute('id')) {
+                return $hasTags = true;
+            }
+        });
+
+        if ($description && $startDate && $hasGuests && $hasTags) {
+            $('#submitEventFormBtn').attr('disabled', false);
+        }
+        else {
+            $('#submitEventFormBtn').attr('disabled', true);
+        }
+    };
+
+    $('#submitEventFormBtn').click(function (e) {
+        e.preventDefault();
+
+        var $url = $(this).data('url');
+
+        var $allTags = $('.eventTagSuggestion');
+        let $selectedTags = [];
+
+        $.each($allTags, function (index, value) {
+            if (value.hasAttribute('id')) {
+                $selectedTags.push(value.innerText);
+            }
+        });
+
+
+        $('#selectedTagsFormField').val($selectedTags);
+        debugger;
+        var $invitedGuestsDivs = $('.guestEmailSelected');
+        var InvitationEmailAddresses = [];
+
+        $.each($invitedGuestsDivs, function (index, value) {
+            InvitationEmailAddresses.push(value.firstChild.innerText);
+        });
+
+        $('#guestsEmailsInputFieldValues').val(InvitationEmailAddresses);
+
+
+        var $serializedform = $('#createBarForm').serialize();
+        console.log($serializedform);
+
+        $.ajax({
+            url: $url,
+            type: 'post',
+            data: $serializedform,
+            success: function (data) {
+                debugger;
+                if (data.mailsSent == true) {
+                    toastr.success('Invitation emails successfully sent');
+                }
+                //if (data.successfullyCreated == true) {
+                //    toastr.success('You have successfully created an event');
+                //}
+                else {
+
+                    console.log('sad4e brato ;(');
+                }
+            },
+        })
+    });
+
+    $('.removeGuestFromList').hover(function () {
+        debugger;
+        var idToAdd = 'deletion-highlight';
+        $(this).parent().attr('id', newClass);
+    });
+</script>

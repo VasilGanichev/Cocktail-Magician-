@@ -59,6 +59,8 @@ namespace CocktailMagicianWeb.Utilities.Mappers
                 PhoneNumber = viewModel.PhoneNumber,
                 Picture = viewModel.CurrentPicture,
                 IsHidden = viewModel.IsHidden,
+                Lat = viewModel.Lat,
+                Long = viewModel.Long,
             };
             return bar;
         }

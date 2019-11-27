@@ -22,7 +22,7 @@ namespace CocktailMagician.Services
             var bar = await _context.Bars
                 .Include(b => b.BarReviews)
                 .Include(b => b.BarCocktails)
-                .ThenInclude(b => b.Cocktail)
+                .ThenInclude(b => b.Cocktail.Ingredients)
                 .FirstOrDefaultAsync(b => b.Id == id);
             bar.EnsureNotNull();
             return bar;
