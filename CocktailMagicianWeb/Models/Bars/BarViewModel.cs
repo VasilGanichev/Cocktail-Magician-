@@ -49,10 +49,17 @@ namespace CocktailMagicianWeb.Models
             CurrentPicture = bar.Picture == null ? new byte[0] : bar.Picture;
             Address = bar.Address;
             PhoneNumber = bar.PhoneNumber;
-            Lat = bar.Lat; 
+            Lat = bar.Lat;
             Long = bar.Long;
             Cocktails = bar.BarCocktails == null ? new List<string>() : bar.BarCocktails.Select(x => x.Cocktail.Name).ToList();
-            BarReviews = bar.BarReviews == null ? new List<BarReview>() : bar.BarReviews;
+            try
+            {
+                Rating = Math.Round(bar.BarReviews.Select(b => b.Rating).Average(), 2);
+            }
+            catch (Exception)
+            {
+                Rating = 0;
+            }
             ImageAddress = ParseStaticGoogleMapQuery();
         }
 

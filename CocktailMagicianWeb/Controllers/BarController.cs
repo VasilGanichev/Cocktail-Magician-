@@ -59,7 +59,7 @@ namespace CocktailMagicianWeb.Controllers
                 var cocktailEntity = await _cocktailServices.GetAsync(cocktail);
                 await _barCocktailServices.CreateAsync(barModel, cocktailEntity);
             }
-            return RedirectToAction("Index", "Home");
+            return View("BarDetails",barViewModel);
         }
         [Authorize(Roles = "CocktailMagician")]
 
@@ -174,7 +174,7 @@ namespace CocktailMagicianWeb.Controllers
             cocktailViewModel.Cocktails = bar.BarCocktails.Select(bc => bc.Cocktail.MapToViewModel()).ToList();
             try
             {
-                model.BarViewHtmlString = await this._formattingService.RenderViewToStringAsync<CocktailsViewModel>("_BarMenuPartial",cocktailViewModel);
+                model.BarViewHtmlString = await _formattingService.RenderViewToStringAsync<CocktailsViewModel>("_BarMenuPartial",cocktailViewModel);
             }
             catch (Exception ex)
             {
@@ -185,9 +185,9 @@ namespace CocktailMagicianWeb.Controllers
             var from = "vesselinignatoff88@gmail.com";
             var body = model.ToString();
             var subject = "Event invitation";
-            var viewAsPdf = this._formattingService.HtmlStringToPDF(model.BarViewHtmlString);
+            var viewAsPdf = _formattingService.HtmlStringToPDF(model.BarViewHtmlString);
 
-            bool mailsSent = await this._mailServices.SendEmailToGroup(from, emails, subject, body, viewAsPdf);
+            bool mailsSent = await _mailServices.SendEmailToGroup(from, emails, subject, body, viewAsPdf);
 
             // тука може да си добавите сървис, който да запазва ивента в базата. в момента нямам имплементиран такъв сървис, нито имам ентити за ивент, има само ивентвюмодел
             // може в джейсъна да сложите и още пропъртита за да има за всяка операция.

@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace CocktailMagicianWeb.Controllers
 {
-    [Authorize(Roles = "BarCrawler, CocktailMagician")]
+
     public class ReviewsController : Controller
     {
         private readonly IBarServices _barServices;
@@ -30,6 +30,7 @@ namespace CocktailMagicianWeb.Controllers
         {
             return View();
         }
+        [Authorize(Roles = "BarCrawler, CocktailMagician")]
         [HttpGet]
         public async Task<IActionResult> LeaveBarReview(int Id)
         {
@@ -39,7 +40,7 @@ namespace CocktailMagicianWeb.Controllers
             };
             return View(viewModel);
         }
-
+        [Authorize(Roles = "BarCrawler, CocktailMagician")]
         [HttpPost]
         public async Task<IActionResult> LeaveBarReview(ReviewViewModel viewModel)
         {
@@ -52,11 +53,8 @@ namespace CocktailMagicianWeb.Controllers
             await _barReviewServices.CreateBarReviewAsync(viewModel.Rating, viewModel.Comment, bar, user);
             return RedirectToAction("Index", "Home");
         }
-        public async Task<IActionResult> LoadBarReviews(int id)
-        {
-            var reviews = await _barReviewServices.GetBarReviewsCollectionAsync(id);
-            return PartialView("_LoadedBarReviewsPartial", reviews);
-        }
+ 
+        [Authorize(Roles = "BarCrawler, CocktailMagician")]
         [HttpGet]
         public IActionResult LeaveCocktailReview(int Id)
         {
@@ -66,6 +64,7 @@ namespace CocktailMagicianWeb.Controllers
             };
             return View(viewModel);
         }
+        [Authorize(Roles = "BarCrawler, CocktailMagician")]
         [HttpPost]
         public async Task<IActionResult> LeaveCocktailReview(ReviewViewModel viewModel)
         {
@@ -82,6 +81,11 @@ namespace CocktailMagicianWeb.Controllers
         {
             var cocktailReviews = await _cocktailReviewServices.GetCocktailReviewsCollectionAsync(id);
             return PartialView("_LoadedCocktailReviewsPartial", cocktailReviews);
+        }
+        public async Task<IActionResult> LoadBarReviews(int id)
+        {
+            var reviews = await _barReviewServices.GetBarReviewsCollectionAsync(id);
+            return PartialView("_LoadedBarReviewsPartial", reviews);
         }
     }
 }

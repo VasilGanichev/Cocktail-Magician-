@@ -22,8 +22,8 @@ namespace CocktailMagicianWeb.Controllers
 
         public async Task<IActionResult> Index()
         {
-            var bars = (await _barServices.LoadNewestBars()).Select(b => b.MapToViewModel()).ToList();
-            var cocktails = (await _cocktailServices.LoadNewestCocktails()).Select(c => c.MapToViewModel()).ToList();
+            var bars = (await _barServices.LoadNewestBars()).Select(b => b.MapToViewModel()).OrderByDescending(b => b.Rating).ToList();
+            var cocktails = (await _cocktailServices.LoadNewestCocktails()).Select(c => c.MapToViewModel()).OrderByDescending(b => b.Rating).ToList();
             var homeViewModel = new HomeViewModel
             {
                 Bars = bars,

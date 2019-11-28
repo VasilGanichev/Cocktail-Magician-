@@ -52,7 +52,11 @@
         position: absolute;
         width: 100%;
     }
-
+    
+        .buttonReview {
+            background: #ff0000;
+            color: white;
+        }
     h3 {
         justify-content: center;
     }
@@ -93,7 +97,7 @@
                 </label>
             </div>
             <div class="form-group" id="createBarBtnPost">
-                <input type="submit" value="Create" class="btn btn-primary" id="submitEventFormBtn" data-url="/Bar/CreateBarEvent" data-viewurl="/Bar/GetBarViewModelPartial/@Model.BarId" />
+                <input type="submit" value="Create" class="btn buttonReview" id="submitEventFormBtn" data-url="/Bar/CreateBarEvent" data-viewurl="/Bar/GetBarViewModelPartial/@Model.BarId" />
             </div>
             <input asp-for="@Model.BarEmail" type="hidden" />
             <input asp-for="@Model.BarId" type="hidden" />

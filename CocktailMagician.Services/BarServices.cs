@@ -24,6 +24,7 @@ namespace CocktailMagician.Services
                 .Include(b => b.BarCocktails)
                 .ThenInclude(b => b.Cocktail.Ingredients)
                 .FirstOrDefaultAsync(b => b.Id == id);
+            bar.BarCocktails = bar.BarCocktails.Where(bc => bc.Cocktail.IsHidden == false).ToList();
             bar.EnsureNotNull();
             return bar;
         }
@@ -77,7 +78,7 @@ namespace CocktailMagician.Services
               && ((phonenumber == null) || (b.PhoneNumber.Contains(phonenumber)))
               && (b.IsHidden == displayOnlyHiddenFiles)
               )
-                .ToListAsync();
+              .ToListAsync();
             return barsResult;
         }
 
